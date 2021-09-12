@@ -15,6 +15,10 @@
                 <input type="text" id="username" v-model="username" placeholder="Digite o seu nome de usuário">
             </div>
             <div class="input-container">
+                <label>Sobrenome</label>
+                <input type="text" id="sobrenome" v-model="sobrenome" placeholder="Digite o seu sobrenome">
+            </div>
+            <div class="input-container">
                 <label>E-mail</label>
                 <input type="text" id="email" v-model="email" placeholder="Digite o seu email">
             </div>
@@ -24,37 +28,51 @@
             </div>
             <div class="input-container">
                 <label>Senha</label>
-                <input type="password" id="senha" placeholder="Digite sua senha">
+                <input type="password" id="senha" v-model="senha" placeholder="Digite sua senha">
             </div>
             <div class="input-container">
-                <input type="submit" class="submit-btn" value="Realizar o cadastro!" @click="create">
+                <input type="submit" class="submit-btn" value="Realizar Cadastro" @click.prevent="create" form="register-form">
             </div>
         </form>
     </div>
 </template>
 
 <script>
+    import axios from '@/main.js'
+
     export default {
         name : 'Register',
         data () {
             return{
                 greetings:'Seja bem vindo ao PUMA ',
                 username:'usuario',
+                sobrenome:'',
                 email: '',
-                matricula: ''
+                matricula: '',
+                senha: ''
             }
         },
         methods:{
             create(){
-                var newRegister = {
+                let newRegister = {
                     nome: this.username,
+                    sobrenome: this.sobrenome,
                     email: this.email,
-                    matricula: this.matricula
+                    matricula: this.matricula,
+                    senha: this.senha
                 }
-                var formRegister = JSON.stringify(newRegister);
-                console.log(formRegister);
+                
+                axios.post("http://localhost:3000/aluno",newRegister)
+                .then(() =>{
+                    this.$router.push('/')//Direcionar para a página de Login
+                    alert('Cadastro realizado com Sucesso!')
+                }).catch(() =>{//Tratamento para aceitar apenas com todos os campos preenchidos
+                    alert('Preencha todos os campos! ')
+                })
+                console.log(newRegister)
             }
-        }        
+        },    
+    
     }
 </script>
 
