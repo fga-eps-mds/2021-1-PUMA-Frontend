@@ -68,7 +68,7 @@
                     alert(response);
                 }).catch((e) =>{
                     alert(e);
-                })ç
+                });
             }
         },    
     
