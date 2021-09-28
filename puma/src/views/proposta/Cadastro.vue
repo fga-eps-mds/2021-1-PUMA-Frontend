@@ -19,7 +19,7 @@
           </div>
           <div class="form-group">
             <label class="justify-content-lg-start">Detalhamento</label>
-            <textarea class="form-control" id="detalhe" v-model="detalhamento" rows="5"></textarea>
+            <textarea class="form-control" id="detalhe" v-model="detalhamento" rows="5" placeholder="Descreva a proposta do projeto"></textarea>
           </div>
           <div class="form-group">
             <button class="col-3 btn btn-primary" @click="submitForm()">Cadastrar</button>
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+
+import axios from '@/main.js'
 
 export default {
   data() {
@@ -44,6 +46,21 @@ export default {
     submitForm() {
       console.log({nome: this.nome, detalhamento: this.detalhamento, previsao: this.previsao});
     },
+    create(){
+      let newCadastroProposta = {
+        nome: this.nome,
+        detalhamento: this.detalhamento,
+        previsao: this.previsao
+      }
+      //Ainda pra implementar!
+      axios.post(`${global.URL_USER}/proposta/cadastro`, newCadastroProposta)
+      .then((res) => {
+        this.$router.push('/proposta/cadastro')
+        alert("Proposta cadastrada com sucesso")
+      }).catch((e) =>{
+        alert("Erro no cadastro")
+      })
+    }
   },
   name: 'CadastroProposta'
 }
