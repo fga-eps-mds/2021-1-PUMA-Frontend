@@ -62,14 +62,14 @@
                     senha: this.senha
                 }
                 
-                axios.post("http://localhost:3000/aluno",newRegister)
-                .then(() =>{
-                    this.$router.push('/')//Direcionar para a página de Login
-                    alert('Cadastro realizado com Sucesso!')
-                }).catch(() =>{//Tratamento para aceitar apenas com todos os campos preenchidos
-                    alert('Preencha todos os campos! ')
+                axios.post("http://localhost:3004/aluno",newRegister);
+                .then((response) =>{
+                    this.$router.push('/');
+                    alert(response);
+                }).catch((e) =>{
+                    alert(e);
                 })
-                console.log(newRegister)
+                console.log(newRegister);
             }
         },    
     
