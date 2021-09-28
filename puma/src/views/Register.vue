@@ -6,11 +6,7 @@
           <div class="title-box">CADASTRO DE USUÁRIO</div>
           <div>
             <form id="register-form">
-              <input
-                type="text"
-                id="name"
-                placeholder="Nome Completo"
-              />
+              <input type="text" id="name" placeholder="Nome Completo" />
               <input
                 type="text"
                 id="email"
@@ -74,22 +70,22 @@ export default {
   },
   methods: {
     create() {
+      console.log(global.URL_GATEWAY + 'asdfgvrftguyhrftgyhugrfg');
       let newRegister = {
-        nome: this.username,
-        sobrenome: this.sobrenome,
+        name: this.username,
+        surname: this.sobrenome,
         email: this.email,
         matricula: this.matricula,
-        senha: this.senha,
+        password: this.senha,
       };
-
       axios
-        .post("http://localhost:3004/aluno", newRegister)
+        .post(`${global.URL_GATEWAY}/aluno`, newRegister)
         .then(() => {
           this.$router.push("/");
-          alert('Cadastro feito com sucesso.');
+          alert("Cadastro feito com sucesso.");
         })
         .catch(() => {
-          alert('Erro no cadastro');
+          alert("Erro no cadastro");
         });
     },
   },
