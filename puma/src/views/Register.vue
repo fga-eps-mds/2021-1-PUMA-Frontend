@@ -62,14 +62,13 @@
                     senha: this.senha
                 }
                 
-                axios.post("http://localhost:3004/aluno",newRegister);
+                axios.post("http://localhost:3004/aluno",newRegister)
                 .then((response) =>{
                     this.$router.push('/');
                     alert(response);
                 }).catch((e) =>{
                     alert(e);
-                })
-                console.log(newRegister);
+                })ç
             }
         },    
     
