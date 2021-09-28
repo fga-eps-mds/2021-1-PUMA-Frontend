@@ -2,11 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Axios from 'axios'
+import axios from 'axios'
 import environment from '../src/config/environment';
 
 Vue.config.productionTip = false
-Vue.prototype.$http = Axios;
+Vue.prototype.$http = axios;
 environment.configUser();
 
 new Vue({
@@ -15,4 +15,4 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-export default Axios;
+export default axios;
