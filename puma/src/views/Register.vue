@@ -6,7 +6,12 @@
           <div class="title-box">CADASTRO DE USUÁRIO</div>
           <div>
             <form id="register-form">
-              <input type="text" id="name" placeholder="Nome Completo" />
+              <input
+                type="text"
+                id="name"
+                v-model="name"
+                placeholder="Nome Completo"
+              />
               <input
                 type="text"
                 id="email"
@@ -22,10 +27,10 @@
               <input
                 type="password"
                 id="repeat-senha"
-                v-model="senha"
+                v-model="senha_repeat"
                 placeholder="Repita sua senha"
               />
-              <select name="tipo" id="tipo" required>
+              <select name="tipo" id="tipo" required v-model="tipo">
                 <option value="" selected disabled class="disabled">
                   Que tipo de usuário você é?
                 </option>
@@ -61,32 +66,49 @@ export default {
   data() {
     return {
       greetings: "Seja bem vindo ao PUMA ",
-      username: "usuario",
+      name: "",
       sobrenome: "",
       email: "",
       matricula: "",
       senha: "",
+      senha_repeat: "",
+      tipo: "",
     };
   },
   methods: {
     create() {
-      console.log(global.URL_GATEWAY + 'asdfgvrftguyhrftgyhugrfg');
-      let newRegister = {
-        name: this.username,
-        surname: this.sobrenome,
-        email: this.email,
-        matricula: this.matricula,
-        password: this.senha,
-      };
-      axios
-        .post(`${global.URL_GATEWAY}/aluno`, newRegister)
-        .then(() => {
-          this.$router.push("/");
-          alert("Cadastro feito com sucesso.");
-        })
-        .catch(() => {
-          alert("Erro no cadastro");
-        });
+      if (
+        !(
+          this.name &&
+          this.email &&
+          this.senha &&
+          this.senha_repeat &&
+          this.matricula &&
+          this.tipo
+        )
+      ) {
+        alert("Preencha todos os campos");
+      } else if (this.senha_repeat != this.senha) {
+        alert("As senhas não são iguais");
+      } else {
+        const newRegister = {
+          name: this.username,
+          surname: this.sobrenome,
+          email: this.email,
+          matricula: this.matricula,
+          password: this.senha,
+        };
+        axios
+          .post(`${global.URL_GATEWAY}/aluno`, newRegister)
+          .then(() => {
+            this.$router.push("/");
+            alert("Cadastro feito com sucesso.");
+          })
+          .catch(() => {
+            alert("Erro no cadastro");
+          });
+      }
+
     },
   },
 };

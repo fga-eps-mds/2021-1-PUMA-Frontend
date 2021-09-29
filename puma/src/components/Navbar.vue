@@ -15,7 +15,7 @@
 <style scope>
     #nav {
         padding: 30px;
-        background-color: #0060DF ;
+        background-color: #15355e ;
     }
 
     #nav a {
