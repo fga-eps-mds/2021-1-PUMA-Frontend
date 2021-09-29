@@ -88,7 +88,7 @@ export default {
         )
       ) {
         alert("Preencha todos os campos");
-      } else if (this.senha_repeat != this.senha) {
+      } else if (this.senha_repeat !== this.senha) {
         alert("As senhas não são iguais");
       } else {
         const newRegister = {
