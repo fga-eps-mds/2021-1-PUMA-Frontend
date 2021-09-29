@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Puma logo" src="../assets/puma.png">
+    <img alt="Puma logo" src="src/assets/puma.png">
   </div>
 </template>
 

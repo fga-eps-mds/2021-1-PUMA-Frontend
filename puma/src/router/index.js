@@ -16,6 +16,7 @@ const routes = [
     component: () => import('../views/About.vue')
   },
   {
+<<<<<<< HEAD
     path: '/projeto/cadastro',
     name: 'Cadastro de Projeto',
     component: () => import('../views/cadastro-projeto')
@@ -29,6 +30,11 @@ const routes = [
     path: '/projeto/visualizar/:idProjeto',
     name: 'Visualizar Projeto',
     component: () => import('../views/cadastro-projeto')
+=======
+    path: '/proposta/cadastro',
+    name: 'Cadastrar Proposta',
+    component: () => import('../views/proposta/Cadastro')
+>>>>>>> def2a57594c41f8add06f1ef19a15a5a64fb5b52
   }
 ]
 
