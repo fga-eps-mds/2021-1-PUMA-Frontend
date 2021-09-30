@@ -8,13 +8,17 @@
       <div class="form-group">
         <textarea v-model.trim="descricao" class="form-control" id="descricao" placeholder="Descreva sua proposta" rows="3"></textarea>
       </div>
+      <div class="form-group mb-3">
+        <input type="file" id="file" ref="myFiles" class="custom-file-input mb-2" @change="previewFiles" multiple>
+      </div>
       <div class="form-group" v-if="operacao !== 'visualizar'">
         <button type="button" class="btn btn-primary" @click="submitForm">Submeter</button>
       </div>
 <!--      <div class="form-group">-->
-<!--        <label for="exampleFormControlFile1">Example file input</label>-->
 <!--        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()">-->
 <!--        <button @click="cadastrarArquivo()">Submeter anexo</button>-->
+<!--        <input type="file" @change="previewFiles" multiple>-->
+
 <!--      </div>-->
     </div>
 
@@ -30,11 +34,12 @@ export default {
       descricao: '',
       titulo: '',
       operacao: 'cadastrar',
+      files: [],
       file: ''
     }
   },
   beforeCreate() {
-    if(this.$router.currentRoute.params.idProjeto) {
+    if (this.$router.currentRoute.params.idProjeto) {
       const idProjeto = this.$router.currentRoute.params.idProjeto;
       console.log('entrei');
       axios.get('http://localhost:3000/projeto/visualizar/'+ idProjeto).then((response) => {
@@ -54,26 +59,22 @@ export default {
           agente_externo: 1, // I'll keep static until the UserService implementation
           disciplina_aloc: 1
         }
-        // const formProject = JSON.stringify(projectObject);
         console.log(projectObject);
-        axios.post("http://localhost:3000/projeto/cadastro",projectObject).then(() =>{
-          alert('Cadastro realizado com Sucesso!')
-        }).catch(() =>{
-          alert('Preencha todos os campos! ')
-        })
+        axios.post("http://localhost:3000/projeto/cadastro",projectObject);
       }
     },
-    // cadastrarArquivo() {
-    //   let formData = new FormData();
-    //   formData.append('file', this.file);
-    //   console.log(formData);
-    //   // console.log(this.arquivo);
-    // },
-    // handleFileUpload() {
-    //   this.file = this.$refs.file.files[0];
-    // },
+    cadastrarArquivo() {
+      let formData = new FormData();
+      formData.append('file', this.file);
+      console.log(formData);
+      // console.log(this.arquivo);
+    },
+    previewFiles() {
+      this.files = this.$refs.myFiles.files
+      console.log(this.files);
+    },
     validateFormData() {
-        return false;
+        return true;
     }
   }
 }
