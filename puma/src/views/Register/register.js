@@ -2,8 +2,12 @@ import UserService from '../../services/userService';
 import Loading from '@/components/Loading.vue'
 const userService = new UserService();
 
-function evaluateLogin() {
-
+function evaluateLogin(email, password) {
+  if(!(email && password)) {
+    alert('Preencha todos os campos');
+    return false;
+  }
+  return true;
 }
 
 function evaluateRegister(name, email, password, repeatPassword, type, matricula, hasMatricula) {
@@ -13,9 +17,8 @@ function evaluateRegister(name, email, password, repeatPassword, type, matricula
   } else if (repeatPassword !== password) {
     alert('As senhas não são iguais');
     return false;
-  } else {
-    return true;
   }
+  return true;
 }
 
 export default {
@@ -58,18 +61,34 @@ export default {
       if (this.isRegister) {
         if (evaluateRegister(this.name, this.email, this.password, this.repeatPassword, this.type, this.matricula, this.hasMatricula)) {
           this.isLoading = true;
-          userService.registerUser(this.name, this.email, this.password, this.type, this.matricula).then(() => {
+          userService.registerUser(this.name, this.email, this.password, this.type, this.matricula).then((response) => {
             this.isLoading = false;
             this.isRegister = false;
+            console.log("then user register")
+            console.log(response);
             alert('Cadastro feito com sucesso!');
-          }).catch(() => {
+          }).catch((response) => {
             this.isLoading = false;
+            console.log("catch user register")
+            console.log(response);
             alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
           });
         }
 
       } else {
-        evaluateLogin();
+        if(evaluateLogin(this.email, this.password)) {
+          this.isLoading = true;
+          userService.logUserIn(this.email, this.password).then((response) => {
+            console.log("then user login")
+            console.log(response);
+            this.isLoading = false;
+          }).catch((response) => {
+            this.isLoading = false;
+            console.log("catch user login")
+            console.log(response);
+            alert('Uma falha ocorreu ao fazer login. Tente novamente.');
+          });
+        }
       }
 
     },
