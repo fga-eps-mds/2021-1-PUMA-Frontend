@@ -6,12 +6,20 @@
           <div class="title-box">CADASTRO DE USUÁRIO</div>
           <div>
             <form id="register-form">
+              <div class="form-row" v-for="(experience, index) in workExperiences" :key="index">
+                <input
+                  type="text"
+                  id="name"
+                  v-model="name"
+                  placeholder="Nome Completo"
+                />
+              </div>
               <input
-                type="text"
-                id="name"
-                v-model="name"
-                placeholder="Nome Completo"
-              />
+                  type="text"
+                  id="name"
+                  v-model="name"
+                  placeholder="Nome Completo"
+                />
               <input
                 type="text"
                 id="email"
@@ -50,6 +58,9 @@
                 @click.prevent="create"
                 form="register-form"
               />
+              <button @click="addExperience" type="button" class="btn btn-secondary">
+                Add experience
+              </button>
             </form>
           </div>
         </div>
@@ -73,9 +84,16 @@ export default {
       senha: "",
       senha_repeat: "",
       tipo: "",
+      workExperiences:[],
     };
   },
-  methods: {
+    methods: {
+      addExperience (){
+        this.workExperiences.push({
+              name:'',
+        });
+      },
+
     create() {
       if (
         !(
@@ -108,7 +126,6 @@ export default {
             alert("Erro no cadastro");
           });
       }
-
     },
   },
 };
