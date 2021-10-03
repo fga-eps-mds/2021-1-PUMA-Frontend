@@ -6,43 +6,36 @@
         <input type="text" v-model.trim="titulo" class="form-control" id="titulo" placeholder="Digite um título para a proposta" @blur="validateFormData">
       </div>
       <div class="form-group">
-        <textarea v-model.trim="descricao" class="form-control" id="descricao" placeholder="Descreva sua proposta" rows="3"></textarea>
+        <textarea v-model.trim="descricao" class="form-control" id="descricao" placeholder="Descreva sua proposta" rows="7"></textarea>
       </div>
-<!--      <div class="form-group mb-3">-->
-<!--        <input type="file" id="file" ref="myFiles" class="custom-file-input mb-2" @change="previewFiles" multiple>-->
-<!--      </div>-->
-
-      <div align="center">
-        <form>
-          <input type="file" multiple>
+      <div class="form-group">
+        <textarea v-model.trim="resultadoEsperado" class="form-control" id="descricao" placeholder="Descreva o resultado esperado" rows="5"></textarea>
+      </div>
+      <div  align="center">
+        <form action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
+          <input @change="updateFile" name="pic" type="file">
         </form>
       </div>
-
       <div class="form-group" v-if="operacao !== 'visualizar'">
         <button type="button" class="btn btn-primary" @click="submitForm">Submeter</button>
       </div>
-<!--      <div class="form-group" v-if="operacao !== 'visualizar'">-->
-<!--        <button type="button" class="btn btn-primary" @click="submitFile">Submeter Arquivo</button>-->
-<!--      </div>-->
-<!--      <div class="form-group">-->
-<!--        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()">-->
-<!--        <button @click="cadastrarArquivo()">Submeter anexo</button>-->
-<!--        <input type="file" @change="previewFiles" multiple>-->
+      <div class="form-group" v-if="operacao !== 'visualizar'">
+        <button type="button" class="btn btn-primary" @click="submitFile">Submeter Arquivo</button>
+      </div>
+      <button class="btn" @click="downloadFile"><i class="fa fa-download"></i> Download</button>
 
-<!--      </div>-->
     </div>
-
   </div>
-
 </template>
 <script>
 import axios from '../main'
 export default {
   name : 'ProjectRegister',
   data () {
-    return{
-      descricao: '',
+    return {
       titulo: '',
+      descricao: '',
+      resultadoEsperado: '',
       operacao: 'cadastrar',
       file: ''
     }
@@ -50,7 +43,6 @@ export default {
   beforeCreate() {
     if (this.$router.currentRoute.params.idProjeto) {
       const idProjeto = this.$router.currentRoute.params.idProjeto;
-      console.log('entrei');
       axios.get('http://localhost:3000/projeto/visualizar/'+ idProjeto).then((response) => {
         this.operacao = 'visualizar';
         this.descricao = response.data[0].descricao;
@@ -61,38 +53,44 @@ export default {
   methods:{
     submitForm() {
       if(this.validateFormData()) {
+        const formDataFile = new FormData();
+        formDataFile.append('file', this.file);
         const projectObject = {
-          descricao: this.descricao,
-          concluido: false,
-          aprovado: true,
-          agente_externo: 1, // I'll keep static until the UserService implementation
-          disciplina_aloc: 1
+          name: this.titulo,
+          problem: this.descricao,
+          expectedresult: this.resultadoEsperado,
+          knowledgearea: 'Engenharia de Produção',
+          status: 'Em alocacao',
+          userid: 1,
+          file: formDataFile
         }
         console.log(projectObject);
         axios.post('http://localhost:3000/projeto/cadastro',projectObject);
       }
     },
-    cadastrarArquivo() {
-      let formData = new FormData();
-      formData.append('file', this.file);
-      console.log(formData);
-      // console.log(this.arquivo);
-    },
-    previewFiles() {
-      this.file = this.$refs.myFiles.files[0]
-      console.log(this.file);
+    updateFile() {
+      this.file = event.target.files[0]
     },
     submitFile() {
       const formData = new FormData();
       formData.append('file', this.file);
       try {
-        axios.post('http://localhost:3000/projeto/cadastro-arquivo', formData).then((response) => {
+        axios.post('http://localhost:3000/upload', formData).then((response) => {
           console.log(response);
         });
       } catch(err) {
         console.log(err);
       }
-      console.log(formData);
+    },
+    downloadFile() {
+      axios.get('http://localhost:3000/projeto/visualizar-arquivo/' + 7).then((response) => {
+        var byteArray = new Uint8Array(response.data[0].bytecontent.data);
+        var blob = new Blob([byteArray], { type: 'application/octet-stream' });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = response.data[0].filename;
+        link.click();
+      });
     },
     validateFormData() {
         return true;
@@ -102,10 +100,7 @@ export default {
 </script>
 
 <style>
-form{
-
-  /*margin-top: -100px;*/
-  /*margin-left: -250px;*/
+form {
   margin-bottom: 25px;
   width: 500px;
   height: 200px;
