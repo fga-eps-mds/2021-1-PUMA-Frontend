@@ -2,19 +2,28 @@ import UserService from '../../services/userService';
 import Loading from '@/components/Loading.vue'
 const userService = new UserService();
 
-function evaluateLogin(email, password) {
-  if(!(email && password)) {
+function evaluateLogin(newUser) {
+  if (!(newUser.email && newUser.password)) {
     alert('Preencha todos os campos');
     return false;
   }
   return true;
 }
 
-function evaluateRegister(name, email, password, repeatPassword, type, matricula, hasMatricula) {
-  if (!(name && email && password && repeatPassword && type && (matricula || !hasMatricula))) {
+function evaluateRegister(newUser, hasMatricula, isJuridical, isPhysical) {
+  if (!(
+    newUser.name &&
+    newUser.email &&
+    newUser.password &&
+    newUser.repeatPassword &&
+    newUser.type &&
+    (newUser.matricula || !hasMatricula) &&
+    (newUser.cpf || !isPhysical) &&
+    ((newUser.cnpj && newUser.cep && newUser.companyName && newUser.socialReason) || !isJuridical)
+  )) {
     alert('Preencha todos os campos');
     return false;
-  } else if (repeatPassword !== password) {
+  } else if (newUser.repeatPassword !== newUser.password) {
     alert('As senhas não são iguais');
     return false;
   }
@@ -29,39 +38,75 @@ export default {
   data() {
     return {
       name: '',
-      sobrenome: '',
       email: '',
       matricula: '',
       password: '',
       repeatPassword: '',
+      cnpj: '',
+      cep: '',
+      companyName: '',
+      socialReason: '',
+      cpf: '',
       type: '',
+      externalAgentType: '',
       greetings: 'Bem-vindo(a) ao PUMA',
       submitButtonText: 'Entrar',
       isRegister: false,
       isLoading: false,
       hasMatricula: false,
+      isJuridical: false,
+      isPhysical: false,
+      isExternalAgent: false,
     };
   },
   updated() {
-    if(this.isRegister) {
+    if (this.isRegister) {
       this.greetings = 'CADASTRO DE USUÁRIO';
       this.submitButtonText = 'Cadastrar';
     } else {
       this.greetings = 'Bem-vindo(a) ao PUMA';
       this.submitButtonText = 'Entrar';
     }
-    if(this.type == 'Aluno' || this.type == 'Professor') {
+    if (this.type === 'Aluno' || this.type === 'Professor') {
       this.hasMatricula = true;
     } else {
       this.hasMatricula = false;
     }
+    if (this.type === 'Agente Externo') {
+      this.isExternalAgent = true;
+      if (this.externalAgentType === 'Pessoa Fisica') {
+        this.isPhysical = true;
+        this.isJuridical = false;
+      } else if (this.externalAgentType === 'Pessoa Juridica') {
+        this.isJuridical = true;
+        this.isPhysical = false;
+      } else {
+        this.isPhysical = false;
+        this.isJuridical = false;
+      }
+    } else {
+      this.isExternalAgent = false;
+      this.isPhysical = false;
+      this.isJuridical = false;
+    }
   },
   methods: {
     submit() {
+      const newUser = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        repeatPassword: this.repeatPassword,
+        cnpj: this.cnpj,
+        cep: this.cep,
+        companyName: this.companyName,
+        socialReason: this.socialReason,
+        cpf: this.cpf,
+      }
       if (this.isRegister) {
-        if (evaluateRegister(this.name, this.email, this.password, this.repeatPassword, this.type, this.matricula, this.hasMatricula)) {
+        if (evaluateRegister(newUser, this.hasMatricula, this.isJuridical, this.isPhysical)) {
           this.isLoading = true;
-          userService.registerUser(this.name, this.email, this.password, this.type, this.matricula).then((response) => {
+          userService.registerUser(newUser).then((response) => {
             this.isLoading = false;
             this.isRegister = false;
             console.log("then user register")
@@ -76,9 +121,9 @@ export default {
         }
 
       } else {
-        if(evaluateLogin(this.email, this.password)) {
+        if (evaluateLogin(newUser)) {
           this.isLoading = true;
-          userService.logUserIn(this.email, this.password).then((response) => {
+          userService.logUserIn(newUser).then((response) => {
             console.log("then user login")
             console.log(response);
             this.isLoading = false;
