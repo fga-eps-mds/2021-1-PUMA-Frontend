@@ -36,8 +36,16 @@
       <div class="form-group" v-if="isPhysicalAgent">
         <div class="">
           <label for="nome">CPF:</label>
-          <input  mask="00000000000" placeholder="Digite seu CPF" :style="{borderColor: !cpf.isValid ? 'red' : ''}" v-model.trim="cpf.val" @blur="validateFormInput('cpf')" @input="validateFormInput('cpf')" class="form-control" type="text" id="nome" />
+          <input  mask="00000000000" placeholder="Digite seu CPF" :style="{borderColor: !cpf.isValid ? 'red' : ''}" v-model.trim="cpf.val" @blur="validateFormInput('cpf')" @input="validateFormInput('cpf')" class="form-control" type="text" id="physicalAgentInput" />
           <p style="float: left" v-if="!cpf.isValid" :style="{color: !cpf.val ? 'red' : ''}">Preenchimento obrigatório</p>
+        </div>
+      </div>
+
+      <div class="form-group" v-if="isLegalEntity">
+        <div class="">
+          <label for="nome">CNPJ:</label>
+          <input  mask="00000000000000" placeholder="Digite seu CNPJ" :style="{borderColor: !cnpj.isValid ? 'red' : ''}" v-model.trim="cnpj.val" @blur="validateFormInput('cnpj')" @input="validateFormInput('cnpj')" class="form-control" type="text" id="legalEntityInput" />
+          <p style="float: left" v-if="!cnpj.isValid" :style="{color: !cnpj.val ? 'red' : ''}">Preenchimento obrigatório</p>
         </div>
       </div>
 
@@ -61,7 +69,7 @@ import axios from '../main'
 export default {
   name : 'ProjectRegister',
   data () {
-    return {
+      return {
       titulo: {val: '', isValid: true},
       descricao: {val: '', isValid: true},
       resultadoEsperado: {val: '', isValid: true},
@@ -69,7 +77,8 @@ export default {
       formIsValid: '',
       file: {val: '', isValid: true},
       isPhysicalAgent: true,
-      cpf: {val: '', isValid: true}
+      cpf: {val: '', isValid: true},
+      cnpj: {val: '', isValid: true}
     }
   },
   beforeCreate() {
@@ -91,7 +100,8 @@ export default {
           knowledgearea: 'Engenharia de Produção',
           status: 'Em alocacao',
           cpf: this.cpf.val,
-          userid: 1,
+          cnpj: this.cnpj.val,
+          userid: 1
         }
         axios.post('http://localhost:3000/projeto/cadastro',projectObject).then((response) => {
           console.log(response)
@@ -101,12 +111,15 @@ export default {
     },
     modifyAgentType($event) {
       if(!$event.path[0].id) {
+        this.isLegalEntity = true;
         this.isPhysicalAgent = false;
         this.cpf.val = '';
         this.cpf.isValid = true;
       } else {
         this.isPhysicalAgent = true;
-
+        this.isLegalEntity = false;
+        this.cnpj.val = '';
+        this.cnpj.isValid = true;
       }
     },
     updateFile() {
@@ -142,11 +155,12 @@ export default {
     validateFormData() {
         this.formIsValid = true;
         this.cpf.isValid = !this.cpf.val ? (this.isPhysicalAgent ? false : true) : true;
+        this.cnpj.isValid = !this.cnpj.val ? (this.isLegalEntity ? false : true) : true;
         this.titulo.isValid = !this.titulo.val ? false : true;
         this.descricao.isValid =  !this.descricao.val ? false : true;
         this.resultadoEsperado.isValid =  !this.resultadoEsperado.val ? false : true;
         this.file.isValid = !this.file.val ? false : true;
-        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.cpf.isValid) {
+        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.cpf.isValid || !this.cnpj.isValid) {
           this.formIsValid = false
         }
         return this.formIsValid;
