@@ -1,5 +1,5 @@
 <template>
-  <div class="row" >
+  <div  class="row" >
     <div class="col-md-8 col-lg-offset-2">
       <div class="table-responsive card">
         <table class="table table-striped table-bordered">
@@ -20,37 +20,31 @@
 <!--                  <button class="btn input-group-append"> Consultar</button>-->
                 <button class="btn input-group-append" @click="consultarProjeto(projeto.projectid)"> Consultar</button>
               </td>
+              <modal-detalhamento-projeto #default v-if="isModalVisible" @close='modifyModalState()' ref="modal"
+              :name=currentModalProject.projeto.name
+              :status="currentModalProject.projeto.status"
+              :projectid="currentModalProject.projeto.projectid"
+              :description="currentModalProject.projeto.problem"
+              :file="currentModalProject.file"
+              >
+              </modal-detalhamento-projeto>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div>
-      <b-button id="show-btn" @click="showModal">Open Modal</b-button>
-      <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
-      <b-modal ref="my-modal" hide-footer title="Using Component Methods">
-        <div class="d-block text-center">
-          <h3>Hello From My Modal!</h3>
-        </div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
-        <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
-      </b-modal>
-    </div>
-    <div>
-      <b-button @click="abrirModal">Abrir Modal</b-button>
-      <b-button @click="fecharModal">Fechar Modal</b-button>
-      <b-modal ref="meu-modal"></b-modal>
-    </div>
   </div>
 </template>
 
 <script>
-  import axios from '../main'
+  import axios from '../main';
 
   export default {
     data () {
       return{
-        projetos: []
+        projetos: [],
+        isModalVisible: false,
+        currentModalProject: ''
       }
     },
     beforeCreate() {
@@ -58,27 +52,24 @@
           response.data.forEach((projeto) => {
             this.projetos.push(projeto);
           });
-        });
+      });
     },
     methods: {
-      consultarProjeto(idProjeto) {
-        console.log(idProjeto);
-        // this.$router.push('/projeto/visualizar/' + idProjeto);
+      consultarProjeto(projectid) {
+        axios.get('http://localhost:3000/projeto/visualizar-arquivo-projeto/' + projectid).then((response) => {
+          this.currentModalProject = {}
+          this.currentModalProject.file = response.data.length ?  {filename: response.data[0].filename, bytecontent: response.data[0].bytecontent.data} : {};
+          this.projetos.forEach((projeto) => {
+            if (projeto.projectid === projectid) {
+              this.currentModalProject.projeto = projeto;
+              this.isModalVisible = true;
+              return;
+            }
+          });
+        });
       },
-      showModal() {
-        this.$refs['my-modal'].show()
-      },
-      hideModal() {
-        this.$refs['my-modal'].hide()
-      },
-      toggleModal() {
-        this.$refs['my-modal'].toggle('#toggle-btn')
-      },
-      abrirModal() {
-        this.$refs['meu-modal'].show()
-      },
-      fecharModal() {
-        this.$refs['meu-modal'].hide()
+      modifyModalState() {
+        this.isModalVisible = false;
       },
     }
   }

@@ -6,12 +6,19 @@ import Axios from 'axios'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.min.css';
-import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
+import {BModal, BootstrapVue, IconsPlugin} from 'bootstrap-vue';
+import ModalDetalhamentoProjeto from './views/modal-detalhamento-projeto';
+import BaseButton from "./views/BaseButton";
+import { ModalPlugin } from 'bootstrap-vue'
+
 Vue.config.productionTip = false
 
 Vue.prototype.$http = Axios;
-
-Vue.config.productionTip = false
+Vue.component('modal-detalhamento-projeto', ModalDetalhamentoProjeto);
+Vue.component('base-button', BaseButton);
+// Note that Vue automatically prefixes directive names with `v-`
+Vue.directive('b-modal', BModal)
+Vue.use(ModalPlugin)
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

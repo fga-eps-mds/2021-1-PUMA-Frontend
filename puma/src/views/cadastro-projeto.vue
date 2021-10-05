@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" >
     <div class="col-lg-4 col-lg-offset-4">
       <h2 class="mb-10">{{ operacao === 'visualizar' ? 'Visualização de Projeto' : 'Cadastro de Projeto'  }}</h2>
       <div class="form-group mt-8">
@@ -48,7 +48,6 @@ export default {
       axios.get('http://localhost:3000/projeto/visualizar/'+ idProjeto).then((response) => {
         this.operacao = 'visualizar';
         this.descricao = response.data[0].descricao;
-        console.log(response)
       });
     }
   },
