@@ -22,7 +22,7 @@ const routes = [
     path: '/register',
     name: 'Register',
     // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Register.vue'),
+    component: () => import('@/views/Register/Register.vue'),
 
   },
 ];
