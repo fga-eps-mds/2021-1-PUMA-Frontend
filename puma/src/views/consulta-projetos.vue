@@ -18,7 +18,7 @@
               <td class="valign-middle text-center" > {{ projeto.status }}</td>
               <td class="valign-middle text-center">
 <!--                  <button class="btn input-group-append"> Consultar</button>-->
-                <button class="btn input-group-append" @click="consultarProjeto(projeto.projectid)"> Consultar</button>
+                <button class="btn input-group-append" @click="consultarProjeto(projeto)"> Consultar</button>
               </td>
               <modal-detalhamento-projeto #default v-if="isModalVisible" @close='modifyModalState()' ref="modal"
               :name=currentModalProject.projeto.name
@@ -55,17 +55,12 @@
       });
     },
     methods: {
-      consultarProjeto(projectid) {
-        axios.get('http://localhost:3000/projeto/visualizar-arquivo-projeto/' + projectid).then((response) => {
+      consultarProjeto(projeto) {
+        axios.get('http://localhost:3000/projeto/visualizar-arquivo-projeto/' + projeto.projectid).then((response) => {
           this.currentModalProject = {}
           this.currentModalProject.file = response.data.length ?  {filename: response.data[0].filename, bytecontent: response.data[0].bytecontent.data} : {};
-          this.projetos.forEach((projeto) => {
-            if (projeto.projectid === projectid) {
-              this.currentModalProject.projeto = projeto;
-              this.isModalVisible = true;
-              return;
-            }
-          });
+          this.currentModalProject.projeto = projeto;
+          this.isModalVisible = true;
         });
       },
       modifyModalState() {
