@@ -1,19 +1,46 @@
 <template>
-  <div class="row" >
-    <div class="col-lg-4 col-lg-offset-4">
+  <div class="col-md-4 col-lg-offset-4">
+    <div class="form-group">
       <h2 class="mb-10">{{ operacao === 'visualizar' ? 'Visualização de Projeto' : 'Cadastro de Projeto'  }}</h2>
-      <div class="form-group mt-8">
-        <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text" v-model.trim="titulo.val" class="form-control" id="titulo" placeholder="Nome da proposta de projeto" @blur="validateFormInput('titulo')" @input="validateFormInput('titulo')">
+      <div class="">
+        <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text" v-model.trim="titulo.val" class="form-control" id="titulo" placeholder="Qual é o título da proposta de projeto?" @blur="validateFormInput('titulo')" @input="validateFormInput('titulo')">
         <p style="float: left" v-if="!titulo.isValid" :style="{color: !titulo.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
-      <div class="form-group">
-        <textarea :style="{borderColor: !descricao.isValid ? 'red' : ''}" v-model.trim="descricao.val" class="form-control" id="descricao" placeholder="Descreva sua proposta" rows="7" maxlength="10000" @blur="validateFormInput('descricao')"  @input="validateFormInput('descricao')"></textarea>
-        <p style="float: left" v-if="!descricao.isValid" :style="{color: !descricao.val ? 'red' : ''}">Preenchimento obrigatório</p>
-      </div>
-      <div class="form-group">
+    </div>
+
+     <div class="form-group">
+        <div class="">
+          <textarea :style="{borderColor: !descricao.isValid ? 'red' : ''}" v-model.trim="descricao.val" class="form-control" id="descricao" placeholder="Descreva sua proposta" rows="7" maxlength="10000" @blur="validateFormInput('descricao')"  @input="validateFormInput('descricao')"></textarea>
+          <p style="float: left" v-if="!descricao.isValid" :style="{color: !descricao.val ? 'red' : ''}">Preenchimento obrigatório</p>
+        </div>
+     </div>
+
+    <div class="form-group">
+      <div class="">
         <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}" v-model.trim="resultadoEsperado.val" class="form-control" id="descricao" placeholder="Descreva o resultado esperado" rows="5" @blur="validateFormInput('resultadoEsperado')" @input="validateFormInput('resultadoEsperado')"></textarea>
         <p style="float: left" v-if="!resultadoEsperado.isValid" :style="{color: !resultadoEsperado.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
+    </div>
+
+
+      <div class="form-group">
+        <div class="form-check form-check-inline">
+          <span class="form-check-input mr-2">Tipo de Submissão </span>
+          <input @change="modifyAgentType($event)" class="form-check-input" type="radio" name="physicalAgent" id="physicalAgent" value="true" checked>
+          <label class="form-check-label" for="physicalAgent">Pessoa Física</label>
+          <input  @change="modifyAgentType($event)" class="form-check-input ml-2" name="physicalAgent" type="radio" id="" value="false">
+          <label class="form-check-label" for="physicalAgent">Pessoa Jurídica</label>
+        </div>
+      </div>
+
+      <div class="form-group" v-if="isPhysicalAgent">
+        <div class="">
+          <label for="nome">CPF:</label>
+          <input  mask="00000000000" placeholder="Digite seu CPF" :style="{borderColor: !cpf.isValid ? 'red' : ''}" v-model.trim="cpf.val" @blur="validateFormInput('cpf')" @input="validateFormInput('cpf')" class="form-control" type="text" id="nome" />
+          <p style="float: left" v-if="!cpf.isValid" :style="{color: !cpf.val ? 'red' : ''}">Preenchimento obrigatório</p>
+        </div>
+      </div>
+
       <div align="center" class="form-group">
         <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
           <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
@@ -21,12 +48,13 @@
           <!--          <p v-if="!file.isValid">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>-->
         </form>
       </div>
-      <div class="form-group" v-if="operacao !== 'visualizar'">
+
+      <div class="form-row" v-if="operacao !== 'visualizar'">
         <button type="button" class="btn btn-warning" @click="submitForm">Submeter</button>
       </div>
 <!--      <button class="btn" @click="downloadFile"><i class="fa fa-download"></i> Download</button>-->
+
     </div>
-  </div>
 </template>
 <script>
 import axios from '../main'
@@ -39,7 +67,9 @@ export default {
       resultadoEsperado: {val: '', isValid: true},
       operacao: {val: '', isValid: true},
       formIsValid: '',
-      file: {val: '', isValid: true}
+      file: {val: '', isValid: true},
+      isPhysicalAgent: true,
+      cpf: {val: '', isValid: true}
     }
   },
   beforeCreate() {
@@ -60,11 +90,23 @@ export default {
           expectedresult: this.resultadoEsperado.val,
           knowledgearea: 'Engenharia de Produção',
           status: 'Em alocacao',
+          cpf: this.cpf.val,
           userid: 1,
         }
         axios.post('http://localhost:3000/projeto/cadastro',projectObject).then((response) => {
-          this.submitFile(response.data.result.rows[0].projectid)
+          console.log(response)
+          // this.submitFile(response.data.result.rows[0].projectid)
         });
+      }
+    },
+    modifyAgentType($event) {
+      if(!$event.path[0].id) {
+        this.isPhysicalAgent = false;
+        this.cpf.val = '';
+        this.cpf.isValid = true;
+      } else {
+        this.isPhysicalAgent = true;
+
       }
     },
     updateFile() {
@@ -99,11 +141,12 @@ export default {
     },
     validateFormData() {
         this.formIsValid = true;
+        this.cpf.isValid = !this.cpf.val ? (this.isPhysicalAgent ? false : true) : true;
         this.titulo.isValid = !this.titulo.val ? false : true;
         this.descricao.isValid =  !this.descricao.val ? false : true;
         this.resultadoEsperado.isValid =  !this.resultadoEsperado.val ? false : true;
         this.file.isValid = !this.file.val ? false : true;
-        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid) {
+        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.cpf.isValid) {
           this.formIsValid = false
         }
         return this.formIsValid;
@@ -119,25 +162,25 @@ export default {
 h2 {
   margin-bottom: 20px;
 }
-form {
-  margin-bottom: 25px;
-  width: 500px;
-  height: 200px;
-  border: 5px dashed darkblue;
-}
-/*form p{*/
+/*form {*/
+/*  margin-bottom: 25px;*/
+/*  width: 500px;*/
+/*  height: 200px;*/
+/*  border: 5px dashed darkblue;*/
+/*}*/
+/*!*form p{*!*/
+/*!*  width: 100%;*!*/
+/*!*  height: 100%;*!*/
+/*!*  text-align: center;*!*/
+/*!*  line-height: 170px;*!*/
+/*!*  color: red;*!*/
+/*!*  font-family: Arial;*!*/
+/*!*}*!*/
+/*form input{*/
+
 /*  width: 100%;*/
 /*  height: 100%;*/
-/*  text-align: center;*/
-/*  line-height: 170px;*/
-/*  color: red;*/
-/*  font-family: Arial;*/
+/*  opacity: 0;*/
 /*}*/
-form input{
-
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
 
 </style>

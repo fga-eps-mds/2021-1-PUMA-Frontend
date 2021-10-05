@@ -11,7 +11,7 @@
         <h2>Descrição: </h2>
         <p>{{ description }}</p>
         <h2>Status: </h2>
-        <p :style="{ color: status === 'Em alocacao' || status === 'Aguardando aprovacao' ? '#eeff1b' : status === 'Recusado' ? 'red' : 'green'}">{{  status }}</p>
+        <p :style="{ color: status === 'Em alocacao' || status === 'Aguardando aprovacao' ? '#eeff1b' : status === 'Recusado' ? 'red' : 'green'}">{{ status }}</p>
       </slot>
     </section>
     <button v-if="Object.keys(this.file).length" class="btn btn-primary" @click="downloadFile()">Download</button>
