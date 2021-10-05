@@ -1,5 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import UserService from '../../services/userService';
-import Loading from '@/components/Loading.vue'
+import Loading from '@/components/Loading.vue';
+
 const userService = new UserService();
 
 function evaluateLogin(newUser) {
@@ -12,18 +14,19 @@ function evaluateLogin(newUser) {
 
 function evaluateRegister(newUser, hasMatricula, isJuridical, isPhysical) {
   if (!(
-    newUser.name &&
-    newUser.email &&
-    newUser.password &&
-    newUser.repeatPassword &&
-    newUser.type &&
-    (newUser.matricula || !hasMatricula) &&
-    (newUser.cpf || !isPhysical) &&
-    ((newUser.cnpj && newUser.cep && newUser.companyName && newUser.socialReason) || !isJuridical)
+    newUser.name
+    && newUser.email
+    && newUser.password
+    && newUser.repeatPassword
+    && newUser.type
+    && (newUser.matricula || !hasMatricula)
+    && (newUser.cpf || !isPhysical)
+    && ((newUser.cnpj && newUser.cep && newUser.companyName
+    && newUser.socialReason) || !isJuridical)
   )) {
     alert('Preencha todos os campos');
     return false;
-  } else if (newUser.repeatPassword !== newUser.password) {
+  } if (newUser.repeatPassword !== newUser.password) {
     alert('As senhas não são iguais');
     return false;
   }
@@ -32,7 +35,7 @@ function evaluateRegister(newUser, hasMatricula, isJuridical, isPhysical) {
 
 export default {
   components: {
-    Loading
+    Loading,
   },
   name: 'Register',
   data() {
@@ -105,46 +108,42 @@ export default {
         companyName: this.companyName,
         socialReason: this.socialReason,
         cpf: this.cpf,
-      }
+      };
       if (this.isRegister) {
         if (evaluateRegister(newUser, this.hasMatricula, this.isJuridical, this.isPhysical)) {
           this.isLoading = true;
           userService.registerUser(newUser).then((response) => {
             this.isLoading = false;
             this.isRegister = false;
-            console.log("then user register")
+            console.log('then user register');
             console.log(response);
             alert('Cadastro feito com sucesso!');
           }).catch((response) => {
             this.isLoading = false;
-            console.log("catch user register")
+            console.log('catch user register');
             console.log(response);
             alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
           });
         }
-
-      } else {
-        if (evaluateLogin(newUser)) {
-          this.isLoading = true;
-          userService.logUserIn(newUser).then((response) => {
-            console.log("then user login")
-            console.log(response);
-            this.isLoading = false;
-          }).catch((response) => {
-            this.isLoading = false;
-            console.log("catch user login")
-            console.log(response);
-            alert('Uma falha ocorreu ao fazer login. Tente novamente.');
-          });
-        }
+      } else if (evaluateLogin(newUser)) {
+        this.isLoading = true;
+        userService.logUserIn(newUser).then((response) => {
+          console.log('then user login');
+          console.log(response);
+          this.isLoading = false;
+        }).catch((response) => {
+          this.isLoading = false;
+          console.log('catch user login');
+          console.log(response);
+          alert('Uma falha ocorreu ao fazer login. Tente novamente.');
+        });
       }
-
     },
     goToRegister() {
       this.isRegister = true;
     },
     goToLogin() {
       this.isRegister = false;
-    }
+    },
   },
 };

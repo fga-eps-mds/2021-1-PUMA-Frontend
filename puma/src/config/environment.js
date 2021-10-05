@@ -1,5 +1,5 @@
 module.exports = {
-    configUser: () => {
-        global.URL_GATEWAY = `http://localhost:3004`;
-    },
-  };
+  configUser: () => {
+    global.URL_GATEWAY = 'http://localhost:3004';
+  },
+};
