@@ -6,7 +6,8 @@
 
 <script>
 export default {
-  props: ['mode']
+  props: ['mode'],
+  emits: ['close'],
 }
 </script>
 

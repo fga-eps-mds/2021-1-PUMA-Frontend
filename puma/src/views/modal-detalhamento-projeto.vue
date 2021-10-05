@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('close')">
+  <div>
   <dialog open>
     <header>
       <slot name="header">
@@ -14,12 +14,13 @@
         <p :style="{ color: status === 'Em alocacao' || status === 'Aguardando aprovacao' ? '#eeff1b' : status === 'Recusado' ? 'red' : 'green'}">{{  status }}</p>
       </slot>
     </section>
+    <button v-if="Object.keys(this.file).length" class="btn btn-primary" @click="downloadFile()">Download</button>
+
     <menu>
       <slot name="actions">
-        <base-button @click="$emit('close')">Fechar</base-button>
+        <base-button @close="$emit('close')">Fechar</base-button>
       </slot>
     </menu>
-    <button v-if="Object.keys(this.file).length" class="btn btn-primary" @click="downloadFile()">Download</button>
   </dialog>
   </div>
 </template>
