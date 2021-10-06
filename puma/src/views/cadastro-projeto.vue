@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 col-lg-offset-4">
     <div class="form-group">
-      <h2 class="mb-10">{{ operacao === 'visualizar' ? 'Visualização de Projeto' : 'Cadastro de Projeto'  }}</h2>
+      <h2 class="mb-10">{{ operacao === 'visualizar' ? 'Visualização de Projeto' : 'Novo Projeto'  }}</h2>
       <div class="">
         <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text" v-model.trim="titulo.val" class="form-control" id="titulo" placeholder="Qual é o título da proposta de projeto?" @blur="validateFormInput('titulo')" @input="validateFormInput('titulo')">
         <p style="float: left" v-if="!titulo.isValid" :style="{color: !titulo.val ? 'red' : ''}">Preenchimento obrigatório</p>
@@ -24,12 +24,17 @@
 
 
       <div class="form-group">
-        <div class="form-check form-check-inline">
+        <div id="checklist" class="form-check form-check-inline">
           <span class="form-check-input mr-2">Tipo de Submissão </span>
-          <input @change="modifyAgentType($event)" class="form-check-input" type="radio" name="physicalAgent" id="physicalAgent" value="true" checked>
-          <label class="form-check-label" for="physicalAgent">Pessoa Física</label>
-          <input  @change="modifyAgentType($event)" class="form-check-input ml-2" name="physicalAgent" type="radio" id="" value="false">
-          <label class="form-check-label" for="physicalAgent">Pessoa Jurídica</label>
+          <div id="checklist">
+            <input @change="modifyAgentType($event)" class="form-check-input" type="radio" name="physicalAgent" id="physicalAgent" value="true" checked>
+            <label class="form-check-label" for="physicalAgent">Pessoa Física</label>
+          </div>
+          <div id="checklist">
+            <input  @change="modifyAgentType($event)" class="form-check-input ml-2" name="physicalAgent" type="radio" id="" value="false">
+            <label class="form-check-label" for="physicalAgent">Pessoa Jurídica</label>
+          </div>          
+          
         </div>
       </div>
 
@@ -44,25 +49,31 @@
     <div class="form-group" v-if="!isPhysicalAgent">
       <div class="form-group">
         <label for="nome">CNPJ:</label>
-        <input placeholder="Digite seu CPF" :style="{borderColor: !cnpj.isValid ? 'red' : ''}" v-model.trim="cnpj.val" @blur="validateFormInput('cnpj')" @input="validateFormInput('cnpj')" class="form-control" type="text"/>
+        <input placeholder="Digite seu CNPJ" :style="{borderColor: !cnpj.isValid ? 'red' : ''}" v-model.trim="cnpj.val" @blur="validateFormInput('cnpj')" @input="validateFormInput('cnpj')" class="form-control" type="text"/>
         <p style="float: left" v-if="!cnpj.isValid" :style="{color: !cnpj.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
 
       <div class="form-group">
-        <label for="nome">Nome da Empresa</label>
-        <input  placeholder="Digite o CNPJ da empresa" :style="{borderColor: !nomeEmpresa.isValid ? 'red' : ''}" v-model.trim="nomeEmpresa.val" @blur="validateFormInput('nomeEmpresa')" @input="validateFormInput('nomeEmpresa')" class="form-control" type="text" id="nomeEmpresa"/>
+        <label v-if="!nomeEmpresa.isValid" style="margin-top: 7px;left: -79px" for="nome">Nome da Empresa</label>
+        <label v-else-if="!cnpj.isValid" style="margin-top: 7px;left: -79px" for="nome">Nome da Empresa</label>
+        <label v-else for="nome">Nome da Empresa</label>
+        <input  placeholder="Digite o nome da empresa" :style="{borderColor: !nomeEmpresa.isValid ? 'red' : ''}" v-model.trim="nomeEmpresa.val" @blur="validateFormInput('nomeEmpresa')" @input="validateFormInput('nomeEmpresa')" class="form-control" type="text" id="nomeEmpresa"/>
         <p style="float: left" v-if="!nomeEmpresa.isValid" :style="{color: !nomeEmpresa.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
 
       <div class="form-group">
-        <label for="nome">Razão Social</label>
-        <input  placeholder="Digite seu CPF" :style="{borderColor: !razaoSocial.isValid ? 'red' : ''}" v-model.trim="razaoSocial.val" @blur="validateFormInput('razaoSocial')" @input="validateFormInput('razaoSocial')" class="form-control" type="text" id="razaoSocial" />
+        <label v-if="!razaoSocial.isValid" style="margin-top: 7px;left: -79px" for="nome">Razão Social</label>
+        <label v-else-if="!nomeEmpresa.isValid" style="margin-top: 7px;left: -79px" for="nome">Razão Social</label>
+        <label v-else for="nome">Razão Social</label>
+        <input  placeholder="Digite sua razão social" :style="{borderColor: !razaoSocial.isValid ? 'red' : ''}" v-model.trim="razaoSocial.val" @blur="validateFormInput('razaoSocial')" @input="validateFormInput('razaoSocial')" class="form-control" type="text" id="razaoSocial" />
         <p style="float: left" v-if="!razaoSocial.isValid" :style="{color: !razaoSocial.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
 
       <div class="form-group">
-        <label for="nome">CEP</label>
-        <input  placeholder="Digite seu CPF" :style="{borderColor: !cep.isValid ? 'red' : ''}" v-model.trim="cep.val" @blur="validateFormInput('cep')" @input="validateFormInput('cep')" class="form-control" type="text" id="cep" />
+        <label v-if="!cep.isValid" style="margin-top: 7px;left: -79px" for="nome">CEP</label>
+        <label v-else-if="!razaoSocial.isValid" style="margin-top: 7px;left: -79px" for="nome">CEP</label>
+        <label v-else for="nome">CEP</label>
+        <input  placeholder="Digite seu CEP" :style="{borderColor: !cep.isValid ? 'red' : ''}" v-model.trim="cep.val" @blur="validateFormInput('cep')" @input="validateFormInput('cep')" class="form-control" type="text" id="cep" />
         <p style="float: left" v-if="!cep.isValid" :style="{color: !cep.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
     </div>
@@ -71,7 +82,8 @@
       <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
         <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
         <label for="file" class="mb-3" :style="{color: !file.isValid ? 'red' : ''}" v-if="!file.isValid">Preenchimento obrigatório</label>
-          <!--          <p v-if="!file.isValid">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>-->
+        <p v-if="!file.isValid">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>
+        <p v-else style = "color: blue; top: -153px">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>
       </form>
     </div>
 
@@ -206,25 +218,48 @@ export default {
 h2 {
   margin-bottom: 20px;
 }
-/*form {*/
-/*  margin-bottom: 25px;*/
-/*  width: 500px;*/
-/*  height: 200px;*/
-/*  border: 5px dashed darkblue;*/
-/*}*/
-/*!*form p{*!*/
-/*!*  width: 100%;*!*/
-/*!*  height: 100%;*!*/
-/*!*  text-align: center;*!*/
-/*!*  line-height: 170px;*!*/
-/*!*  color: red;*!*/
-/*!*  font-family: Arial;*!*/
-/*!*}*!*/
-/*form input{*/
+html{
+  margin-bottom: 27px;
+}
 
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  opacity: 0;*/
-/*}*/
+div#checklist {
+  display: inline-flex;
+  padding-left: 13px;
+}
+label{
+  position: relative;
+}
+
+input#file {
+    position: relative;
+    z-index: 5;
+}
+form {
+  margin-bottom: 25px;
+  margin-top: 32px;
+  width: 409px;
+  height: 200px;
+  border: 5px dashed darkblue;
+}
+form p {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 39px;
+  color: red;
+  font-family: Arial;
+  position: relative;
+  top: -173px;
+  font-size: 20px;
+}
+form input{
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+form label {
+    position: relative;
+    top: 7px;
+}
 
 </style>
