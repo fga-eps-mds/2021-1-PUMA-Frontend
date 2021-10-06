@@ -41,13 +41,39 @@
         </div>
       </div>
 
-      <div align="center" class="form-group">
-        <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
-          <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
-          <label for="file" class="mb-3" :style="{color: !file.isValid ? 'red' : ''}" v-if="!file.isValid">Preenchimento obrigatório</label>
-          <!--          <p v-if="!file.isValid">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>-->
-        </form>
+    <div class="form-group" v-if="!isPhysicalAgent">
+      <div class="form-group">
+        <label for="nome">CNPJ:</label>
+        <input placeholder="Digite seu CPF" :style="{borderColor: !cnpj.isValid ? 'red' : ''}" v-model.trim="cnpj.val" @blur="validateFormInput('cnpj')" @input="validateFormInput('cnpj')" class="form-control" type="text"/>
+        <p style="float: left" v-if="!cnpj.isValid" :style="{color: !cnpj.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
+
+      <div class="form-group">
+        <label for="nome">Nome da Empresa</label>
+        <input  placeholder="Digite o CNPJ da empresa" :style="{borderColor: !nomeEmpresa.isValid ? 'red' : ''}" v-model.trim="nomeEmpresa.val" @blur="validateFormInput('nomeEmpresa')" @input="validateFormInput('nomeEmpresa')" class="form-control" type="text" id="nomeEmpresa"/>
+        <p style="float: left" v-if="!nomeEmpresa.isValid" :style="{color: !nomeEmpresa.val ? 'red' : ''}">Preenchimento obrigatório</p>
+      </div>
+
+      <div class="form-group">
+        <label for="nome">Razão Social</label>
+        <input  placeholder="Digite seu CPF" :style="{borderColor: !razaoSocial.isValid ? 'red' : ''}" v-model.trim="razaoSocial.val" @blur="validateFormInput('razaoSocial')" @input="validateFormInput('razaoSocial')" class="form-control" type="text" id="razaoSocial" />
+        <p style="float: left" v-if="!razaoSocial.isValid" :style="{color: !razaoSocial.val ? 'red' : ''}">Preenchimento obrigatório</p>
+      </div>
+
+      <div class="form-group">
+        <label for="nome">CEP</label>
+        <input  placeholder="Digite seu CPF" :style="{borderColor: !cep.isValid ? 'red' : ''}" v-model.trim="cep.val" @blur="validateFormInput('cep')" @input="validateFormInput('cep')" class="form-control" type="text" id="cep" />
+        <p style="float: left" v-if="!cep.isValid" :style="{color: !cep.val ? 'red' : ''}">Preenchimento obrigatório</p>
+      </div>
+    </div>
+
+    <div align="center" class="form-group">
+      <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
+        <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
+        <label for="file" class="mb-3" :style="{color: !file.isValid ? 'red' : ''}" v-if="!file.isValid">Preenchimento obrigatório</label>
+          <!--          <p v-if="!file.isValid">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>-->
+      </form>
+    </div>
 
       <div class="form-row" v-if="operacao !== 'visualizar'">
         <button type="button" class="btn btn-warning" @click="submitForm">Submeter</button>
@@ -69,7 +95,11 @@ export default {
       formIsValid: '',
       file: {val: '', isValid: true},
       isPhysicalAgent: true,
-      cpf: {val: '', isValid: true}
+      cpf: {val: '', isValid: true},
+      cnpj: {val: '', isValid: true},
+      nomeEmpresa: {val: '', isValid: true},
+      razaoSocial: {val: '', isValid: true},
+      cep: {val: '', isValid: true}
     }
   },
   beforeCreate() {
@@ -91,11 +121,14 @@ export default {
           knowledgearea: 'Engenharia de Produção',
           status: 'Em alocacao',
           cpf: this.cpf.val,
+          cnpj: this.cnpj.val,
+          razaoSocial: this.razaoSocial.val,
+          nomeEmpresa: this.nomeEmpresa.val,
+          cep: this.cep.val,
           userid: 1,
         }
         axios.post('http://localhost:3000/projeto/cadastro',projectObject).then((response) => {
-          console.log(response)
-          // this.submitFile(response.data.result.rows[0].projectid)
+          this.submitFile(response.data.result.rows[0].projectid)
         });
       }
     },
@@ -105,8 +138,15 @@ export default {
         this.cpf.val = '';
         this.cpf.isValid = true;
       } else {
+        this.cnpj.val = '';
+        this.razaoSocial.val = '';
+        this.nomeEmpresa.val = '';
+        this.cep.val = ''
+        this.cnpj.isValid = true;
+        this.razaoSocial.isValid = true;
+        this.nomeEmpresa.isValid = true
+        this.cep.isValid = true;
         this.isPhysicalAgent = true;
-
       }
     },
     updateFile() {
@@ -142,11 +182,15 @@ export default {
     validateFormData() {
         this.formIsValid = true;
         this.cpf.isValid = !this.cpf.val ? (this.isPhysicalAgent ? false : true) : true;
+        this.cnpj.isValid = !this.cnpj.val ? (!this.isPhysicalAgent ? false : true) : true;
+        this.nomeEmpresa.isValid = !this.nomeEmpresa.val ? (!this.isPhysicalAgent ? false : true) : true;
+        this.razaoSocial.isValid = !this.razaoSocial.val ? (!this.isPhysicalAgent ? false : true) : true;
+        this.cep.isValid = !this.cep.val ? (!this.isPhysicalAgent ? false : true) : true;
         this.titulo.isValid = !this.titulo.val ? false : true;
         this.descricao.isValid =  !this.descricao.val ? false : true;
         this.resultadoEsperado.isValid =  !this.resultadoEsperado.val ? false : true;
         this.file.isValid = !this.file.val ? false : true;
-        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.cpf.isValid) {
+        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.cpf.isValid || !this.cnpj.isValid || !this.razaoSocial.isValid || !this.nomeEmpresa.isValid || !this.cep.isValid) {
           this.formIsValid = false
         }
         return this.formIsValid;
