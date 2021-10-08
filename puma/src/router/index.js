@@ -29,20 +29,16 @@ const routes = [
     path: '/projeto/visualizar/:idProjeto',
     name: 'Visualizar Projeto',
     component: () => import('../views/cadastro-projeto')
-  }
-]
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+  },
+  {
+    component: () => import('../views/About.vue')
   },
   {
     path: '/register',
     name: 'Register',
-    // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Register/Register.vue'),
+    component: () => import('../views/Register/Register.vue'),
 
-  },
+  }
 ];
 
 const router = new VueRouter({
