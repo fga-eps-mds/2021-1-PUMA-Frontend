@@ -2,6 +2,8 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
+ENV ENVIRONMENT=dev
+
 COPY package*.json ./
 
 RUN npm install --silent
