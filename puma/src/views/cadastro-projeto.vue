@@ -10,80 +10,44 @@
 
      <div class="form-group">
         <div class="">
-          <textarea :style="{borderColor: !descricao.isValid ? 'red' : ''}" v-model.trim="descricao.val" class="form-control" id="descricao" placeholder="Descreva sua proposta" rows="7" maxlength="10000" @blur="validateFormInput('descricao')"  @input="validateFormInput('descricao')"></textarea>
+          <textarea :style="{borderColor: !descricao.isValid ? 'red' : ''}" v-model.trim="descricao.val" class="form-control" id="descricao" placeholder="Qual é a proposta do projeto?" rows="7" maxlength="10000" @blur="validateFormInput('descricao')"  @input="validateFormInput('descricao')"></textarea>
           <p style="float: left" v-if="!descricao.isValid" :style="{color: !descricao.val ? 'red' : ''}">Preenchimento obrigatório</p>
         </div>
      </div>
 
     <div class="form-group">
       <div class="">
-        <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}" v-model.trim="resultadoEsperado.val" class="form-control" id="descricao" placeholder="Descreva o resultado esperado" rows="5" @blur="validateFormInput('resultadoEsperado')" @input="validateFormInput('resultadoEsperado')"></textarea>
+        <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}" v-model.trim="resultadoEsperado.val" class="form-control" id="descricao" placeholder="Qual é o resultado esperado?" rows="7" @blur="validateFormInput('resultadoEsperado')" @input="validateFormInput('resultadoEsperado')"></textarea>
         <p style="float: left" v-if="!resultadoEsperado.isValid" :style="{color: !resultadoEsperado.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
     </div>
 
-
-      <div class="form-group">
-        <div id="checklist" class="form-check form-check-inline">
-          <span class="form-check-input mr-2">Tipo de Submissão </span>
-          <div id="checklist">
-            <input @change="modifyAgentType($event)" class="form-check-input" type="radio" name="physicalAgent" id="physicalAgent" value="true" checked>
-            <label class="form-check-label" for="physicalAgent">Pessoa Física</label>
-          </div>
-          <div id="checklist">
-            <input  @change="modifyAgentType($event)" class="form-check-input ml-2" name="physicalAgent" type="radio" id="" value="false">
-            <label class="form-check-label" for="physicalAgent">Pessoa Jurídica</label>
-          </div>          
-          
-        </div>
+    <div>
+      <h1 v-if="!resultadoEsperado.isValid" style="left: -10px;">Qual área de conhecimento que o projeto aborda?</h1>
+      <h1 v-else>Qual área de conhecimento que o projeto aborda?</h1>
+      <div class="form-check">
+        <input class="btn-check" type="checkbox" value="Engenharia de Produção" id="engenhariaProducao" autocomplete="off" v-model="knowledgearea.val">
+        <label class="btn btn-outline-primary" for="engenhariaProducao">Engenharia de Produção</label>
       </div>
-
-      <div class="form-group" v-if="isPhysicalAgent">
-        <div class="">
-          <label for="nome">CPF:</label>
-          <input  mask="00000000000" placeholder="Digite seu CPF" :style="{borderColor: !cpf.isValid ? 'red' : ''}" v-model.trim="cpf.val" @blur="validateFormInput('cpf')" @input="validateFormInput('cpf')" class="form-control" type="text" id="nome" />
-          <p style="float: left" v-if="!cpf.isValid" :style="{color: !cpf.val ? 'red' : ''}">Preenchimento obrigatório</p>
-        </div>
+      <div class="form-check">
+        <input class="btn-check" type="checkbox" value="Engenharia da Computação" id="engenhariaComputacao" autocomplete="off" v-model="knowledgearea.val">
+        <label class="btn btn-outline-primary" for="engenhariaComputacao">Engenharia da Computação</label>
       </div>
-
-    <div class="form-group" v-if="!isPhysicalAgent">
-      <div class="form-group">
-        <label for="nome">CNPJ:</label>
-        <input placeholder="Digite seu CNPJ" :style="{borderColor: !cnpj.isValid ? 'red' : ''}" v-model.trim="cnpj.val" @blur="validateFormInput('cnpj')" @input="validateFormInput('cnpj')" class="form-control" type="text"/>
-        <p style="float: left" v-if="!cnpj.isValid" :style="{color: !cnpj.val ? 'red' : ''}">Preenchimento obrigatório</p>
+      <div class="form-check">
+        <input class="btn-check" type="checkbox" value="Nutrição" id="nutricao" autocomplete="off" v-model="knowledgearea.val">
+        <label class="btn btn-outline-primary" for="nutricao">Nutrição</label>
       </div>
-
-      <div class="form-group">
-        <label v-if="!nomeEmpresa.isValid" style="margin-top: 7px;left: -79px" for="nome">Nome da Empresa</label>
-        <label v-else-if="!cnpj.isValid" style="margin-top: 7px;left: -79px" for="nome">Nome da Empresa</label>
-        <label v-else for="nome">Nome da Empresa</label>
-        <input  placeholder="Digite o nome da empresa" :style="{borderColor: !nomeEmpresa.isValid ? 'red' : ''}" v-model.trim="nomeEmpresa.val" @blur="validateFormInput('nomeEmpresa')" @input="validateFormInput('nomeEmpresa')" class="form-control" type="text" id="nomeEmpresa"/>
-        <p style="float: left" v-if="!nomeEmpresa.isValid" :style="{color: !nomeEmpresa.val ? 'red' : ''}">Preenchimento obrigatório</p>
-      </div>
-
-      <div class="form-group">
-        <label v-if="!razaoSocial.isValid" style="margin-top: 7px;left: -79px" for="nome">Razão Social</label>
-        <label v-else-if="!nomeEmpresa.isValid" style="margin-top: 7px;left: -79px" for="nome">Razão Social</label>
-        <label v-else for="nome">Razão Social</label>
-        <input  placeholder="Digite sua razão social" :style="{borderColor: !razaoSocial.isValid ? 'red' : ''}" v-model.trim="razaoSocial.val" @blur="validateFormInput('razaoSocial')" @input="validateFormInput('razaoSocial')" class="form-control" type="text" id="razaoSocial" />
-        <p style="float: left" v-if="!razaoSocial.isValid" :style="{color: !razaoSocial.val ? 'red' : ''}">Preenchimento obrigatório</p>
-      </div>
-
-      <div class="form-group">
-        <label v-if="!cep.isValid" style="margin-top: 7px;left: -79px" for="nome">CEP</label>
-        <label v-else-if="!razaoSocial.isValid" style="margin-top: 7px;left: -79px" for="nome">CEP</label>
-        <label v-else for="nome">CEP</label>
-        <input  placeholder="Digite seu CEP" :style="{borderColor: !cep.isValid ? 'red' : ''}" v-model.trim="cep.val" @blur="validateFormInput('cep')" @input="validateFormInput('cep')" class="form-control" type="text" id="cep" />
-        <p style="float: left" v-if="!cep.isValid" :style="{color: !cep.val ? 'red' : ''}">Preenchimento obrigatório</p>
-      </div>
+      <p style="float: left" v-if="!knowledgearea.isValid" :style="{color: !knowledgearea.val ? 'red' : ''}">Selecione pelo menos uma área de conhecimento</p>
     </div>
+    <!-- <div>{{this.knowledgearea.val}}</div> -->
+    
 
     <div align="center" class="form-group">
       <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
         <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
         <label for="file" class="mb-3" :style="{color: !file.isValid ? 'red' : ''}" v-if="!file.isValid">Preenchimento obrigatório</label>
         <p v-if="!file.isValid">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>
-        <p v-else style = "color: blue; top: -153px">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>
+        <p v-else style = "color: darkblue; top: -153px">Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o</p>
       </form>
     </div>
 
@@ -104,14 +68,9 @@ export default {
       descricao: {val: '', isValid: true},
       resultadoEsperado: {val: '', isValid: true},
       operacao: {val: '', isValid: true},
+      knowledgearea: {val: [], isValid: true},
       formIsValid: '',
       file: {val: '', isValid: true},
-      isPhysicalAgent: true,
-      cpf: {val: '', isValid: true},
-      cnpj: {val: '', isValid: true},
-      nomeEmpresa: {val: '', isValid: true},
-      razaoSocial: {val: '', isValid: true},
-      cep: {val: '', isValid: true}
     }
   },
   beforeCreate() {
@@ -130,35 +89,13 @@ export default {
           name: this.titulo.val,
           problem: this.descricao.val,
           expectedresult: this.resultadoEsperado.val,
-          knowledgearea: 'Engenharia de Produção',
+          knowledgearea: this.knowledgearea.val,
           status: 'Em alocacao',
-          cpf: this.cpf.val,
-          cnpj: this.cnpj.val,
-          razaoSocial: this.razaoSocial.val,
-          nomeEmpresa: this.nomeEmpresa.val,
-          cep: this.cep.val,
           userid: 1,
         }
         axios.post('http://localhost:3000/projeto/cadastro',projectObject).then((response) => {
           this.submitFile(response.data.result.rows[0].projectid)
         });
-      }
-    },
-    modifyAgentType($event) {
-      if(!$event.path[0].id) {
-        this.isPhysicalAgent = false;
-        this.cpf.val = '';
-        this.cpf.isValid = true;
-      } else {
-        this.cnpj.val = '';
-        this.razaoSocial.val = '';
-        this.nomeEmpresa.val = '';
-        this.cep.val = ''
-        this.cnpj.isValid = true;
-        this.razaoSocial.isValid = true;
-        this.nomeEmpresa.isValid = true
-        this.cep.isValid = true;
-        this.isPhysicalAgent = true;
       }
     },
     updateFile() {
@@ -193,16 +130,12 @@ export default {
     },
     validateFormData() {
         this.formIsValid = true;
-        this.cpf.isValid = !this.cpf.val ? (this.isPhysicalAgent ? false : true) : true;
-        this.cnpj.isValid = !this.cnpj.val ? (!this.isPhysicalAgent ? false : true) : true;
-        this.nomeEmpresa.isValid = !this.nomeEmpresa.val ? (!this.isPhysicalAgent ? false : true) : true;
-        this.razaoSocial.isValid = !this.razaoSocial.val ? (!this.isPhysicalAgent ? false : true) : true;
-        this.cep.isValid = !this.cep.val ? (!this.isPhysicalAgent ? false : true) : true;
         this.titulo.isValid = !this.titulo.val ? false : true;
         this.descricao.isValid =  !this.descricao.val ? false : true;
         this.resultadoEsperado.isValid =  !this.resultadoEsperado.val ? false : true;
         this.file.isValid = !this.file.val ? false : true;
-        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.cpf.isValid || !this.cnpj.isValid || !this.razaoSocial.isValid || !this.nomeEmpresa.isValid || !this.cep.isValid) {
+        this.knowledgearea.isValid = !this.knowledgearea.val ? false : true;
+        if(!this.titulo.isValid || !this.descricao.isValid || !this.resultadoEsperado.isValid || !this.file.isValid || !this.knowledgearea.val) {
           this.formIsValid = false
         }
         return this.formIsValid;
@@ -218,13 +151,15 @@ export default {
 h2 {
   margin-bottom: 20px;
 }
+h1{
+  font-size: 18px;
+  margin: 0px 0 3px 0;
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+}
 html{
   margin-bottom: 27px;
-}
-
-div#checklist {
-  display: inline-flex;
-  padding-left: 13px;
 }
 label{
   position: relative;
