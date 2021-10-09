@@ -18,9 +18,13 @@
               <td class="valign-middle text-center" > {{ projeto.status }}</td>
               <td class="valign-middle text-center">
 <!--                  <button class="btn input-group-append"> Consultar</button>-->
-                <button class="btn input-group-append" @click="consultarProjeto(projeto)"> Consultar</button>
+                <button class="btn input-group-append" @click="consultarProjeto(projeto)">
+                  Consultar
+                </button>
               </td>
-              <modal-detalhamento-projeto #default v-if="isModalVisible" @close='modifyModalState()' ref="modal"
+              <modal-detalhamento-projeto
+                  v-if="isModalVisible"
+                  @close='modifyModalState()' ref="modal"
               :name=currentModalProject.projeto.name
               :status="currentModalProject.projeto.status"
               :projectid="currentModalProject.projeto.projectid"
@@ -37,37 +41,38 @@
 </template>
 
 <script>
-  import axios from '../main';
+import axios from '../main';
 
-  export default {
-    data () {
-      return{
-        projetos: [],
-        isModalVisible: false,
-        currentModalProject: ''
-      }
-    },
-    beforeCreate() {
-      axios.get('http://localhost:3000/projeto/consulta').then((response) => {
-          response.data.forEach((projeto) => {
-            this.projetos.push(projeto);
-          });
+export default {
+  data() {
+    return {
+      projetos: [],
+      isModalVisible: false,
+      currentModalProject: '',
+    };
+  },
+  beforeCreate() {
+    axios.get('http://localhost:3000/projeto/consulta').then((response) => {
+      response.data.forEach((projeto) => {
+        this.projetos.push(projeto);
+      });
+    });
+  },
+  methods: {
+    consultarProjeto(projeto) {
+      axios.get(`http://localhost:3000/projeto/visualizar-arquivo-projeto/${projeto.projectid}`).then((response) => {
+        this.currentModalProject = {};
+        // eslint-disable-next-line max-len
+        this.currentModalProject.file = response.data.length ? { filename: response.data[0].filename, bytecontent: response.data[0].bytecontent.data } : {};
+        this.currentModalProject.projeto = projeto;
+        this.isModalVisible = true;
       });
     },
-    methods: {
-      consultarProjeto(projeto) {
-        axios.get('http://localhost:3000/projeto/visualizar-arquivo-projeto/' + projeto.projectid).then((response) => {
-          this.currentModalProject = {}
-          this.currentModalProject.file = response.data.length ?  {filename: response.data[0].filename, bytecontent: response.data[0].bytecontent.data} : {};
-          this.currentModalProject.projeto = projeto;
-          this.isModalVisible = true;
-        });
-      },
-      modifyModalState() {
-        this.isModalVisible = false;
-      },
-    }
-  }
+    modifyModalState() {
+      this.isModalVisible = false;
+    },
+  },
+};
 </script>
 
 <style></style>

@@ -11,11 +11,17 @@
         <h2>Descrição: </h2>
         <p>{{ description }}</p>
         <h2>Status: </h2>
-        <p :style="{ color: status === 'Em alocacao' || status === 'Aguardando aprovacao' ? '#eeff1b' : status === 'Recusado' ? 'red' : 'green'}">{{ status }}</p>
+        <p :style="{ color: status === 'Em alocacao'
+        || status==='Aguardando aprovacao' ? '#eeff1b' : status === 'Recusado' ? 'red' : 'green'}">
+          {{ status }}
+        </p>
       </slot>
     </section>
-    <button v-if="Object.keys(this.file).length" class="btn btn-primary" @click="downloadFile()">Download</button>
-
+    <button v-if="Object.keys(this.file).length"
+            class="btn btn-primary"
+            @click="downloadFile()">
+      Download
+    </button>
     <menu>
       <slot name="actions">
         <base-button @close="$emit('close')">Fechar</base-button>
@@ -34,22 +40,22 @@ export default {
     'projectid',
     'description',
     'status',
-    'file'
+    'file',
   ],
   emits: ['close'],
   data() {
-    return {}
+    return {};
   },
   methods: {
     downloadFile() {
-      var byteArray = new Uint8Array(this.file.bytecontent);
-      var blob = new Blob([byteArray], { type: 'application/octet-stream' });
-      var link = document.createElement("a");
+      const byteArray = new Uint8Array(this.file.bytecontent);
+      const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+      const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = this.file.filename;
       link.click();
-    }
-  }
+    },
+  },
 };
 </script>
 

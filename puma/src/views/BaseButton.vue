@@ -8,7 +8,7 @@
 export default {
   props: ['mode'],
   emits: ['close'],
-}
+};
 </script>
 
 <style scoped>

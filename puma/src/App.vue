@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import Navbar from '../src/components/Navbar';
+// eslint-disable-next-line import/no-unresolved
+import Navbar from '@/components/Navbar.vue';
 
 export default {
   components: {
