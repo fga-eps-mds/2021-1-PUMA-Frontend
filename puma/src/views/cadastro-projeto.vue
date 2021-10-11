@@ -6,7 +6,8 @@
         <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text"
                v-model.trim="titulo.val" class="form-control"
                id="titulo" placeholder="Qual é o título da proposta de projeto?"
-               @blur="validateFormInput('titulo')" @input="validateFormInput('titulo')">
+               @blur="validateFormInput('titulo')" @input="validateFormInput('titulo')"
+               :disabled = isLoading>
         <p style="float: left" v-if="!titulo.isValid"
            :style="{color: !titulo.val ? 'red' : ''}">Preenchimento obrigatório</p>
       </div>
@@ -18,7 +19,8 @@
               :style="{borderColor: !descricao.isValid ? 'red' : ''}"
               v-model.trim="descricao.val" class="form-control" id="descricao"
               placeholder="Descreva sua proposta" rows="7" maxlength="10000"
-              @blur="validateFormInput('descricao')" @input="validateFormInput('descricao')">
+              @blur="validateFormInput('descricao')" @input="validateFormInput('descricao')"
+              :disabled = isLoading>
           </textarea>
           <p style="float: left" v-if="!descricao.isValid"
              :style="{color: !descricao.val ? 'red' : ''}">
@@ -33,7 +35,8 @@
                   v-model.trim="resultadoEsperado.val" class="form-control"
                   id="descricao" placeholder="Descreva o resultado esperado" rows="5"
                   @blur="validateFormInput('resultadoEsperado')"
-                  @input="validateFormInput('resultadoEsperado')">
+                  @input="validateFormInput('resultadoEsperado')"
+                  :disabled = isLoading>
         </textarea>
         <p style="float: left"
            v-if="!resultadoEsperado.isValid"
@@ -43,9 +46,29 @@
       </div>
     </div>
 
+    <div class="form-group"
+         v-for="areaConhecimento in areasConhecimento"
+         :key="areaConhecimento.id"
+         >
+        <input :value="areaConhecimento.knowledgearea"
+               type="checkbox"
+               v-model="areasConhecimentoSelecionadas.val"
+              @change="validateFormInput('areaConhecimento')">
+        <label :for="areaConhecimento.id"> {{areaConhecimento.knowledgearea}}</label>
+    </div>
+    <label
+        v-if="!areasConhecimentoSelecionadas.isValid"
+        :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}">
+      Selecione ao menos uma área de conhecimento
+    </label>
+
     <div align="center" class="form-group">
       <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
-        <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
+        <input :disabled = isLoading
+               @change="updateFile"
+               name="pic" id="file"
+               type="file"
+               placeholder="assa">
         <label for="file" class="mb-3"
                :style="{color: !file.isValid ? 'red' : ''}"
                v-if="!file.isValid">
@@ -62,16 +85,20 @@
 
     <div>
     </div>
-
       <div class="form-row" v-if="operacao !== 'visualizar'">
-        <button type="button" class="btn btn-warning" @click="submitForm">Submeter</button>
+        <button v-if="!isLoading"
+                type="button"
+                class="btn btn-warning"
+                @click="submitForm">Submeter</button>
       </div>
 <!--<button class="btn" @click="downloadFile"><i class="fa fa-download"></i> Download</button>-->
-
     </div>
 </template>
 <script>
 import axios from '../main';
+import ProjectService from '../services/projectService';
+
+const projectService = new ProjectService();
 
 export default {
   name: 'ProjectRegister',
@@ -83,39 +110,66 @@ export default {
       operacao: { val: '', isValid: true },
       formIsValid: '',
       file: { val: '', isValid: true },
-      areasConhecimento: [{ knoledgeareaid: 1, knowledgearea: 'math' }, { knoledgeareaid: 2, knowledgearea: 'biology' }],
+      isLoading: false,
+      areasConhecimento: [],
+      areasConhecimentoSelecionadas: { val: [], isValid: true },
+      areasConhecimentoObject: [],
     };
   },
   beforeCreate() {
-    // axios.get('http://localhost:3000/areas-conhecimento').then((response) => {
-    //   response.data.forEach((areaConhecimento) => {
-    //     this.areasConhecimento.push(areaConhecimento);
-    //   });
-    // });
-    // if (this.$router.currentRoute.params.idProjeto) {
-    //   const { idProjeto } = this.$router.currentRoute.params;
-    //   axios.get(`http://localhost:3000/projeto/visualizar/${idProjeto}`).then((response) => {
-    //     this.operacao = 'visualizar';
-    //     this.descricao = response.data[0].descricao;
-    //   });
-    // }
+    projectService.getKnowledgeAreas().then((response) => {
+      response.data.data.response.forEach((areaConhecimento) => {
+        this.areasConhecimento.push(areaConhecimento);
+      });
+    });
   },
   methods: {
     submitForm() {
-      console.log(this.file);
       if (this.validateFormData()) {
+        this.areasConhecimentoObject = [];
+        this.areasConhecimentoSelecionadas.val.forEach((areaConhecimento) => {
+          this.areasConhecimento.forEach((area) => {
+            if (area.knowledgearea === areaConhecimento) {
+              // eslint-disable-next-line max-len
+              this.areasConhecimentoObject.push({ knowledgearea: area.knowledgearea, knoledgeareaid: area.knoledgeareaid });
+            }
+          });
+        });
+        const aux = [];
+        this.areasConhecimentoObject.forEach((area) => {
+          aux.push({ knowledgearea: area.knowledgearea, knoledgeareaid: area.knoledgeareaid });
+        });
         const projectObject = {
           name: this.titulo.val,
           problem: this.descricao.val,
           expectedresult: this.resultadoEsperado.val,
-          knowledgearea: [],
           status: 'Em alocacao',
           subjectid: 1,
           userid: 1,
-          file: '',
+          isLoading: false,
+          knowledgeareas: aux,
         };
-        axios.post('http://localhost:3000/projeto/cadastro', projectObject).then((response) => {
-          this.submitFile(response.data.result.rows[0].projectid);
+        projectService.addProject(projectObject).then(async (response) => {
+          this.isLoading = true;
+          const projectId = response.data.data.response;
+          const fileByteArray = await this.getFileByteContent();
+          const file = {
+            filename: this.file.val.name,
+            bytecontent: fileByteArray,
+            projectid: projectId,
+          };
+          console.log(file);
+          projectService.addFile(file).then((resp) => {
+            this.isLoading = false;
+            console.log(resp);
+          }).catch(() => {
+            this.isLoading = false;
+            alert('erro no cadastro de arquivo');
+          });
+        }).catch((response) => {
+          this.isLoading = false;
+          console.log(response);
+          alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
         });
       }
     },
@@ -131,17 +185,24 @@ export default {
         this.file.isValid = true;
       }
     },
-    submitFile(projectid) {
-      const formData = new FormData();
-      formData.append('file', this.file.val);
-      formData.append('projectid', projectid);
-      try {
-        axios.post('http://localhost:3000/upload', formData).then((response) => {
-          console.log(response);
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    getFileByteContent() {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        const fileByteArray = [];
+        reader.readAsArrayBuffer(this.file.val);
+        // eslint-disable-next-line consistent-return
+        reader.onloadend = function (evt) {
+          if (evt.target.readyState === FileReader.DONE) {
+            const arrayBuffer = evt.target.result;
+            const array = new Uint8Array(arrayBuffer);
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < array.length; i++) {
+              fileByteArray.push(array[i]);
+            }
+            resolve(fileByteArray);
+          }
+        };
+      });
     },
     downloadFile() {
       axios.get(`http://localhost:3000/projeto/visualizar-arquivo/${13}`).then((response) => {
@@ -159,16 +220,24 @@ export default {
       this.descricao.isValid = !!this.descricao.val;
       this.resultadoEsperado.isValid = !!this.resultadoEsperado.val;
       this.file.isValid = !!this.file.val;
+      this.areasConhecimentoSelecionadas.isValid = !!this.areasConhecimentoSelecionadas.val.length;
       if (!this.titulo.isValid
           || !this.descricao.isValid
           || !this.resultadoEsperado.isValid
-          || !this.file.isValid) {
+          || !this.file.isValid
+          || !this.areasConhecimentoSelecionadas.isValid
+      ) {
         this.formIsValid = false;
       }
       return this.formIsValid;
     },
     validateFormInput(input) {
-      this[input].isValid = !!this[input].val;
+      if (input === 'areaConhecimento') {
+        // eslint-disable-next-line max-len
+        this.areasConhecimentoSelecionadas.isValid = !!this.areasConhecimentoSelecionadas.val.length;
+      } else {
+        this[input].isValid = this[input].val;
+      }
     },
   },
 };

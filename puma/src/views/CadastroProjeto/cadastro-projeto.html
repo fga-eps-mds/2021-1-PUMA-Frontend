@@ -1,0 +1,77 @@
+<div class="col-md-4 col-lg-offset-4">
+  <div class="form-group">
+    <h2 class="mb-10">{{operacao === 'visualizar'?'Visualização de Projeto':'Novo Projeto'}}</h2>
+    <div class="">
+      <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text"
+             v-model.trim="titulo.val" class="form-control"
+             id="titulo" placeholder="Qual é o título da proposta de projeto?"
+             @blur="validateFormInput('titulo')" @input="validateFormInput('titulo')"
+             :disabled = isLoading>
+      <p style="float: left" v-if="!titulo.isValid"
+         :style="{color: !titulo.val ? 'red' : ''}">Preenchimento obrigatório</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="">
+          <textarea
+            :style="{borderColor: !descricao.isValid ? 'red' : ''}"
+            v-model.trim="descricao.val" class="form-control" id="descricao"
+            placeholder="Descreva sua proposta" rows="7" maxlength="10000"
+            @blur="validateFormInput('descricao')" @input="validateFormInput('descricao')"
+            :disabled = isLoading>
+          </textarea>
+      <p style="float: left" v-if="!descricao.isValid"
+         :style="{color: !descricao.val ? 'red' : ''}">
+        Preenchimento obrigatório
+      </p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="">
+        <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}"
+                  v-model.trim="resultadoEsperado.val" class="form-control"
+                  id="descricao" placeholder="Descreva o resultado esperado" rows="5"
+                  @blur="validateFormInput('resultadoEsperado')"
+                  @input="validateFormInput('resultadoEsperado')"
+                  :disabled = isLoading>
+        </textarea>
+      <p style="float: left"
+         v-if="!resultadoEsperado.isValid"
+         :style="{color: !resultadoEsperado.val ? 'red' : ''}">
+        Preenchimento obrigatório
+      </p>
+    </div>
+  </div>
+    <p>
+      asasas
+    </p>
+
+  <div align="center" class="form-group">
+    <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
+      <input  @change="updateFile" name="pic" id="file" type="file" placeholder="assa">
+      <label for="file" class="mb-3"
+             :style="{color: !file.isValid ? 'red' : ''}"
+             v-if="!file.isValid">
+        Preenchimento obrigatório
+      </label>
+      <p v-if="!this.file.val ">
+        Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+      </p>
+      <p v-else>
+        {{ file.val.name }}
+      </p>
+    </form>
+  </div>
+
+  <div>
+  </div>
+  <div class="form-row" v-if="operacao !== 'visualizar'">
+    <button v-if="!isLoading"
+            type="button"
+            class="btn btn-warning"
+            @click="submitForm">Submeter</button>
+  </div>
+  <!--<button class="btn" @click="downloadFile"><i class="fa fa-download"></i> Download</button>-->
+</div>

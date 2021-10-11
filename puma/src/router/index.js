@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/projeto/consulta',
     name: 'Consulta de Projetos',
-    component: () => import('../views/consulta-projetos.vue'),
+    component: () => import('../views/cadastro-projeto.vue'),
   },
   {
     path: '/projeto/visualizar/:idProjeto',

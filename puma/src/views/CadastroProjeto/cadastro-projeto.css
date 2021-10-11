@@ -1,0 +1,46 @@
+h2 {
+    margin-bottom: 20px;
+}
+html{
+    margin-bottom: 27px;
+}
+
+div#checklist {
+    display: inline-flex;
+    padding-left: 13px;
+}
+label{
+    position: relative;
+}
+
+input#file {
+    position: relative;
+    z-index: 5;
+}
+form {
+    margin-bottom: 25px;
+    margin-top: 32px;
+    width: 409px;
+    height: 200px;
+    border: 5px dashed darkblue;
+}
+form p {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 39px;
+    color: red;
+    font-family: Arial;
+    position: relative;
+    top: -173px;
+    font-size: 20px;
+}
+form input{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+form label {
+    position: relative;
+    top: 7px;
+}
