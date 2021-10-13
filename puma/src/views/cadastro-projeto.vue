@@ -29,7 +29,7 @@
         </div>
      </div>
 
-    <div class="form-group">
+    <div class="form-group" style="display: inline">
       <div class="">
         <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}"
                   v-model.trim="resultadoEsperado.val" class="form-control"
@@ -49,42 +49,55 @@
     <div class="form-group"
          v-for="areaConhecimento in areasConhecimento"
          :key="areaConhecimento.id"
-         >
-        <input :value="areaConhecimento.knowledgearea"
-               type="checkbox"
-               v-model="areasConhecimentoSelecionadas.val"
-              @change="validateFormInput('areaConhecimento')">
-        <label :for="areaConhecimento.id"> {{areaConhecimento.knowledgearea}}</label>
+         id="checklistArea"
+    >
+      <input :value="areaConhecimento.knowledgearea"
+             type="checkbox"
+             v-model="areasConhecimentoSelecionadas.val"
+             @change="validateFormInput('areaConhecimento')">
+      <label :for="areaConhecimento.id"> {{areaConhecimento.knowledgearea}}</label>
     </div>
+
     <label
         v-if="!areasConhecimentoSelecionadas.isValid"
         :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}">
       Selecione ao menos uma área de conhecimento
     </label>
 
-    <div align="center" class="form-group">
-      <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
-        <input :disabled = isLoading
-               @change="updateFile"
-               name="pic" id="file"
-               type="file"
-               placeholder="assa">
-        <label for="file" class="mb-3"
-               :style="{color: !file.isValid ? 'red' : ''}"
-               v-if="!file.isValid">
-          Preenchimento obrigatório
-        </label>
-        <p v-if="!this.file.val ">
-          Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
-        </p>
-        <p v-else>
-          {{ file.val.name }}
-        </p>
-      </form>
+    <div style="float: left" class="form-group" :style="{borderColor: !file.isValid ? 'red' : ''}">
+      <input
+          :disabled = isLoading
+          @change="updateFile($event)"
+          name="pic" id="file"
+          type="file"
+      >
     </div>
 
-    <div>
-    </div>
+    <label for="file" class="mb-3"
+           :style="{color: !file.isValid ? 'red' : ''}"
+           v-if="!file.isValid">
+      Preenchimento obrigatório
+    </label>
+<!--    <div align="center" class="form-group">-->
+<!--      <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">-->
+<!--        <input :disabled = isLoading-->
+<!--               @change="updateFile($event)"-->
+<!--               name="pic" id="file"-->
+<!--               type="file"-->
+<!--               placeholder="assa">-->
+<!--        <label for="file" class="mb-3"-->
+<!--               :style="{color: !file.isValid ? 'red' : ''}"-->
+<!--               v-if="!file.isValid">-->
+<!--          Preenchimento obrigatório-->
+<!--        </label>-->
+<!--        <p v-if="!this.file.val ">-->
+<!--          Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o-->
+<!--        </p>-->
+<!--        <p v-else>-->
+<!--          {{ file.val.name }}-->
+<!--        </p>-->
+<!--      </form>-->
+<!--    </div>-->
       <div class="form-row" v-if="operacao !== 'visualizar'">
         <button v-if="!isLoading"
                 type="button"
@@ -173,14 +186,13 @@ export default {
         });
       }
     },
-    updateFile() {
-      // eslint-disable-next-line no-restricted-globals
+    updateFile(event) {
       console.log(event.target.files[0]);
-      // eslint-disable-next-line no-restricted-globals
       if (!event.target.files[0]) {
+        this.file.val = null;
         this.file.isValid = false;
       } else {
-        // eslint-disable-next-line prefer-destructuring,no-restricted-globals
+        // eslint-disable-next-line prefer-destructuring
         this.file.val = event.target.files[0];
         this.file.isValid = true;
       }
@@ -216,11 +228,11 @@ export default {
     },
     validateFormData() {
       this.formIsValid = true;
-      this.titulo.isValid = !!this.titulo.val;
-      this.descricao.isValid = !!this.descricao.val;
-      this.resultadoEsperado.isValid = !!this.resultadoEsperado.val;
-      this.file.isValid = !!this.file.val;
-      this.areasConhecimentoSelecionadas.isValid = !!this.areasConhecimentoSelecionadas.val.length;
+      this.titulo.isValid = this.titulo.val;
+      this.descricao.isValid = this.descricao.val;
+      this.resultadoEsperado.isValid = this.resultadoEsperado.val;
+      this.file.isValid = this.file.val;
+      this.areasConhecimentoSelecionadas.isValid = this.areasConhecimentoSelecionadas.val.length;
       if (!this.titulo.isValid
           || !this.descricao.isValid
           || !this.resultadoEsperado.isValid
@@ -290,5 +302,12 @@ form label {
     position: relative;
     top: 7px;
 }
-
+#checklistArea{
+  margin: 0;
+  display: -webkit-inline-box;
+  position: relative;
+  float: left;
+  padding: 10px;
+  left: -33px;
+}
 </style>
