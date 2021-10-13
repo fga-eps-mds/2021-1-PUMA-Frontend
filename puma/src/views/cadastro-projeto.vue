@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="areasConhecimento.lenght">
       <h3>
         Quais áreas de conhecimento o projeto pertence?
       </h3>
