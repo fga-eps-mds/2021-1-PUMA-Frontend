@@ -48,7 +48,7 @@
 
     <div>
       <h3>
-        Quais áreas de conhecimento serão usadas no projeto?
+        Quais áreas de conhecimento o projeto pertence?
       </h3>
     </div>
     <div class="form-group"
@@ -66,7 +66,7 @@
     <div>
       <label
           id="negativeKnAreaForm"
-          style="margin-bottom: 10px;margin-bottom: 7px;position: relative;top: -11px;"
+          style="margin-bottom: 10px;margin-bottom: 7px;position: relative;top: -11px;left: -33px;"
           v-if="!areasConhecimentoSelecionadas.isValid"
           :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}"
           >
@@ -86,7 +86,7 @@
     <label for="file" class="mb-3"
            :style="{color: !file.isValid ? 'red' : ''}"
            v-if="!file.isValid"
-           style="position: relative;top: -16px;">
+           style="position: relative;top: -16px;left: -100px;">
       Preenchimento obrigatório
     </label>
    <!-- <div align="center" class="form-group">
