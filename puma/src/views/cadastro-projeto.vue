@@ -18,7 +18,7 @@
           <textarea
               :style="{borderColor: !descricao.isValid ? 'red' : ''}"
               v-model.trim="descricao.val" class="form-control" id="descricao"
-              placeholder="Descreva sua proposta" rows="7" maxlength="10000"
+              placeholder="Qual a proposta do projeto?" rows="7" maxlength="10000"
               @blur="validateFormInput('descricao')" @input="validateFormInput('descricao')"
               :disabled = isLoading>
           </textarea>
@@ -33,12 +33,12 @@
       <div class="">
         <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}"
                   v-model.trim="resultadoEsperado.val" class="form-control"
-                  id="descricao" placeholder="Descreva o resultado esperado" rows="5"
+                  id="descricao" placeholder="Qual resultado espera ter?" rows="5"
                   @blur="validateFormInput('resultadoEsperado')"
                   @input="validateFormInput('resultadoEsperado')"
                   :disabled = isLoading>
         </textarea>
-        <p style="float: left"
+        <p style="position: relative; left: -106px;margin-bottom: 0;"
            v-if="!resultadoEsperado.isValid"
            :style="{color: !resultadoEsperado.val ? 'red' : ''}">
           Preenchimento obrigatório
@@ -46,6 +46,11 @@
       </div>
     </div>
 
+    <div>
+      <h3>
+        Quais áreas de conhecimento serão usadas no projeto?
+      </h3>
+    </div>
     <div class="form-group"
          v-for="areaConhecimento in areasConhecimento"
          :key="areaConhecimento.id"
@@ -58,11 +63,16 @@
       <label :for="areaConhecimento.id"> {{areaConhecimento.knowledgearea}}</label>
     </div>
 
-    <label
-        v-if="!areasConhecimentoSelecionadas.isValid"
-        :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}">
-      Selecione ao menos uma área de conhecimento
-    </label>
+    <div>
+      <label
+          id="negativeKnAreaForm"
+          style="margin-bottom: 10px;margin-bottom: 7px;position: relative;top: -11px;"
+          v-if="!areasConhecimentoSelecionadas.isValid"
+          :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}"
+          >
+        Selecione ao menos uma área de conhecimento
+      </label>
+    </div>
 
     <div style="float: left" class="form-group" :style="{borderColor: !file.isValid ? 'red' : ''}">
       <input
@@ -75,29 +85,33 @@
 
     <label for="file" class="mb-3"
            :style="{color: !file.isValid ? 'red' : ''}"
-           v-if="!file.isValid">
+           v-if="!file.isValid"
+           style="position: relative;top: -16px;">
       Preenchimento obrigatório
     </label>
-<!--    <div align="center" class="form-group">-->
-<!--      <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">-->
-<!--        <input :disabled = isLoading-->
-<!--               @change="updateFile($event)"-->
-<!--               name="pic" id="file"-->
-<!--               type="file"-->
-<!--               placeholder="assa">-->
-<!--        <label for="file" class="mb-3"-->
-<!--               :style="{color: !file.isValid ? 'red' : ''}"-->
-<!--               v-if="!file.isValid">-->
-<!--          Preenchimento obrigatório-->
-<!--        </label>-->
-<!--        <p v-if="!this.file.val ">-->
-<!--          Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o-->
-<!--        </p>-->
-<!--        <p v-else>-->
-<!--          {{ file.val.name }}-->
-<!--        </p>-->
-<!--      </form>-->
-<!--    </div>-->
+   <!-- <div align="center" class="form-group">
+     <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
+       <input :disabled = isLoading
+              @change="updateFile($event)"
+              name="pic" id="file"
+              type="file"
+              placeholder="assa">
+       <label for="file" class="mb-3"
+              :style="{color: !file.isValid ? 'red' : ''}"
+              v-if="!file.isValid">
+         Preenchimento obrigatório
+       </label>
+       <p v-if="!this.file.val">
+         Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+       </p>
+       <p v-else-if="this.file.val">
+         {{ file.val.name }}
+       </p>
+       <p v-else style="color: darkblue">
+         Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+       </p>
+     </form>
+   </div> -->
       <div class="form-row" v-if="operacao !== 'visualizar'">
         <button v-if="!isLoading"
                 type="button"
@@ -257,12 +271,22 @@ export default {
 
 <style>
 h2 {
+  margin-top: 50px;
   margin-bottom: 20px;
+}
+h3{
+  font-size: 18px;
+  margin: 15px 0 3px 0;
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
 }
 html{
   margin-bottom: 27px;
 }
-
+input[type="checkbox"] {
+    margin: 0 4px 0 0;
+}
 div#checklist {
   display: inline-flex;
   padding-left: 13px;
@@ -274,6 +298,7 @@ label{
 input#file {
     position: relative;
     z-index: 5;
+    margin-bottom: 7px;
 }
 form {
   margin-bottom: 25px;
@@ -302,12 +327,14 @@ form label {
     position: relative;
     top: 7px;
 }
-#checklistArea{
-  margin: 0;
-  display: -webkit-inline-box;
-  position: relative;
-  float: left;
-  padding: 10px;
-  left: -33px;
+#checklistArea {
+    margin: 10px 0 15px 0;
+    display: -webkit-inline-box;
+    position: relative;
+    padding-left: 8px;
+    left: -43px;
+}
+.btn{
+  color: black;
 }
 </style>
