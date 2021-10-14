@@ -313,7 +313,7 @@ form p {
   text-align: center;
   line-height: 39px;
   color: red;
-  font-family: Arial;
+  font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   position: relative;
   top: -173px;
   font-size: 20px;

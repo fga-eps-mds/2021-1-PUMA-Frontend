@@ -15,13 +15,6 @@ export default class ProjectService {
 
   // eslint-disable-next-line class-methods-use-this
   addFile(file) {
-    // const aux = [];
-    // // eslint-disable-next-line guard-for-in,no-restricted-syntax
-    // for (const t in file) {
-    //   aux.push(file[t]);
-    // }
-    // console.log(file);
-    // console.log(aux);
     return new Promise((resolve, reject) => {
       axios.post(`${global.URL_GATEWAY}/upload`, file).then((response) => {
         resolve(response);

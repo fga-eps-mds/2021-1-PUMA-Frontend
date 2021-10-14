@@ -3,6 +3,7 @@
     <div class="col-md-8 col-lg-offset-2">
       <div class="table-responsive card">
         <table class="table table-striped table-bordered">
+          <caption>Consulta de projetos</caption>
           <thead class="thead-dark">
             <tr>
               <th class="font-weight-bold text-center w-10pc" scope="col">Nro proposta</th>
