@@ -2,7 +2,7 @@
   <div class="col-md-4 col-lg-offset-4">
     <div class="form-group">
       <h2 class="mb-10">{{operacao === 'visualizar'?'Visualização de Projeto':'Novo Projeto'}}</h2>
-      <div class="">
+      <div>
         <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text"
                v-model.trim="titulo.val" class="form-control"
                id="titulo" placeholder="Qual é o título da proposta de projeto?"
@@ -185,7 +185,6 @@ export default {
             bytecontent: fileByteArray,
             projectid: projectId,
           };
-          console.log(file);
           projectService.addFile(file).then((resp) => {
             this.isLoading = false;
             console.log(resp);
@@ -201,7 +200,6 @@ export default {
       }
     },
     updateFile(event) {
-      console.log(event.target.files[0]);
       if (!event.target.files[0]) {
         this.file.val = null;
         this.file.isValid = false;
