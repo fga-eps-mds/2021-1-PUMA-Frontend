@@ -25,6 +25,19 @@ const routes = [
     component: () => import('@/views/Register/Register.vue'),
 
   },
+  {
+    path: '/discipline',
+    name: 'Discipline',
+    // eslint-disable-next-line import/no-unresolved
+    component: () => import('@/views/Discipline/Discipline.vue'),
+
+  },
+  {
+    path: '/disciplineRegister',
+    name: 'DisciplineRegister',
+    // eslint-disable-next-line import/no-unresolved
+    component: () => import('@/views/DisciplineRegister/DisciplineRegister.vue'),
+  },
 ];
 
 const router = new VueRouter({
