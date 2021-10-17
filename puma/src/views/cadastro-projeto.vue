@@ -310,5 +310,6 @@ form label {
 }
 .btn{
   color: black;
+  margin-left: 9px;
 }
 </style>
