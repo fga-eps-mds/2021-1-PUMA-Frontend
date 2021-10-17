@@ -38,7 +38,7 @@
                   @input="validateFormInput('resultadoEsperado')"
                   :disabled = isLoading>
         </textarea>
-        <p style="position: relative; left: -106px;margin-bottom: 0;"
+        <p style="position: relative; left: -210px; margin-bottom: 0;"
            v-if="!resultadoEsperado.isValid"
            :style="{color: !resultadoEsperado.val ? 'red' : ''}">
           Preenchimento obrigatório
@@ -46,9 +46,9 @@
       </div>
     </div>
 
-    <div v-if="areasConhecimento.lenght">
+    <div v-if="areasConhecimento.length">
       <h3>
-        Quais áreas de conhecimento o projeto pertence?
+        A quais áreas de conhecimento o projeto pertence?
       </h3>
     </div>
     <div class="form-group"
@@ -208,9 +208,6 @@ export default {
         this.file.val = event.target.files[0];
         this.file.isValid = true;
       }
-    },
-    renderizar() {
-      this.$forceUpdate();
     },
     getFileByteContent() {
       return new Promise((resolve) => {
