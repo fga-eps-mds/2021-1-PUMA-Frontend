@@ -17,8 +17,9 @@ export default {
 
 <style scope>
 #nav {
-  padding: 30px;
-  background-color: #15355e;
+    padding-top: 19px;
+    background-color: #15355e;
+    height: 84px;
 }
 
 #nav a {
