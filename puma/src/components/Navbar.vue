@@ -1,10 +1,11 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/register">Register</router-link> |
-    <router-link to="/projeto/cadastro">Cadastro de projeto</router-link> |
-    <router-link to="/projeto/consulta">Consulta de projetos</router-link>
+    <a href="/">Home</a> |
+    <a href="/about">About</a> |
+    <a href="/register">Register</a> |
+    <a class="router-link" href="/projeto/cadastro">Cadastro de projeto</a>
+<!--    <router-link to="/projeto/cadastro"></router-link> |-->
+<!--    <router-link to="/projeto/consulta">Consulta de projetos</router-link>-->
   </div>
 </template>
 
@@ -16,13 +17,15 @@ export default {
 
 <style scope>
 #nav {
-  padding: 30px;
-  background-color: #15355e;
+    padding-top: 19px;
+    background-color: #15355e;
+    height: 84px;
 }
 
 #nav a {
   font-weight: bold;
   color: white;
+  margin: 20px;
 }
 
 #nav a.router-link-exact-active {

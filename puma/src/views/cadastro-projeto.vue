@@ -38,7 +38,7 @@
                   @input="validateFormInput('resultadoEsperado')"
                   :disabled = isLoading>
         </textarea>
-        <p style="position: relative; left: -106px;margin-bottom: 0;"
+        <p style="position: relative; left: -117px; margin-bottom: 0;"
            v-if="!resultadoEsperado.isValid"
            :style="{color: !resultadoEsperado.val ? 'red' : ''}">
           Preenchimento obrigatório
@@ -46,9 +46,9 @@
       </div>
     </div>
 
-    <div v-if="areasConhecimento.lenght">
+    <div v-if="areasConhecimento.length">
       <h3>
-        Quais áreas de conhecimento o projeto pertence?
+        A quais áreas de conhecimento o projeto pertence?
       </h3>
     </div>
     <div class="form-group"
@@ -89,36 +89,12 @@
            style="position: relative;top: -16px;left: -100px;">
       Preenchimento obrigatório
     </label>
-   <!-- <div align="center" class="form-group">
-     <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
-       <input :disabled = isLoading
-              @change="updateFile($event)"
-              name="pic" id="file"
-              type="file"
-              placeholder="assa">
-       <label for="file" class="mb-3"
-              :style="{color: !file.isValid ? 'red' : ''}"
-              v-if="!file.isValid">
-         Preenchimento obrigatório
-       </label>
-       <p v-if="!this.file.val">
-         Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
-       </p>
-       <p v-else-if="this.file.val">
-         {{ file.val.name }}
-       </p>
-       <p v-else style="color: darkblue">
-         Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
-       </p>
-     </form>
-   </div> -->
       <div class="form-row" v-if="operacao !== 'visualizar'">
         <button v-if="!isLoading"
                 type="button"
                 class="btn btn-warning"
                 @click="submitForm">Submeter</button>
       </div>
-<!--<button class="btn" @click="downloadFile"><i class="fa fa-download"></i> Download</button>-->
     </div>
 </template>
 <script>
