@@ -209,6 +209,9 @@ export default {
         this.file.isValid = true;
       }
     },
+    renderizar() {
+      this.$forceUpdate();
+    },
     getFileByteContent() {
       return new Promise((resolve) => {
         const reader = new FileReader();
