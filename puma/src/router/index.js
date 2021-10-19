@@ -13,30 +13,32 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import('../views/About.vue'),
   },
   {
     path: '/register',
     name: 'Register',
-    // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Register/Register.vue'),
-
+    component: () => import('../views/Register/Register.vue'),
   },
   {
-    path: '/discipline',
-    name: 'Discipline',
-    // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Discipline/Discipline.vue'),
-
+    path: '/disciplina/cadastro',
+    name: 'Cadastro de Disciplina',
+    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
   },
   {
-    path: '/disciplineRegister',
-    name: 'DisciplineRegister',
-    // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/DisciplineRegister/DisciplineRegister.vue'),
+    path: 'disciplina/alteraracao/:idDisciplina',
+    name: 'Alteração de Disciplina',
+    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
+  },
+  {
+    path: 'disciplina/consulta/:idDisciplina',
+    name: 'Consulta de Disciplina',
+    component: () => import('../views/Disciplina/ConsultaDisciplina.vue'),
+  },
+  {
+    path: '/disciplina',
+    name: 'Disciplinas',
+    component: () => import('../views/Disciplina/ConsultaDisciplinas.vue'),
   },
 ];
 
