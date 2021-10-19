@@ -25,6 +25,12 @@ const routes = [
     component: () => import('@/views/Register/Register.vue'),
 
   },
+  {
+    path: '/evaluate',
+    name: 'Evaluate',
+    // eslint-disable-next-line import/no-unresolved
+    component: () => import('@/views/Evaluate/Evaluate.vue'),
+  },
 ];
 
 const router = new VueRouter({

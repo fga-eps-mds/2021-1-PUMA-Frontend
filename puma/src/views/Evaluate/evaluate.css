@@ -1,0 +1,18 @@
+.title {
+    display: flex;
+    color: black;
+    font-family: rubik;
+    font-weight: 300;
+    font-size: 2em;
+    justify-content: left;
+    margin-top: 1.7em;
+    margin-left: 3.5em;
+}
+
+hr {
+    border-top: .15em solid #989898;
+    border-left: 0;
+    /* border: 0;
+    height: 0; /* Firefox... 
+    box-shadow: 0 0 10px 1px black; */
+}

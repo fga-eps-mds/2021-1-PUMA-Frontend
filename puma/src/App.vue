@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+  <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700,900" rel="stylesheet">
     <Navbar />
     <router-view />
   </div>

@@ -23,7 +23,7 @@ import axios from '@/main.js';
 export default class UserService {
   registerUser(newUser) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/register`, newUser).then((response) => {
+      axios.post(`${global.URL_GATEWAY}/user/register`, newUser).then((response) => {
         resolve(`/register resolve: ${response}`);
       }).catch((response) => {
         reject(`/register reject: ${response}`);
@@ -33,8 +33,9 @@ export default class UserService {
 
   logUserIn(newUser) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/login`, newUser).then((response) => {
+      axios.post(`${global.URL_GATEWAY}/user/login`, newUser).then((response) => {
         if (response.data.auth) {
+          console.log(response.data.auth);
           Cookie.set('PUMA_USER_SESSION', response.data.token, { expires: 7, path: '/' });
           resolve(`/login resolve: ${response}`);
         } else {
