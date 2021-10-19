@@ -3,6 +3,15 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+
+ARG IP_ARG
+
+ENV IP_ADDRESS ${IP_ARG}
+
+ARG env
+
+ENV ENVIRONMENT ${env}
+
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
