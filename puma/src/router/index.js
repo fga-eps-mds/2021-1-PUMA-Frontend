@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// import CadastroDisciplina from '../views/Disciplina/CadastroDisciplina.vue';
+// import ConsultaDisciplina from '../views/Disciplina/ConsultaDisciplina.vue';
 import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
@@ -21,24 +23,21 @@ const routes = [
     component: () => import('../views/Register/Register.vue'),
   },
   {
-    path: '/disciplina/cadastro',
-    name: 'Cadastro de Disciplina',
-    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
-  },
-  {
-    path: 'disciplina/alteraracao/:idDisciplina',
-    name: 'Alteração de Disciplina',
-    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
-  },
-  {
-    path: 'disciplina/consulta/:idDisciplina',
-    name: 'Consulta de Disciplina',
-    component: () => import('../views/Disciplina/ConsultaDisciplina.vue'),
-  },
-  {
     path: '/disciplina',
-    name: 'Disciplinas',
+    name: 'Consulta de Disciplinas',
     component: () => import('../views/Disciplina/ConsultaDisciplinas.vue'),
+  },
+  {
+    path: '/disciplina/:cadastro',
+    name: 'Cadastro de Disciplina',
+    props: true,
+    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
+  },
+  {
+    path: '/disciplina/:alteracao/:idDisciplina',
+    name: 'Alteração de Disciplina',
+    props: true,
+    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
   },
 ];
 

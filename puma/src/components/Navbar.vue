@@ -3,7 +3,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/register">Register</router-link> |
-    <a href="disciplina/cadastro"> Cadastro de Disciplina</a>
+    <a href="disciplina/cadastro"> Cadastro de Disciplina</a> |
+    <router-link to="disciplina"> Consulta de Disciplinas</router-link>
   </div>
 </template>
 
