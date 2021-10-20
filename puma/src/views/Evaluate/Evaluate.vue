@@ -2,4 +2,4 @@
 
 <script src="./evaluate.js"></script>
 
-<style src="./evaluate.css"></style>
+<style src="./evaluate.css" scoped></style>

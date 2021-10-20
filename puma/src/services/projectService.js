@@ -16,4 +16,14 @@ export default class ProjectService {
     });
     return allocatedArray;
   }
+
+  async getProjById(projId) {
+    const auth = Cookie.get('PUMA_USER_SESSION');
+    const projInfos = await axios.get(`${global.URL_GATEWAY}/project/${projId}`, {
+      headers: {
+        auth,
+      },
+    });
+    return projInfos;
+  }
 }

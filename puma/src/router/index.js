@@ -31,6 +31,13 @@ const routes = [
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Evaluate/Evaluate.vue'),
   },
+  {
+    path: '/approval/:projId',
+    name: 'Approval',
+    props: true,
+    // eslint-disable-next-line import/no-unresolved
+    component: () => import('@/views/Approval/Approval.vue'),
+  },
 ];
 
 const router = new VueRouter({

@@ -10,12 +10,18 @@ export default {
   },
   name: 'Evaluate',
   data() {
-    return {};
+    return {
+      projs: [],
+    };
   },
   created() {
-    projectService.getAllocatedProjects(1).then((lel) => {
-      console.log(lel);
+    projectService.getAllocatedProjects(1).then((res) => {
+      this.projs = res.data;
     });
   },
-  methods: {},
+  methods: {
+    projDetail(id) {
+      this.$router.push({ name: 'Approval', params: { projId: id } });
+    },
+  },
 };

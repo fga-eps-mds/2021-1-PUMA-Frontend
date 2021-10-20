@@ -4,6 +4,14 @@
         Avaliar Propostas
     </div>
     <hr>
-
-<ProjectCard font-family='Rubik' class='ocard' title='sekso' expectedResult='shonbshso hsohnsohsosdig  ii ooi op hhou pu huio huio uhu iouh iy gyfuofyu fyufyu ofy fyufu yf ffu uft r68 686 ' picture='https://www.hypeness.com.br/1/2019/02/puma-oriental-extinto-capa-1.png'/>
+<div class='projcard'>
+  <ProjectCard
+    v-for='proj in projs'
+    font-family='Rubik'
+    class='ocard'
+    v-bind:title='proj.name'
+    v-bind:expectedResult='proj.expectedresult'
+    picture='https://www.hypeness.com.br/1/2019/02/puma-oriental-extinto-capa-1.png'
+    v-on:click.native='projDetail(proj.projectid)'/>
+</div>
 </body>
