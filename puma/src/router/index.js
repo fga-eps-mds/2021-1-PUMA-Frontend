@@ -18,23 +18,7 @@ const routes = [
   {
     path: '/projeto/cadastro',
     name: 'Cadastro de Projeto',
-    component: () => import('../views/cadastro-projeto.vue'),
-  },
-  {
-    path: '/projeto/consulta',
-    name: 'Consulta de Projetos',
-    component: () => import('../views/consulta-projetos.vue'),
-  },
-  {
-    path: '/projeto/visualizar/:idProjeto',
-    name: 'Visualizar Projeto',
-    component: () => import('../views/cadastro-projeto.vue'),
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('../views/Register/Register.vue'),
-
+    component: () => import('../views/cadastroProjeto/cadastro-projeto.vue'),
   },
 ];
 
