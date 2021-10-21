@@ -32,20 +32,29 @@
     </div>
 
     <div class="form-group">
-      <select name="subareas" id="subareas" multiple="true" v-model="subareasSelecionadas.val">
+      <select name="subareas"
+              id="subareas"
+              multiple="true" v-model="subareasSelecionadas.val"
+              @change="validateFormInput('subareasSelecionadas')">
         <option v-for="subarea in subareas"
                 :key="subarea.subareaid"
                 :value="subarea"
                 selected="true"
+                :disabled = isLoading
                 >{{ subarea.description }}</option>
       </select>
-
     </div>
+
+    <p style="float: left" v-if="!subareasSelecionadas.isValid"
+       :style="{color: !subareasSelecionadas.val.length ? 'red' : ''}">
+      Preenchimento obrigatório
+    </p>
 
     <div class="form-group">
       <div>
         <button @click="submitForm()"
-                class="btn btn-warnig">
+                class="btn btn-warnig"
+                v-if="!isLoading">
           {{operacao==='cadastro'?'Cadastrar':'Alterar'}}
         </button>
       </div>
@@ -85,44 +94,6 @@ export default {
       });
     }
   },
-  methods: {
-    validateFormInput(input) {
-      this[input].isValid = this[input].val;
-    },
-    validateFormData() {
-      this.formIsValid = true;
-      this.nomeDisciplina.isValid = this.nomeDisciplina.val;
-      this.ementa.isValid = this.ementa.val;
-      if (!this.ementa.isValid || !this.nomeDisciplina.isValid) {
-        this.formIsValid = false;
-      }
-      return this.formIsValid;
-    },
-    submitForm() {
-      this.subareasSelecionadas.val.forEach((sub) => {
-        this.subareas.forEach((subarea) => {
-          if (subarea.description === sub.description) {
-            this.subareasObject.push({ description: sub.description, subareaid: sub.subareaid });
-          }
-        });
-      });
-      const aux = [];
-      this.subareasObject.forEach((subarea) => {
-        aux.push({ description: subarea.description, subareaid: subarea.subareaid });
-      });
-      if (this.validateFormData()) {
-        const subjectObject = {
-          name: this.nomeDisciplina.val,
-          coursesyllabus: this.ementa.val,
-          subareas: aux,
-          operacao: this.operacao,
-          subjectid: this.subjectid,
-        };
-        console.log(subjectObject);
-        subjectService.addSubject(subjectObject);
-      }
-    },
-  },
   data() {
     return {
       nomeDisciplina: { val: '', isValid: true },
@@ -135,6 +106,64 @@ export default {
       subareasObject: [],
       formIsValid: '',
     };
+  },
+  methods: {
+    submitForm() {
+      this.subareasSelecionadas.val.forEach((sub) => {
+        this.subareas.forEach((subarea) => {
+          if (subarea.description === sub.description) {
+            this.subareasObject.push({ description: sub.description, subareaid: sub.subareaid });
+          }
+        });
+      });
+      if (this.validateFormData()) {
+        const subjectObject = {
+          name: this.nomeDisciplina.val,
+          coursesyllabus: this.ementa.val,
+          subareas: this.subareasObject,
+          operacao: this.operacao,
+          subjectid: this.subjectid,
+        };
+        if (this.operacao === 'cadastro') {
+          this.isLoading = true;
+          subjectService.addSubject(subjectObject).then(async (response) => {
+            this.isLoading = false;
+            console.log(response);
+          }).catch((response) => {
+            console.log(response);
+            this.isLoading = false;
+          });
+        } else {
+          this.isLoading = true;
+          subjectService.updateSubject(subjectObject).then(async (response) => {
+            this.isLoading = false;
+            console.log(response);
+          }).catch((response) => {
+            console.log(response);
+            this.isLoading = false;
+          });
+        }
+      }
+    },
+    validateFormInput(input) {
+      if (input === 'subareasSelecionadas') {
+        this.subareasSelecionadas.isValid = this.subareasSelecionadas.val.length;
+      } else {
+        this[input].isValid = this[input].val;
+      }
+    },
+    validateFormData() {
+      this.formIsValid = true;
+      this.nomeDisciplina.isValid = this.nomeDisciplina.val;
+      this.ementa.isValid = this.ementa.val;
+      this.subareasSelecionadas.isValid = this.subareasSelecionadas.val.length;
+      if (!this.ementa.isValid
+          || !this.nomeDisciplina.isValid
+          || !this.subareasSelecionadas.isValid) {
+        this.formIsValid = false;
+      }
+      return this.formIsValid;
+    },
   },
 };
 </script>

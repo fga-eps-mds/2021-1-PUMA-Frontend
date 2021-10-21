@@ -1,10 +1,10 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/register">Register</router-link> |
+    <a href="/">Home</a> |
+    <a href="/about">About</a> |
+    <a href="/register">Register</a> |
     <a href="disciplina/cadastro"> Cadastro de Disciplina</a> |
-    <router-link to="disciplina"> Consulta de Disciplinas</router-link>
+    <a href="/disciplina"> Consulta de Disciplinas</a>
   </div>
 </template>
 
