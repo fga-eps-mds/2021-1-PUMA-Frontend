@@ -12,8 +12,6 @@ Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 environment.configUser();
 
-console.log(global);
-
 new Vue({
   router,
   store,

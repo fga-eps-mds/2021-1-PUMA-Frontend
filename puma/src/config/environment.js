@@ -1,6 +1,5 @@
 module.exports = {
   configUser: () => {
-    console.log(process.env);
     if (process.env.VUE_APP_ENVIRONMENT === 'dev') {
       /* eslint-disable  semi */
       global.URL_GATEWAY = `http://${process.env.VUE_APP_IP_ADDRESS}:3004`
