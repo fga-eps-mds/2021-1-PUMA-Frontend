@@ -1,5 +1,5 @@
 <template>
-  <div class='card'>
+  <div class='projectCard'>
     <img class='picture' :src='picture'>
     <div class='text'>
       <div class='cardTitle'>
@@ -20,8 +20,8 @@ export default {
 };
 </script>
 
-<style scope>
-.card {
+<style>
+.projectCard {
   height: 225px;
   width: 349px;
   border: 0.1em solid black;

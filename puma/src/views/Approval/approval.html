@@ -1,12 +1,40 @@
-
 <body>
-    <div class='title'>
-        Avaliar Proposta
+    <div class='container'>
+        <div class='title lighter'>
+            Avaliar proposta
+        </div>
     </div>
+
     <hr>
 
-    {{title}}
+    <div class='column container'>
+        
+        <div class='row bold proposalTitle'>
+            {{title}}
+        </div>
+        <div class='row compositeLine'>
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column '>Nome do Agente Externo:&nbsp;</p>
+                    <p class='lighter column'>{{responsibleName}}</p>
+                </div>
+            </div>
+            
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column'>Nome do Agente Externo:&nbsp;</p>
+                    <p class='lighter column'>{{responsibleName}}</p>
+                </div>
+            </div>
+        </div>
 
-    <p>Nome do Agente Externo: {{responsibleName}}</p>
+        <div class='row bold label'>
+            <p>Problemas a serem resolvidos</p>
+        </div>
+        <div class='row'>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas enim ex, scelerisque ut pretium in, laoreet a dolor. Praesent erat dolor, commodo ut dolor gravida, vulputate faucibus metus. Fusce quis sapien ut ante consectetur finibus sed in nisi. In tincidunt tempor ultrices. Donec pulvinar purus sodales tempus fringilla. Etiam a malesuada nibh. Curabitur ornare accumsan sapien, et convallis lorem scelerisque id. Aliquam commodo mauris placerat enim dictum efficitur. Nam et lacus at ex ultrices ultrices. Cras bibendum non purus lobortis tempor. Mauris mollis sem id orci sagittis, aliquam dapibus orci efficitur.</p>
+        </div>
+
+    </div>
 
 </body>
