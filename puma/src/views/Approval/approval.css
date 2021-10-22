@@ -28,6 +28,14 @@ p {
     margin-top: 0px;
     font-size: 20px;
 }
+ul {
+    margin-top: 0px;
+}
+li {
+    margin-top: 0px;
+    font-size: 20px;
+}
+
 
 .container {
     text-align: left;
@@ -59,6 +67,11 @@ p {
     max-width: 1100px;
 }
 
+.submit-btn {
+    /* flex-direction: row; */
+    margin: 50px 0;
+}
+
 hr {
     border-top: .15em solid #989898;
     border-left: 0;
@@ -66,5 +79,3 @@ hr {
     height: 0; /* Firefox...
     box-shadow: 0 0 10px 1px black; */
 }
-
-

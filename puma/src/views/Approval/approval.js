@@ -12,7 +12,7 @@ export default {
       title: '',
       projExpectedResult: '',
       projProblem: '',
-      knowledgeAreas: [],
+      knowledgeAreas: ['shonk shonk', 'onk', 'fonk'],
     };
   },
   created() {
@@ -25,5 +25,9 @@ export default {
       this.projProblem = parsedData.problem;
     });
   },
-  methods: {},
+  methods: {
+    evaluate() {
+      console.log('shit');
+    },
+  },
 };
