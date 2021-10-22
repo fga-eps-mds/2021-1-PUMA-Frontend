@@ -57,4 +57,18 @@ select {
   transition: 0.5s;
   width: 10em;
 }
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex1 {
+    flex: 1;
+}
 </style>

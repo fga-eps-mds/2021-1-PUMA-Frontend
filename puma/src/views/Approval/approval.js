@@ -1,8 +1,13 @@
+/* eslint-disable import/no-unresolved */
 import ProjectService from '../../services/projectService';
+import EvaluateModal from '@/components/EvaluateModal.vue';
 
 const projectService = new ProjectService();
 
 export default {
+  components: {
+    EvaluateModal,
+  },
   name: 'Approval',
   data() {
     return {
@@ -13,6 +18,7 @@ export default {
       projExpectedResult: '',
       projProblem: '',
       knowledgeAreas: ['shonk shonk', 'onk', 'fonk'],
+      showModal: true,
     };
   },
   created() {
@@ -27,6 +33,7 @@ export default {
   },
   methods: {
     evaluate() {
+      this.showModal = !this.showModal;
       console.log('shit');
     },
   },
