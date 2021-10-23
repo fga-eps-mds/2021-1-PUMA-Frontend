@@ -19,6 +19,7 @@ export default {
       projProblem: '',
       knowledgeAreas: ['shonk shonk', 'onk', 'fonk'],
       showModal: true,
+      subjectArray: [{ name: 'onoask' }],
     };
   },
   created() {

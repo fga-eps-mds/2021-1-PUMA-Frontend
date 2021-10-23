@@ -19,7 +19,7 @@ export default class ProjectService {
 
   async getProjById(projId) {
     const auth = Cookie.get('PUMA_USER_SESSION');
-    const projInfos = await axios.get(`${global.URL_GATEWAY}/project/${projId}`, {
+    const projInfos = await axios.get(`${global.URL_GATEWAY}/project/project/${projId}`, {
       headers: {
         auth,
       },

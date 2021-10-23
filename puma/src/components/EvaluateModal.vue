@@ -2,14 +2,8 @@
   <transition name='modal'>
     <div class='modal-mask'>
       <div class='modal-wrapper'>
-        <div v-if='!isChooseDiscipline' class='modal-container'>
-            <p>Essa proposta se encaixa na disciplina?</p>
-
-          <!-- <div class='modal-body'>
-              <slot name='body'>
-                  default body
-              </slot>
-              </div> -->
+        <div v-if='!isChooseSubject' class='modal-container'>
+          <p>Essa proposta se encaixa na disciplina?</p>
 
           <div class='modal-footer row'>
             <slot name='footer'>
@@ -24,29 +18,34 @@
                 type='submit'
                 class='submit-btn yes-button'
                 value='Sim'
-                v-on:click='$emit("close")'
+                v-on:click='$emit(`close`)'
               />
             </slot>
           </div>
         </div>
 
-        <div v-if='isChooseDiscipline' class='modal-container'>
+        <div v-if='isChooseSubject' class='modal-container choose-subject'>
           <div class='modal-header'>
-            <p>
-              fonk
-            </p>
+            <p>Em qual disciplina essa proposta se encaixa?</p>
           </div>
 
-          <select></select>
+          <select>
+            <option value='' selected disabled class='disabled'>
+              Escolha uma disciplina
+            </option>
+            <option v-for='subject in subjectArray' v-bind:key='subject.name'
+            v-bind:value='subject.name'>
+              {{subject.name}}
+            </option>
+          </select>
 
           <input
-                type='submit'
-                class='submit-btn yes-button'
-                value='Sim'
-                v-on:click='$emit("close")'
-              />
+            type='submit'
+            class='submit-btn submit-button'
+            value='Submeter'
+            v-on:click='$emit(`close`)'
+          />
         </div>
-
       </div>
     </div>
   </transition>
@@ -55,21 +54,22 @@
 <script>
 export default {
   name: 'EvaluateModal',
+  props: ['subjectArray'],
   data() {
     return {
-      isChooseDiscipline: false,
+      isChooseSubject: false,
     };
   },
   methods: {
     fuck() {
-      this.isChooseDiscipline = !this.isChooseDiscipline;
+      console.log(this.subjectArray);
+      this.isChooseSubject = !this.isChooseSubject;
     },
   },
 };
 </script>
 
 <style scoped>
-
 p {
   font-family: rubik;
   font-size: 20px;
@@ -83,6 +83,12 @@ p {
 .no-button {
   background-color: #ffff;
   border: 2px dashed black;
+}
+
+.choose-subject {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .modal-mask {
@@ -102,6 +108,12 @@ p {
   vertical-align: middle;
 }
 
+select {
+  width: 90%;
+  height: 70%;
+  padding: 7px;
+}
+
 .modal-container {
   width: 400px;
   margin: 0px auto;
@@ -116,8 +128,14 @@ p {
 }
 
 .modal-header {
-  margin-top: 0;
+  width: 115%;
+  margin-top: -20px;
+  margin-left: -30px;
+  margin-right: -30px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   background-color: #f7db36;
+  text-align: center;
 }
 
 .modal-body {
@@ -130,12 +148,16 @@ p {
 
 /*
  * The following styles are auto-applied to elements with
- * transition='modal' when their visibility is toggled
+ * transition=`modal` when their visibility is toggled
  * by Vue.js.
  *
  * You can easily play with the modal transition by editing
  * these styles.
  */
+
+option[value=''][disabled] {
+  display: none;
+}
 
 .modal-enter {
   opacity: 0;
