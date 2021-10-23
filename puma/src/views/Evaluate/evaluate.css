@@ -23,6 +23,10 @@ hr {
 }
 
 .projcard {
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
 }
