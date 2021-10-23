@@ -26,4 +26,26 @@ export default class ProjectService {
     });
     return projInfos;
   }
+
+  async getAllSubjects() {
+    const auth = Cookie.get('PUMA_USER_SESSION');
+    const subjects = await axios.get(`${global.URL_GATEWAY}/project/subject`, {
+      headers: {
+        auth,
+      },
+    });
+    return subjects;
+  }
+
+  async putProposal(projectId, subjId) {
+    const auth = Cookie.get('PUMA_USER_SESSION');
+    const subjects = await axios.put(`${global.URL_GATEWAY}/project/proposal/${projectId}`,
+      { subjectId: subjId },
+      {
+        headers: {
+          auth,
+        },
+      });
+    return subjects;
+  }
 }

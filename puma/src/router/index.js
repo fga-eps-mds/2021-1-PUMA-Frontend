@@ -26,7 +26,7 @@ const routes = [
 
   },
   {
-    path: '/evaluate',
+    path: '/evaluate/:subjectId',
     name: 'Evaluate',
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Evaluate/Evaluate.vue'),

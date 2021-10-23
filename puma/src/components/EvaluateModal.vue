@@ -29,12 +29,12 @@
             <p>Em qual disciplina essa proposta se encaixa?</p>
           </div>
 
-          <select>
+          <select v-model='selected'>
             <option value='' selected disabled class='disabled'>
               Escolha uma disciplina
             </option>
-            <option v-for='subject in subjectArray' v-bind:key='subject.name'
-            v-bind:value='subject.name'>
+            <option v-for='subject in subjectArray' v-bind:key='subject'
+            v-bind:value='subject'>
               {{subject.name}}
             </option>
           </select>
@@ -43,7 +43,7 @@
             type='submit'
             class='submit-btn submit-button'
             value='Submeter'
-            v-on:click='$emit(`close`)'
+            v-on:click='selectedHandler(selected)'
           />
         </div>
       </div>
@@ -54,16 +54,21 @@
 <script>
 export default {
   name: 'EvaluateModal',
-  props: ['subjectArray'],
+  props: ['subjectArray', 'submitHandler'],
   data() {
     return {
       isChooseSubject: false,
+      selected: '',
     };
   },
   methods: {
     fuck() {
-      console.log(this.subjectArray);
       this.isChooseSubject = !this.isChooseSubject;
+    },
+    selectedHandler(selected) {
+      console.log(selected);
+      this.submitHandler(selected.subjectid);
+      this.$emit('close');
     },
   },
 };

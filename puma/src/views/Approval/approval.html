@@ -56,7 +56,7 @@
             <input type='submit' class='submit-btn' value='Avaliar proposta'
                 v-on:click='evaluate'/>
         </div>
-        <EvaluateModal v-if="!showModal" v-on:close="evaluate" :subjectArray='subjectArray'></EvaluateModal>
+        <EvaluateModal v-if="!showModal" :submitHandler="submit" v-on:close="evaluate" :subjectArray='subjectArray'></EvaluateModal>
     </div>
 
 </body>

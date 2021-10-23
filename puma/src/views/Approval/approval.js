@@ -12,6 +12,7 @@ export default {
   data() {
     return {
       id: this.$route.params.projId,
+      parentId: this.$route.params.parentSubj,
       responsibleName: '',
       responsiblePhone: '',
       title: '',
@@ -31,11 +32,20 @@ export default {
       this.projExpectedResult = parsedData.expectedresult;
       this.projProblem = parsedData.problem;
     });
+    projectService.getAllSubjects().then((res) => {
+      const parsedData = res.data;
+      this.subjectArray = parsedData;
+      // console.log(res.data);
+    });
   },
   methods: {
     evaluate() {
       this.showModal = !this.showModal;
-      console.log('shit');
+    },
+    submit(subjectId) {
+      projectService.putProposal(this.id, subjectId).then(() => {
+        this.$router.push({ name: 'Evaluate', params: { subjectId: this.parentId } });
+      });
     },
   },
 };

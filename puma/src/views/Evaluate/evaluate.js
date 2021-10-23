@@ -11,17 +11,18 @@ export default {
   name: 'Evaluate',
   data() {
     return {
+      id: this.$route.params.subjectId,
       projs: [],
     };
   },
   created() {
-    projectService.getAllocatedProjects(1).then((res) => {
+    projectService.getAllocatedProjects(this.id).then((res) => {
       this.projs = res.data;
     });
   },
   methods: {
     projDetail(id) {
-      this.$router.push({ name: 'Approval', params: { projId: id } });
+      this.$router.push({ name: 'Approval', params: { projId: id, parentSubj: 1 } });
     },
   },
 };
