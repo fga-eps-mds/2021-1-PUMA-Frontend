@@ -334,5 +334,7 @@ form label {
 }
 .btn{
   color: black;
+  margin-left: 9px;
+  margin-left: 3%;
 }
 </style>
