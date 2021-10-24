@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import dotenv from 'dotenv';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -12,6 +13,8 @@ import ModalDetalhamentoProjeto from './views/modal-detalhamento-projeto.vue';
 import BaseButton from './views/BaseButton.vue';
 
 import environment from './config/environment';
+
+dotenv.config();
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;

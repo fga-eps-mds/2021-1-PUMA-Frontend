@@ -6,15 +6,22 @@ COPY . .
 
 ARG IP_ARG
 
-ENV IP_ADDRESS ${IP_ARG}
+ENV VUE_APP_IP_ADDRESS ${IP_ARG}
 
 ARG env
 
-ENV ENVIRONMENT ${env}
+ENV VUE_APP_ENVIRONMENT ${env}
 
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
+ARG IP_ARG
+
+ENV VUE_APP_IP_ADDRESS ${IP_ARG}
+
+ARG env
+
+ENV VUE_APP_ENVIRONMENT ${env}
 CMD ["nginx", "-g", "daemon off;"]
