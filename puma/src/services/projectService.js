@@ -48,4 +48,16 @@ export default class ProjectService {
       });
     return subjects;
   }
+
+  async putProposalStatus(id, status) {
+    const auth = Cookie.get('PUMA_USER_SESSION');
+    const subjects = await axios.put(`${global.URL_GATEWAY}/project/alocate/${id}/status`,
+      { proposal: { approved: status } },
+      {
+        headers: {
+          auth,
+        },
+      });
+    return subjects;
+  }
 }

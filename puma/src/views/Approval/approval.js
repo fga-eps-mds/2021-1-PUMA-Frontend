@@ -20,7 +20,7 @@ export default {
       projProblem: '',
       knowledgeAreas: ['shonk shonk', 'onk', 'fonk'],
       showModal: true,
-      subjectArray: [{ name: 'onoask' }],
+      subjectArray: [{ name: 'Nenhuma', id: 0 }],
     };
   },
   created() {
@@ -31,19 +31,30 @@ export default {
       this.title = parsedData.name;
       this.projExpectedResult = parsedData.expectedresult;
       this.projProblem = parsedData.problem;
+      this.knowledgeAreas = parsedData.areas;
     });
     projectService.getAllSubjects().then((res) => {
       const parsedData = res.data;
-      this.subjectArray = parsedData;
-      // console.log(res.data);
+      this.subjectArray = this.subjectArray.concat(parsedData);
     });
   },
   methods: {
     evaluate() {
       this.showModal = !this.showModal;
     },
-    submit(subjectId) {
-      projectService.putProposal(this.id, subjectId).then(() => {
+    submitReallocate(subjectId) {
+      if (subjectId > 0) {
+        projectService.putProposal(this.id, subjectId).then(() => {
+          this.$router.push({ name: 'Evaluate', params: { subjectId: this.parentId } });
+        });
+      } else {
+        projectService.putProposalStatus(this.id, false).then(() => {
+          this.$router.push({ name: 'Evaluate', params: { subjectId: this.parentId } });
+        });
+      }
+    },
+    submitApprove() {
+      projectService.putProposalStatus(this.id, true).then(() => {
         this.$router.push({ name: 'Evaluate', params: { subjectId: this.parentId } });
       });
     },

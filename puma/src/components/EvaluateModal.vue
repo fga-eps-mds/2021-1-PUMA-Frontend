@@ -18,7 +18,7 @@
                 type='submit'
                 class='submit-btn yes-button'
                 value='Sim'
-                v-on:click='$emit(`close`)'
+                v-on:click='approveHandler'
               />
             </slot>
           </div>
@@ -43,7 +43,7 @@
             type='submit'
             class='submit-btn submit-button'
             value='Submeter'
-            v-on:click='selectedHandler(selected)'
+            v-on:click='submitHandlerNo(selected)'
           />
         </div>
       </div>
@@ -54,7 +54,7 @@
 <script>
 export default {
   name: 'EvaluateModal',
-  props: ['subjectArray', 'submitHandler'],
+  props: ['subjectArray', 'submitHandlerNo', 'submitHandlerYes'],
   data() {
     return {
       isChooseSubject: false,
@@ -66,8 +66,11 @@ export default {
       this.isChooseSubject = !this.isChooseSubject;
     },
     selectedHandler(selected) {
-      console.log(selected);
-      this.submitHandler(selected.subjectid);
+      this.submitHandlerNo(selected.subjectid);
+      this.$emit('close');
+    },
+    approveHandler() {
+      this.submitHandlerYes();
       this.$emit('close');
     },
   },
