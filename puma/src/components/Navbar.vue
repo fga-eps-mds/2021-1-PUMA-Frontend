@@ -2,10 +2,7 @@
   <div id="nav">
     <a href="/">Home</a> |
     <a href="/about">About</a> |
-    <a href="/register">Register</a> |
     <a class="router-link" href="/projeto/cadastro">Cadastro de projeto</a>
-<!--    <router-link to="/projeto/cadastro"></router-link> |-->
-<!--    <router-link to="/projeto/consulta">Consulta de projetos</router-link>-->
   </div>
 </template>
 

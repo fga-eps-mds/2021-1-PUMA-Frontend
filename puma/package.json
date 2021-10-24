@@ -12,6 +12,7 @@
     "bootstrap": "^3.4.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "dotenv": "^10.0.0",
     "formidable": "^1.2.2",
     "install": "^0.13.0",
     "multer": "^1.4.3",
