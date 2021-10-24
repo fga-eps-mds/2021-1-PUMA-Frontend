@@ -2,7 +2,8 @@
   <div id="nav">
     <a href="/">Home</a> |
     <a href="/about">About</a> |
-    <a class="router-link" href="/projeto/cadastro">Cadastro de projeto</a>
+    <a href="/register">Register</a> |
+    <a href="/projeto/cadastro">Cadastro de projeto</a>
   </div>
 </template>
 
@@ -12,11 +13,11 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 #nav {
-    padding-top: 19px;
-    background-color: #15355e;
-    height: 84px;
+  padding-top: 19px;
+  background-color: #15355e;
+  height: 84px;
 }
 
 #nav a {
