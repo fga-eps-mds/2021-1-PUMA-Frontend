@@ -3,6 +3,7 @@
     <div class='modal-mask'>
       <div class='modal-wrapper'>
         <div v-if='!isChooseSubject' class='modal-container'>
+          <div class='close-x' v-on:click='$emit("close")'>X</div>
           <p>Essa proposta se encaixa na disciplina?</p>
 
           <div class='modal-footer row'>
@@ -11,7 +12,7 @@
                 type='submit'
                 class='submit-btn no-button'
                 value='Não'
-                v-on:click='fuck()'
+                v-on:click='sla()'
               />
 
               <input
@@ -26,6 +27,7 @@
 
         <div v-if='isChooseSubject' class='modal-container choose-subject'>
           <div class='modal-header'>
+          <div class='close-x' v-on:click='$emit("close")'>X</div>
             <p>Em qual disciplina essa proposta se encaixa?</p>
           </div>
 
@@ -62,7 +64,7 @@ export default {
     };
   },
   methods: {
-    fuck() {
+    sla() {
       this.isChooseSubject = !this.isChooseSubject;
     },
     selectedHandler(selected) {
@@ -99,6 +101,14 @@ p {
   align-items: center;
 }
 
+.close-x {
+  cursor: pointer;
+  margin-top: 15px;
+  margin-right: 15px;
+  text-align: right;
+  align-self: flex-end;
+}
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -117,6 +127,7 @@ p {
 }
 
 select {
+  cursor: pointer;
   width: 90%;
   height: 70%;
   padding: 7px;
