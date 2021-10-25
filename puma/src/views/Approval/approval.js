@@ -42,7 +42,8 @@ export default {
     evaluate() {
       this.showModal = !this.showModal;
     },
-    submitReallocate(subjectId) {
+    submitReallocate(subject) {
+      const subjectId = parseInt(subject.subjectid, 10);
       if (subjectId > 0) {
         projectService.putProposal(this.id, subjectId).then(() => {
           this.$router.push({ name: 'Evaluate', params: { subjectId: this.parentId } });

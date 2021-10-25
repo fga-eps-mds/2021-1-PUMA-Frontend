@@ -68,7 +68,7 @@ export default {
       this.isChooseSubject = !this.isChooseSubject;
     },
     selectedHandler(selected) {
-      this.submitHandlerNo(selected.subjectid);
+      this.submitHandlerNo(selected);
       this.$emit('close');
     },
     approveHandler() {
