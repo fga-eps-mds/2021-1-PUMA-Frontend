@@ -73,13 +73,36 @@
       </label>
     </div>
 
-    <div style="float: left" class="form-group" :style="{borderColor: !file.isValid ? 'red' : ''}">
+    <!-- <div style="float: left" class="form-group" :style="{borderColor: !file.isValid ? 'red' : ''}">
       <input
           :disabled = isLoading
           @change="updateFile($event)"
           name="pic" id="file"
           type="file"
       >
+    </div> -->
+    <div align="center" class="form-group">
+      <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
+        <input :disabled = isLoading
+               @change="updateFile($event)"
+               name="pic" id="file"
+               type="file"
+               placeholder="assa">
+        <label for="file" class="mb-3"
+               :style="{color: !file.isValid ? 'red' : ''}"
+               v-if="!file.isValid">
+          Preenchimento obrigatório
+        </label>
+        <p v-if="!this.file.val">
+          Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+        </p>
+        <p v-else-if="this.file.val">
+          {{ file.val.name }}
+        </p>
+        <p v-else style="color: darkblue">
+          Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+        </p>
+      </form>
     </div>
 
     <label for="file" class="mb-3"
