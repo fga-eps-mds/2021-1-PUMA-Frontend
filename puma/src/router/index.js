@@ -38,6 +38,12 @@ const routes = [
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Approval/Approval.vue'),
   },
+  {
+    path: '/home/professor',
+    name: 'HomeProfessor',
+    // eslint-disable-next-line import/no-unresolved
+    component: () => import('@/views/Home/Professor.vue'),
+  },
 ];
 
 const router = new VueRouter({

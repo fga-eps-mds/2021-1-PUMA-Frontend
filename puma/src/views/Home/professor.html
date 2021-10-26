@@ -1,0 +1,17 @@
+<body>
+    <div class='title'>
+        Suas disciplinas
+    </div>
+    <hr>
+<div class='projcard'>
+  <ProjectCard
+    v-for='subj in subjects'
+    font-family='Rubik'
+    class='ocard'
+    v-bind:title='subj.name'
+    v-bind:expectedResult='subj.detail'
+    :picture='subj.picture'
+    v-bind:is_last='subj.is_last'
+    v-on:click.native='subjDetail(id)'/>
+</div>
+</body>
