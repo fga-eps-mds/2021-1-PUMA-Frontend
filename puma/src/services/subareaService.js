@@ -6,9 +6,9 @@
 import axios from '../main';
 
 export default class SubareaService {
-  getSubareas(subject) {
+  getSubareas() {
     return new Promise((resolve, reject) => {
-      axios.get(`${global.URL_GATEWAY}/subareas-conhecimento`, subject).then((response) => {
+      axios.get(`${global.URL_GATEWAY}/subareas-conhecimento`).then((response) => {
         resolve(response);
       }).catch((response) => {
         reject(`/subareas-conhecimento reject: ${response}`);

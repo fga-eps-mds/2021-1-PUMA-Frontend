@@ -1,0 +1,49 @@
+<body>
+    <div>
+        <div class="title-box">{{ greetings }}</div>
+        <form id="discipline-register-form">
+            <div>
+                <div class="input-container">
+                    <input class ="input-text" type="text" id="nomeDisciplina" v-model.trim="nomeDisciplina" placeholder="Nome da Disciplina"/>
+                </div>        
+            </div>
+
+            <div class="in-line">
+                <input type="text" id="turma" v-model="turma" placeholder="Turma"/>
+            </div>
+
+            <div class="in-line">
+                <input type="number" id="anoLetivo" v-model="academicYear" placeholder="Ano Letivo"/>
+            </div>
+
+            <div class="in-line">
+                <input type="number" id="Semestre" v-model="semester" placeholder="Semestre"/>
+            </div>
+
+            <div class="input-container">
+                <input class ="input-text" type="text" id="nomeProfessor" v-model="nameTeacher" placeholder="Nome do Professor"/>
+            </div>
+
+            <div class="input-container">
+                <label>Sub-areas</label>
+                <div class="checkbox-container" v-for="subarea in subareas">
+                    <input type="checkbox" value="testando">
+                    <span>{{subarea}}</span>
+                </div>
+            </div>
+
+            <div class="textarea">
+                <textarea type="text" id="ementaDisciplina" v-model.trim="ementa.val" placeholder="Descreva a ementa da disciplina dentro de 1000 caracteres" maxlength="1000"></textarea>    
+            </div>
+
+            <div class="input-container">
+                <input  class ="input-text" type="password" id="Senha" v-model="password" placeholder="Senha de Acesso (Opcional)">    
+            </div>
+
+            <div>
+                <input type="submit" class="submit-btn" :value="submitButtonText"
+                @click.prevent="submitForm" form="register-form" />
+            </div>
+        </form>
+    </div>
+</body>

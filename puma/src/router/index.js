@@ -25,19 +25,19 @@ const routes = [
   {
     path: '/disciplina',
     name: 'Consulta de Disciplinas',
-    component: () => import('../views/Disciplina/ConsultaDisciplinas.vue'),
+    component: () => import('../views/Subject/ConsultaDisciplinas.vue'),
   },
   {
     path: '/disciplina/:cadastro',
     name: 'Cadastro de Disciplina',
     props: true,
-    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
+    component: () => import('../views/Subject/SubjectRegister/SubjectRegister.vue'),
   },
   {
     path: '/disciplina/:alteracao/:idDisciplina',
     name: 'Alteração de Disciplina',
     props: true,
-    component: () => import('../views/Disciplina/CadastroDisciplina.vue'),
+    component: () => import('../views/Subject/SubjectRegister/SubjectRegister.vue'),
   },
 ];
 
