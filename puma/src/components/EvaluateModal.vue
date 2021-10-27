@@ -81,7 +81,7 @@ export default {
 
 <style scoped>
 p {
-  font-family: rubik, arial;
+  font-family: rubik, Sans-serif;
   font-size: 20px;
 }
 
