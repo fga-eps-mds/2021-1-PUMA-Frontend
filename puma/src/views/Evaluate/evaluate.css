@@ -1,7 +1,7 @@
 .title {
     display: flex;
     color: black;
-    font-family: rubik, arial;
+    font-family: rubik, Sans-serif;
     font-weight: 300;
     font-size: 2em;
     justify-content: left;

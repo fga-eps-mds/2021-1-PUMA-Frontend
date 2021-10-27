@@ -37,7 +37,7 @@ export default {
   margin-right: 15px;
 
   color: #787878;
-  font-family: rubik, arial;
+  font-family: rubik, Sans-serif;
   text-align: left;
 
   overflow: hidden;
