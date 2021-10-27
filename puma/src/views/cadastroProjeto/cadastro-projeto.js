@@ -53,6 +53,7 @@ export default {
           knowledgeareas: aux,
         };
         projectService.addProject(projectObject).then(async (response) => {
+          
           this.isLoading = true;
           const projectId = response.data.data.response;
           const fileByteArray = await this.getFileByteContent();
@@ -63,14 +64,14 @@ export default {
           };
           projectService.addFile(file).then((resp) => {
             this.isLoading = false;
-            console.log(resp);
+            
           }).catch(() => {
             this.isLoading = false;
             alert('erro no cadastro de arquivo');
           });
         }).catch((response) => {
           this.isLoading = false;
-          console.log(response);
+          
           alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
         });
       }
