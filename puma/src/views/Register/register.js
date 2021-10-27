@@ -112,29 +112,22 @@ export default {
       if (this.isRegister) {
         if (evaluateRegister(newUser, this.hasMatricula, this.isJuridical, this.isPhysical)) {
           this.isLoading = true;
-          userService.registerUser(newUser).then((response) => {
+          userService.registerUser(newUser).then(() => {
             this.isLoading = false;
             this.isRegister = false;
-            console.log('then user register');
-            console.log(response);
             alert('Cadastro feito com sucesso!');
-          }).catch((response) => {
+          }).catch(() => {
             this.isLoading = false;
-            console.log('catch user register');
-            console.log(response);
             alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
           });
         }
       } else if (evaluateLogin(newUser)) {
         this.isLoading = true;
-        userService.logUserIn(newUser).then((response) => {
-          console.log('then user login');
-          console.log(response);
+        userService.logUserIn(newUser).then(() => {
+          alert('Login feito com sucesso!');
           this.isLoading = false;
-        }).catch((response) => {
+        }).catch(() => {
           this.isLoading = false;
-          console.log('catch user login');
-          console.log(response);
           alert('Uma falha ocorreu ao fazer login. Tente novamente.');
         });
       }
