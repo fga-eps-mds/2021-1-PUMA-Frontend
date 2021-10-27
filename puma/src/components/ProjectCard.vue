@@ -1,6 +1,6 @@
 <template>
   <div class='projectCard'>
-    <img class='picture' :src='picture'>
+    <img class='picture' alt='projPicture' :src='picture'>
     <div class='text'>
       <div class='cardTitle'>
         {{ title }}
@@ -37,7 +37,7 @@ export default {
   margin-right: 15px;
 
   color: #787878;
-  font-family: rubik;
+  font-family: rubik, arial;
   text-align: left;
 
   overflow: hidden;

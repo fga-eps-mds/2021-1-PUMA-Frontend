@@ -35,7 +35,6 @@ export default class UserService {
     return new Promise((resolve, reject) => {
       axios.post(`${global.URL_GATEWAY}/user/login`, newUser).then((response) => {
         if (response.data.auth) {
-          console.log(response.data.auth);
           Cookie.set('PUMA_USER_SESSION', response.data.token, { expires: 7, path: '/' });
           resolve(`/login resolve: ${response}`);
         } else {
