@@ -1,0 +1,68 @@
+<body>
+    <div class='container'>
+        <div class='title lighter'>
+            Avaliar proposta
+        </div>
+    </div>
+
+    <hr>
+
+    <div class='column container'>
+
+        <div class='row bold proposalTitle'>
+            {{title}}
+        </div>
+        <div class='row compositeLine'>
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column '>Nome do Agente Externo:&nbsp;</p>
+                    <p class='lighter column'>{{responsibleName}}</p>
+                </div>
+            </div>
+
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column'>Telefone:&nbsp;</p>
+                    <p class='lighter column'>{{responsiblePhone}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class='row bold label'>
+            <p>Problemas a serem resolvidos</p>
+        </div>
+        <div class='row'>
+            <p>{{projProblem}}</p>
+        </div>
+
+        <div class='row bold label'>
+            <p>Resultado esperado</p>
+        </div>
+        <div class='row'>
+            <p>{{projExpectedResult}}</p>
+        </div>
+
+        <div class='row bold label'>
+            <p>Áreas do conhecimento</p>
+        </div>
+        <div class='row'>
+            <ul class=''>
+                <li class='' v-for='area in knowledgeAreas'>{{area.knowledgearea}} - {{area.description}}</li>
+
+            </ul>
+        </div>
+
+        <div class='row buttonRow'>
+            <input type='submit' class='submit-btn' value='Avaliar proposta'
+                v-on:click='evaluate'/>
+        </div>
+        <EvaluateModal
+          v-if="!showModal"
+          :submitHandlerNo="submitReallocate"
+          :submitHandlerYes="submitApprove"
+          v-on:close="evaluate"
+          :subjectArray='subjectArray'
+        />
+    </div>
+
+</body>
