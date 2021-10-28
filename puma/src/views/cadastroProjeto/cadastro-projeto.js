@@ -21,7 +21,7 @@ export default {
   },
   beforeCreate() {
     projectService.getKnowledgeAreas().then((response) => {
-      response.data.data.response.forEach((areaConhecimento) => {
+      response.data.response.forEach((areaConhecimento) => {
         this.areasConhecimento.push(areaConhecimento);
       });
     });

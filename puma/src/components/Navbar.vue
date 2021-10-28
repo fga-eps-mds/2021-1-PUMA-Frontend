@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/register">Register</router-link> |
-    <router-link to="/evaluate">Evaluate</router-link> | 
+    <router-link to="/evaluate">Evaluate</router-link> |
     <router-link to="/projeto/cadastro">Cadastro de Proposta</router-link>
   </div>
 </template>

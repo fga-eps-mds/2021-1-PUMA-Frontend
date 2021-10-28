@@ -9,7 +9,7 @@ import axios from '@/main.js';
 export default class ProjectService {
   addProject(project) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/projeto/cadastro`, project).then((response) => {
+      axios.post(`${global.URL_GATEWAY}/project`, project).then((response) => {
         resolve(response);
       }).catch((response) => {
         reject(`/projeto/cadastro reject: ${response}`);
@@ -19,7 +19,7 @@ export default class ProjectService {
 
   addFile(file) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/upload`, file).then((response) => {
+      axios.post(`${global.URL_GATEWAY}/project/upload`, file).then((response) => {
         resolve(response);
       }).catch(() => {
         reject('erro no upload do arquivo');
@@ -29,7 +29,7 @@ export default class ProjectService {
 
   deleteProject(idprojeto) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/projeto/deletar`, idprojeto).then((response) => {
+      axios.post(`${global.URL_GATEWAY}/project/${idprojeto}`).then((response) => {
         resolve(response);
       }).catch(() => {
         reject('erro na deleção do arquivo');
