@@ -4,21 +4,6 @@
 /* eslint-disable import/no-unresolved */
 import * as Cookie from 'js-cookie';
 import axios from '@/main.js';
-// public get userValue(): User {
-//   return this.userSubject.value;
-// }
-
-// public get userSession(): string {
-// return Cookie.get('USER_SESSION');
-// }
-
-// public get isLoggedIn(): boolean {
-// return Cookie.get('USER_SESSION') ? (Cookie.get('USER_SESSION') != '' ? true : false) : false;
-// }
-
-// public emailIsValid (email) {
-//   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-// }
 
 export default class UserService {
   registerUser(newUser) {
@@ -41,8 +26,17 @@ export default class UserService {
           reject(`/login reject: ${response}`);
         }
       }).catch((response) => {
+        console.log(response);
         reject(`/login reject: ${response}`);
       });
     });
+  }
+
+  logUserOut() {
+    Cookie.remove('PUMA_USER_SESSION');
+  }
+
+  isUserLoggedIn() {
+    return Cookie.get('PUMA_USER_SESSION') !== undefined;
   }
 }

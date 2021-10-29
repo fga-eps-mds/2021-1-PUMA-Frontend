@@ -4,17 +4,28 @@
     <div id='dropdown'>
       <img class='nav-item' id='menu-button' src='../assets/navbarMenu.svg' />
       <div class="dropdown-content">
-        <a href="#">Meu perfil</a>
-        <a href="#">Configurações</a>
-        <a href="#">Sair</a>
+        <a v-on:click='logOut()'>Sair</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import UserService from '../services/userService';
+
+const userService = new UserService();
+
 export default {
   name: 'Navbar',
+  methods: {
+    logOut() {
+      userService.logUserOut();
+      console.log('fuck');
+      // this.$forceUpdate();
+      this.$router.push('/register');
+      this.$router.go();
+    },
+  },
 };
 </script>
 
@@ -45,6 +56,7 @@ div {
 
 #dropdown {
   margin-top: 5px;
+  cursor: pointer;
 }
 
 .dropdown-content a:hover {

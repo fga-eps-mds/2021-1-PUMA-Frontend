@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import UserService from '../services/userService';
+
+const userService = new UserService();
 
 Vue.use(VueRouter);
 
@@ -9,6 +12,9 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/about',
@@ -23,6 +29,9 @@ const routes = [
     name: 'Register',
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Register/Register.vue'),
+    meta: {
+      guest: true,
+    },
 
   },
   {
@@ -30,6 +39,9 @@ const routes = [
     name: 'Evaluate',
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Evaluate/Evaluate.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/approval/:projId',
@@ -37,12 +49,18 @@ const routes = [
     props: true,
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Approval/Approval.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/home/professor',
     name: 'HomeProfessor',
     // eslint-disable-next-line import/no-unresolved
     component: () => import('@/views/Home/Professor.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 
@@ -50,6 +68,27 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!userService.isUserLoggedIn()) {
+      next({
+        path: '/register',
+        params: { nextUrl: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((record) => record.meta.guest)) {
+    if (!userService.isUserLoggedIn()) {
+      next();
+    } else {
+      next({ path: '/' });
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

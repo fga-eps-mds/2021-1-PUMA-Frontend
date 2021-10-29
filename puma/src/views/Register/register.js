@@ -124,8 +124,8 @@ export default {
       } else if (evaluateLogin(newUser)) {
         this.isLoading = true;
         userService.logUserIn(newUser).then(() => {
-          alert('Login feito com sucesso!');
           this.isLoading = false;
+          this.$router.push('/');
         }).catch(() => {
           this.isLoading = false;
           alert('Uma falha ocorreu ao fazer login. Tente novamente.');
