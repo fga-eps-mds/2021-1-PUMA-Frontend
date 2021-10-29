@@ -1,7 +1,7 @@
-<template>
+  <template>
   <div id="app">
   <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,900" rel="stylesheet">
-    <Navbar />
+    <Navbar v-if='isloggedIn'/>
     <router-view />
   </div>
 </template>
@@ -9,10 +9,29 @@
 <script>
 // eslint-disable-next-line import/no-unresolved
 import Navbar from '@/components/Navbar.vue';
+import UserService from './services/userService';
+
+const userService = new UserService();
 
 export default {
   components: {
     Navbar,
+  },
+  methods: {
+    updateSessionStatus() {
+      this.isloggedIn = userService.isUserLoggedIn();
+    },
+  },
+  data() {
+    return {
+      isloggedIn: false,
+    };
+  },
+  created() {
+    this.updateSessionStatus();
+  },
+  updated() {
+    this.updateSessionStatus();
   },
 };
 </script>

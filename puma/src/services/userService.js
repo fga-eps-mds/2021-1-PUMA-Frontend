@@ -4,21 +4,6 @@
 /* eslint-disable import/no-unresolved */
 import * as Cookie from 'js-cookie';
 import axios from '@/main.js';
-// public get userValue(): User {
-//   return this.userSubject.value;
-// }
-
-// public get userSession(): string {
-// return Cookie.get('USER_SESSION');
-// }
-
-// public get isLoggedIn(): boolean {
-// return Cookie.get('USER_SESSION') ? (Cookie.get('USER_SESSION') != '' ? true : false) : false;
-// }
-
-// public emailIsValid (email) {
-//   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-// }
 
 export default class UserService {
   registerUser(newUser) {
@@ -35,6 +20,7 @@ export default class UserService {
     return new Promise((resolve, reject) => {
       axios.post(`${global.URL_GATEWAY}/user/login`, newUser).then((response) => {
         if (response.data.auth) {
+          Cookie.set('PUMA_USER_TYPE', response.data.type, { expires: 7, path: '/' });
           Cookie.set('PUMA_USER_SESSION', response.data.token, { expires: 7, path: '/' });
           resolve(`/login resolve: ${response}`);
         } else {
@@ -44,5 +30,14 @@ export default class UserService {
         reject(`/login reject: ${response}`);
       });
     });
+  }
+
+  logUserOut() {
+    Cookie.remove('PUMA_USER_TYPE');
+    Cookie.remove('PUMA_USER_SESSION');
+  }
+
+  isUserLoggedIn() {
+    return Cookie.get('PUMA_USER_SESSION') !== undefined;
   }
 }

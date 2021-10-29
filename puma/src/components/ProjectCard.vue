@@ -1,6 +1,17 @@
 <template>
-  <div class='projectCard'>
-    <img class='picture' alt='projPicture' :src='picture'>
+  <div v-if='is_last' class='projectLast'>
+    <div class='text'>
+      <div class='cardLast'>
+        <div>
+          <p>+</p>
+        </div>
+        <p>vamos de next</p>
+      </div>
+    </div>
+  </div>
+
+  <div v-else class='projectCard'>
+  <img class='picture' alt='projPicture' :src='picture'>
     <div class='text'>
       <div class='cardTitle'>
         {{ title }}
@@ -16,7 +27,10 @@
 <script>
 export default {
   name: 'ProjectCard',
-  props: ['picture', 'title', 'expectedResult', 'font-family'],
+  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last'],
+  created() {
+    console.log(this.picture);
+  },
 };
 </script>
 
@@ -26,6 +40,14 @@ export default {
   width: 349px;
   border: 0.1em solid black;
   border-radius: 0.8em;
+}
+
+.projectLast {
+  height: 225px;
+  width: 349px;
+  border: 0.1em solid black;
+  border-radius: 0.8em;
+  background-color: #15355E;
 }
 
 .text {
@@ -49,6 +71,14 @@ export default {
   flex-direction: line;
   font-size: 19px;
   justify-content: flex-start;
+}
+
+.cardLast {
+  display: flex;
+  flex-direction: column;
+  font-size: 19px;
+  justify-content: center;
+  color: #ffffff;
 }
 
 .expectedResult {
