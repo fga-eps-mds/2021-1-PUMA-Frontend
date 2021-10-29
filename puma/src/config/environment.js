@@ -1,5 +1,11 @@
 module.exports = {
   configUser: () => {
-    global.URL_GATEWAY = 'http://localhost:3004';
+    if (process.env.VUE_APP_ENVIRONMENT === 'dev') {
+      /* eslint-disable  semi */
+      global.URL_GATEWAY = `http://${process.env.VUE_APP_IP_ADDRESS}:3004`
+    } else if (process.env.VUE_APP_ENVIRONMENT === 'prod') {
+      /* eslint-disable  semi */
+      global.URL_GATEWAY = `http://${process.env.VUE_APP_IP_ADDRESS}:3004`
+    }
   },
 };
