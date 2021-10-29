@@ -53,15 +53,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-  {
-    path: '/home/professor',
-    name: 'HomeProfessor',
-    // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Home/Professor.vue'),
-    meta: {
-      requiresAuth: true,
-    },
-  },
 ];
 
 const router = new VueRouter({

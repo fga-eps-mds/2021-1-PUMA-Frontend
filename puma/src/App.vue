@@ -17,24 +17,21 @@ export default {
   components: {
     Navbar,
   },
+  methods: {
+    updateSessionStatus() {
+      this.isloggedIn = userService.isUserLoggedIn();
+    },
+  },
   data() {
     return {
       isloggedIn: false,
     };
   },
   created() {
-    if (userService.isUserLoggedIn()) {
-      this.isloggedIn = true;
-    } else {
-      this.isloggedIn = false;
-    }
+    this.updateSessionStatus();
   },
   updated() {
-    if (userService.isUserLoggedIn()) {
-      this.isloggedIn = true;
-    } else {
-      this.isloggedIn = false;
-    }
+    this.updateSessionStatus();
   },
 };
 </script>

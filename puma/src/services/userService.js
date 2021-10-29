@@ -27,7 +27,6 @@ export default class UserService {
           reject(`/login reject: ${response}`);
         }
       }).catch((response) => {
-        console.log(response);
         reject(`/login reject: ${response}`);
       });
     });

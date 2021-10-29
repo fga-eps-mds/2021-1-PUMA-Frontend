@@ -1,8 +1,14 @@
 <template>
   <div id='nav'>
-    <img class='nav-item' id='logo' src='../assets/navbarLogo.svg' />
+    <img
+      v-on:click='$router.push({ name: `Home` })'
+      class='nav-item'
+      id='logo'
+      src='../assets/navbarLogo.svg'
+      alt='PUMA'
+    />
     <div id='dropdown'>
-      <img class='nav-item' id='menu-button' src='../assets/navbarMenu.svg' />
+      <img class='nav-item' id='menu-button' src='../assets/navbarMenu.svg' alt='|||' />
       <div class="dropdown-content">
         <a v-on:click='logOut()'>Sair</a>
       </div>
@@ -20,8 +26,6 @@ export default {
   methods: {
     logOut() {
       userService.logUserOut();
-      console.log('fuck');
-      // this.$forceUpdate();
       this.$router.push('/register');
       this.$router.go();
     },
@@ -81,6 +85,7 @@ div {
 
 #logo {
   height: 18px;
+  cursor: pointer;
 }
 
 #menu {
