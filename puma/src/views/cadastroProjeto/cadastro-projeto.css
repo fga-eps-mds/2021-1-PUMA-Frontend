@@ -1,6 +1,5 @@
-h2 {
-    margin-top: 50px;
-    margin-bottom: 20px;
+.title {
+  justify-content: center;
 }
 h3{
   font-size: 18px;

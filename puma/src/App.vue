@@ -1,7 +1,10 @@
   <template>
-  <div id="app">
-  <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,900" rel="stylesheet">
-    <Navbar v-if='isloggedIn'/>
+  <div id='app'>
+    <link
+      href='https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,900'
+      rel='stylesheet'
+    />
+    <Navbar v-if='isloggedIn' />
     <router-view />
   </div>
 </template>
@@ -50,6 +53,7 @@ body {
 }
 
 input,
+textarea,
 select {
   border-radius: 7px;
   font-size: 1.1em;
@@ -78,16 +82,27 @@ select {
 }
 
 .column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .flex1 {
-    flex: 1;
+  flex: 1;
+}
+
+.title {
+  display: flex;
+  color: black;
+  font-family: rubik, Sans-serif;
+  font-weight: 300;
+  font-size: 2em;
+  justify-content: left;
+  margin-top: 1.7em;
+  margin-left: 3.5em;
 }
 </style>
