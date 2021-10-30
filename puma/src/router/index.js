@@ -53,6 +53,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '/projeto/cadastro',
+    name: 'Cadastro de Projeto',
+    component: () => import('../views/cadastroProjeto/cadastro-projeto.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({

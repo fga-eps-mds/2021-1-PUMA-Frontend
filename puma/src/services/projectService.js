@@ -59,4 +59,44 @@ export default class ProjectService {
       });
     return subjects;
   }
+
+  addProject(project) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${global.URL_GATEWAY}/project`, project).then((response) => {
+        resolve(response);
+      }).catch((response) => {
+        reject(`/projeto/cadastro reject: ${response}`);
+      });
+    });
+  }
+
+  addFile(file) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${global.URL_GATEWAY}/project/upload`, file).then((response) => {
+        resolve(response);
+      }).catch(() => {
+        reject('erro no upload do arquivo');
+      });
+    });
+  }
+
+  deleteProject(idprojeto) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${global.URL_GATEWAY}/project/${idprojeto}`).then((response) => {
+        resolve(response);
+      }).catch(() => {
+        reject('erro na deleção do arquivo');
+      });
+    });
+  }
+
+  getKnowledgeAreas() {
+    return new Promise((resolve, reject) => {
+      axios.get(`${global.URL_GATEWAY}/areas-conhecimento`).then((response) => {
+        resolve(response);
+      }).catch(() => {
+        reject('erro na deleção do arquivo');
+      });
+    });
+  }
 }
