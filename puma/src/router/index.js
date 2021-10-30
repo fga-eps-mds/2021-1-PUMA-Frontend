@@ -23,20 +23,20 @@ const routes = [
   {
     path: '/projeto/cadastro',
     name: 'Cadastro de Projeto',
-    component: () => import('../views/cadastroProjeto/cadastro-projeto.vue'),
+    component: () => import('../views/cadastro-projeto/cadastro-projeto.vue'),
   },
   {
     path: '/evaluate/:subjectId',
     name: 'Evaluate',
     // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Evaluate/Evaluate.vue'),
+    component: () => import('../views/Evaluate/Evaluate.vue'),
   },
   {
     path: '/approval/:projId',
     name: 'Approval',
     props: true,
     // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Approval/Approval.vue'),
+    component: () => import('../views/Approval/Approval.vue'),
   },
 ];
 
