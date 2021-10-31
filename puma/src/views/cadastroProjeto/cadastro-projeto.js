@@ -1,4 +1,3 @@
-import axios from '../../main';
 import ProjectService from '../../services/projectService';
 
 const projectService = new ProjectService();
@@ -8,6 +7,7 @@ export default {
   name: 'ProjectRegister',
   data() {
     return {
+      fonk: '',
       titulo: { val: '', isValid: true },
       descricao: { val: '', isValid: true },
       resultadoEsperado: { val: '', isValid: true },
@@ -17,7 +17,6 @@ export default {
       isLoading: false,
       areasConhecimento: [],
       selectedAreasConhecimento,
-      fonk: true,
       areasConhecimentoSelecionadas: { val: selectedAreasConhecimento, isValid: true },
       areasConhecimentoObject: [],
     };
@@ -26,7 +25,6 @@ export default {
     projectService.getKnowledgeAreas().then((response) => {
       response.data.response.forEach((areaConhecimento) => {
         this.areasConhecimento.push(areaConhecimento);
-        // this.areasConhecimento.push(areaConhecimento);
       });
     });
   },
@@ -41,59 +39,62 @@ export default {
       this.areasConhecimentoSelecionadas.val = selectedAreasConhecimento;
     },
     whoAmI(lel) {
-      console.log(selectedAreasConhecimento);
-      this.fonk = !this.fonk;
-      if (this.selectedAreasConhecimento.includes(lel)) {
+      if (this.areasConhecimentoSelecionadas.val.includes(lel)) {
         return ('fuck');
       }
       return ('notfuck');
     },
     submitForm() {
-      if (this.validateFormData()) {
-        this.areasConhecimentoObject = [];
-        this.areasConhecimentoSelecionadas.val.forEach((areaConhecimento) => {
-          this.areasConhecimento.forEach((area) => {
-            if (area.knowledgearea === areaConhecimento) {
-              // eslint-disable-next-line max-len
-              this.areasConhecimentoObject.push({ knowledgearea: area.knowledgearea, knoledgeareaid: area.knoledgeareaid, selected: false });
-            }
-          });
+      if (!this.validateFormData()) {
+        alert('Preencha todos os campos, selecione pelo menos uma área de conhecimento e submeta um arquivo.');
+        return;
+      }
+      this.areasConhecimentoObject = [];
+      this.areasConhecimentoSelecionadas.val.forEach((areaConhecimento) => {
+        this.areasConhecimento.forEach((area) => {
+          if (area.knowledgeareaid === areaConhecimento) {
+            this.areasConhecimentoObject.push({
+              knowledgearea: area.knowledgearea,
+              knowledgeareaid: area.knowledgeareaid,
+              selected: false,
+            });
+          }
         });
-        const aux = [];
-        this.areasConhecimentoObject.forEach((area) => {
-          aux.push({ knowledgearea: area.knowledgearea, knoledgeareaid: area.knoledgeareaid });
-        });
-        const projectObject = {
-          name: this.titulo.val,
-          problem: this.descricao.val,
-          expectedresult: this.resultadoEsperado.val,
-          status: 'Em alocacao',
-          subjectid: 1,
-          userid: 1,
-          isLoading: false,
-          knowledgeareas: aux,
+      });
+      const aux = [];
+      this.areasConhecimentoObject.forEach((area) => {
+        aux.push({ knowledgearea: area.knowledgearea, knowledgeareaid: area.knowledgeareaid });
+      });
+      const projectObject = {
+        name: this.titulo.val,
+        problem: this.descricao.val,
+        expectedresult: this.resultadoEsperado.val,
+        status: 'Em alocacao',
+        subjectid: 1,
+        userid: 1,
+        isLoading: false,
+        knowledgeareas: aux,
+      };
+      projectService.addProject(projectObject).then(async (response) => {
+        this.isLoading = true;
+        const projectId = response.data.data.response;
+        const fileByteArray = await this.getFileByteContent();
+        const file = {
+          filename: this.file.val.name,
+          bytecontent: fileByteArray,
+          projectid: projectId,
         };
-        projectService.addProject(projectObject).then(async (response) => {
-          this.isLoading = true;
-          const projectId = response.data.data.response;
-          const fileByteArray = await this.getFileByteContent();
-          const file = {
-            filename: this.file.val.name,
-            bytecontent: fileByteArray,
-            projectid: projectId,
-          };
-          projectService.addFile(file).then(() => {
-            this.isLoading = false;
-          }).catch(() => {
-            this.isLoading = false;
-            alert('erro no cadastro de arquivo');
-          });
+        projectService.addFile(file).then(() => {
+          this.isLoading = false;
         }).catch(() => {
           this.isLoading = false;
-
-          alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
+          alert('erro no cadastro de arquivo');
         });
-      }
+      }).catch(() => {
+        this.isLoading = false;
+
+        alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
+      });
     },
     updateFile(event) {
       if (!event.target.files[0]) {
@@ -124,19 +125,10 @@ export default {
         };
       });
     },
-    downloadFile() {
-      axios.get(`http://localhost:3000/projeto/visualizar-arquivo/${13}`).then((response) => {
-        const byteArray = new Uint8Array(response.data[0].bytecontent.data);
-        const blob = new Blob([byteArray], { type: 'application/octet-stream' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = response.data[0].filename;
-        link.click();
-      });
-    },
     validateFormData() {
       this.formIsValid = true;
       this.titulo.isValid = this.titulo.val;
+      this.titulo.isValid = true;
       this.descricao.isValid = this.descricao.val;
       this.resultadoEsperado.isValid = this.resultadoEsperado.val;
       this.file.isValid = this.file.val;

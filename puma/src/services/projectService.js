@@ -65,6 +65,8 @@ export default class ProjectService {
       axios.post(`${global.URL_GATEWAY}/project`, project).then((response) => {
         resolve(response);
       }).catch((response) => {
+        console.log('fuckme');
+        console.log(response);
         reject(`/projeto/cadastro reject: ${response}`);
       });
     });

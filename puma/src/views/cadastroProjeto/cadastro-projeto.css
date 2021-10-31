@@ -61,6 +61,14 @@ input[type="checkbox"] {
   margin: 0 4px 0 0;
 }
 
+input[type="file"] {
+  border-radius: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0px;
+}
+
 .fuck {
   appearance: none;
   background-color: #F7DB36;
@@ -98,7 +106,7 @@ form p {
   color: red;
   font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   position: relative;
-  top: -173px;
+  top: -220px;
   font-size: 20px;
 }
 form label {
