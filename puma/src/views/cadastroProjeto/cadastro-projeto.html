@@ -1,48 +1,50 @@
 <body>
   <div class='title'>
-    {{operacao === 'visualizar'?'Visualização de Projeto':'Novo Projeto'}}
-</div>
-<hr>
-  <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text"
-    id="titulo" placeholder="Qual é o título da proposta de projeto?" @blur="validateFormInput('titulo')"
-    @input="validateFormInput('titulo')" :disabled=isLoading>
-  <p  v-if="!titulo.isValid" :style="{color: !titulo.val ? 'red' : ''}">Preenchimento obrigatório</p>
+    {{operacao === 'visualizar'?'Visualização de Projeto':'Nova proposta'}}
+  </div>
 
-  <textarea :style="{borderColor: !descricao.isValid ? 'red' : ''}" class="form-control"
-    id="descricao" placeholder="Qual a proposta do projeto?" rows="7" maxlength="10000"
-    @blur="validateFormInput('descricao')" @input="validateFormInput('descricao')" :disabled=isLoading>
-    </textarea>
-  <p style="float: left" v-if="!descricao.isValid" :style="{color: !descricao.val ? 'red' : ''}">
-    Preenchimento obrigatório
-  </p>
+  <div class='forms'>
+    <input :style="{borderColor: !titulo.isValid ? 'red' : ''}" type="text" id="titulo"
+      placeholder="Qual é o título da proposta de projeto?" @blur="validateFormInput('titulo')"
+      @input="validateFormInput('titulo')" :disabled=isLoading>
+    <p v-if="!titulo.isValid" :style="{color: !titulo.val ? 'red' : ''}">Preenchimento obrigatório</p>
+  
+    <textarea :style="{borderColor: !descricao.isValid ? 'red' : ''}" id="descricao"
+      placeholder="Qual a proposta do projeto?" rows="7" maxlength="10000" @blur="validateFormInput('descricao')"
+      @input="validateFormInput('descricao')" :disabled=isLoading>
+      </textarea>
+    <p style="float: left" v-if="!descricao.isValid" :style="{color: !descricao.val ? 'red' : ''}">
+      Preenchimento obrigatório
+    </p>
+  
+    <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}" id="descricao"
+      placeholder="Qual resultado espera ter?" rows="5" @blur="validateFormInput('resultadoEsperado')"
+      @input="validateFormInput('resultadoEsperado')" :disabled=isLoading>
+          </textarea>
+    <p v-if="!resultadoEsperado.isValid" :style="{color: !resultadoEsperado.val ? 'red' : ''}">
+      Preenchimento obrigatório
+    </p>
 
-  <textarea :style="{borderColor: !resultadoEsperado.isValid ? 'red' : ''}" id="descricao" placeholder="Qual resultado espera ter?" rows="5"
-    @blur="validateFormInput('resultadoEsperado')" @input="validateFormInput('resultadoEsperado')" :disabled=isLoading>
-        </textarea>
-  <p v-if="!resultadoEsperado.isValid"
-    :style="{color: !resultadoEsperado.val ? 'red' : ''}">
-    Preenchimento obrigatório
-  </p>
-
-  <div v-if="areasConhecimento.length">
+    
+    <div v-if="areasConhecimento.length">
     <h3>
       A quais áreas de conhecimento o projeto pertence?
     </h3>
   </div>
-
-  <div v-for="areaConhecimento in areasConhecimento" :key="areaConhecimento.id" id="checklistArea">
-    <input :value="areaConhecimento.knowledgearea" type="checkbox" v-model="areasConhecimentoSelecionadas.val"
-      @change="validateFormInput('areaConhecimento')">
-    <label :for="areaConhecimento.id"> {{areaConhecimento.knowledgearea}}</label>
+  
+  <div class="bubblesContainer">
+    <div v-for="areaConhecimento in areasConhecimento" :key="areaConhecimento.id" id="checklistArea">
+      <div id="categoryBubble" :class='whoAmI(areaConhecimento.knowledgeareaid)' @click="beGay(areaConhecimento.knowledgeareaid)">{{areaConhecimento.knowledgearea}}</div>
+    </div>
   </div>
+</div>
+    
 
-
-    <label id="negativeKnAreaForm"
-      style="margin-bottom: 10px;margin-bottom: 7px;position: relative;top: -11px;left: -33px;"
-      v-if="!areasConhecimentoSelecionadas.isValid"
-      :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}">
-      Selecione ao menos uma área de conhecimento
-    </label>
+  <label id="negativeKnAreaForm"
+    style="margin-bottom: 10px;margin-bottom: 7px;position: relative;top: -11px;left: -33px;"
+    v-if="!areasConhecimentoSelecionadas.isValid" :style="{color: !areasConhecimentoSelecionadas.isValid ? 'red' : ''}">
+    Selecione ao menos uma área de conhecimento
+  </label>
 
   <div align="center">
     <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload"

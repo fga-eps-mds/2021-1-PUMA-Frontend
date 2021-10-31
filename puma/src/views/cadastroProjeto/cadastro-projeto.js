@@ -2,6 +2,7 @@ import axios from '../../main';
 import ProjectService from '../../services/projectService';
 
 const projectService = new ProjectService();
+let selectedAreasConhecimento = [];
 
 export default {
   name: 'ProjectRegister',
@@ -15,7 +16,9 @@ export default {
       file: { val: '', isValid: true },
       isLoading: false,
       areasConhecimento: [],
-      areasConhecimentoSelecionadas: { val: [], isValid: true },
+      selectedAreasConhecimento,
+      fonk: true,
+      areasConhecimentoSelecionadas: { val: selectedAreasConhecimento, isValid: true },
       areasConhecimentoObject: [],
     };
   },
@@ -23,10 +26,28 @@ export default {
     projectService.getKnowledgeAreas().then((response) => {
       response.data.response.forEach((areaConhecimento) => {
         this.areasConhecimento.push(areaConhecimento);
+        // this.areasConhecimento.push(areaConhecimento);
       });
     });
   },
   methods: {
+    beGay(lel) {
+      if (selectedAreasConhecimento.includes(lel)) {
+        selectedAreasConhecimento = selectedAreasConhecimento
+          .filter((value) => value !== lel);
+      } else {
+        selectedAreasConhecimento.push(lel);
+      }
+      this.areasConhecimentoSelecionadas.val = selectedAreasConhecimento;
+    },
+    whoAmI(lel) {
+      console.log(selectedAreasConhecimento);
+      this.fonk = !this.fonk;
+      if (this.selectedAreasConhecimento.includes(lel)) {
+        return ('fuck');
+      }
+      return ('notfuck');
+    },
     submitForm() {
       if (this.validateFormData()) {
         this.areasConhecimentoObject = [];
@@ -34,7 +55,7 @@ export default {
           this.areasConhecimento.forEach((area) => {
             if (area.knowledgearea === areaConhecimento) {
               // eslint-disable-next-line max-len
-              this.areasConhecimentoObject.push({ knowledgearea: area.knowledgearea, knoledgeareaid: area.knoledgeareaid });
+              this.areasConhecimentoObject.push({ knowledgearea: area.knowledgearea, knoledgeareaid: area.knoledgeareaid, selected: false });
             }
           });
         });
@@ -121,10 +142,10 @@ export default {
       this.file.isValid = this.file.val;
       this.areasConhecimentoSelecionadas.isValid = this.areasConhecimentoSelecionadas.val.length;
       if (!this.titulo.isValid
-          || !this.descricao.isValid
-          || !this.resultadoEsperado.isValid
-          || !this.file.isValid
-          || !this.areasConhecimentoSelecionadas.isValid
+        || !this.descricao.isValid
+        || !this.resultadoEsperado.isValid
+        || !this.file.isValid
+        || !this.areasConhecimentoSelecionadas.isValid
       ) {
         this.formIsValid = false;
       }
