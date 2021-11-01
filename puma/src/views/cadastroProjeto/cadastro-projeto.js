@@ -65,6 +65,7 @@ export default {
       this.areasConhecimentoObject.forEach((area) => {
         aux.push({ knowledgearea: area.knowledgearea, knowledgeareaid: area.knowledgeareaid });
       });
+      console.log(this.titulo.val);
       const projectObject = {
         name: this.titulo.val,
         problem: this.descricao.val,

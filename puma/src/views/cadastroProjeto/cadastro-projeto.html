@@ -4,7 +4,7 @@
   </div>
 
   <div class='forms'>
-    <input type="text" id="titulo"
+    <input type="text" id="titulo" v-model="titulo.val"
       placeholder="Qual é o título da proposta de projeto?" :disabled=isLoading>
   
     <textarea id="descricao" placeholder="Qual a proposta do projeto?" rows="7" v-model="descricao.val"

@@ -62,7 +62,8 @@ export default class ProjectService {
 
   addProject(project) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/project`, project).then((response) => {
+      const auth = Cookie.get('PUMA_USER_SESSION');
+      axios.post(`${global.URL_GATEWAY}/project`, project, { headers: { auth } }).then((response) => {
         resolve(response);
       }).catch((response) => {
         console.log('fuckme');
@@ -74,7 +75,8 @@ export default class ProjectService {
 
   addFile(file) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/project/upload`, file).then((response) => {
+      const auth = Cookie.get('PUMA_USER_SESSION');
+      axios.post(`${global.URL_GATEWAY}/project/upload`, file, { headers: { auth } }).then((response) => {
         resolve(response);
       }).catch(() => {
         reject('erro no upload do arquivo');
