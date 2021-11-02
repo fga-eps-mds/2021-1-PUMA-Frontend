@@ -14,9 +14,21 @@ export default {
       projs: [],
     };
   },
+  methods: {
+    goToNewProposal() {
+      this.$router.push({ name: 'Cadastro de Projeto' });
+    },
+    doNothing() {
+      // pass
+    },
+  },
   created() {
     projectService.getMyProposals().then((proposals) => {
-      this.projs = proposals.data;
+      proposals.data.forEach((element) => {
+        this.projs.push({ ...element, is_last: false, submit: this.doNothing });
+      });
+      // this.projs = proposals.data;
+      this.projs.push({ is_last: true, submit: this.goToNewProposal });
     });
   },
 };

@@ -43,6 +43,6 @@
     </form>
   </div>
   <div class="form-row" v-if="operacao !== 'visualizar'">
-    <button v-if="!isLoading" type="button" class="btn btn-warning" @click="submitForm">Submeter</button>
+    <input value="Submeter" v-if="!isLoading" type="submit" class="btn btn-warning submit-btn" @click="submitForm"></input>
   </div>
 </body>

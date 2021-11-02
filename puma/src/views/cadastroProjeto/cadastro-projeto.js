@@ -87,6 +87,7 @@ export default {
         };
         projectService.addFile(file).then(() => {
           this.isLoading = false;
+          this.$router.push({ name: 'My Proposals' });
         }).catch(() => {
           this.isLoading = false;
           alert('erro no cadastro de arquivo');
