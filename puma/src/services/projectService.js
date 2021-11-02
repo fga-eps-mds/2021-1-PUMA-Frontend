@@ -73,11 +73,10 @@ export default class ProjectService {
   addProject(project) {
     return new Promise((resolve, reject) => {
       const auth = Cookie.get('PUMA_USER_SESSION');
+      console.log(project);
       axios.post(`${global.URL_GATEWAY}/project`, project, { headers: { auth } }).then((response) => {
         resolve(response);
       }).catch((response) => {
-        console.log('fuckme');
-        console.log(response);
         reject(`/projeto/cadastro reject: ${response}`);
       });
     });

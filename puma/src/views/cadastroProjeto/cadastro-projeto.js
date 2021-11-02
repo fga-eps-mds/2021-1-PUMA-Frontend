@@ -79,22 +79,27 @@ export default {
       projectService.addProject(projectObject).then(async (response) => {
         this.isLoading = true;
         const projectId = response.data.data.response;
-        const fileByteArray = await this.getFileByteContent();
-        const file = {
-          filename: this.file.val.name,
-          bytecontent: fileByteArray,
-          projectid: projectId,
-        };
-        projectService.addFile(file).then(() => {
+        if (this.file.val) {
+          const fileByteArray = await this.getFileByteContent();
+          const file = {
+            filename: this.file.val.name,
+            bytecontent: fileByteArray,
+            projectid: projectId,
+          };
+          projectService.addFile(file).then(() => {
+            this.isLoading = false;
+            this.$router.push({ name: 'My Proposals' });
+          }).catch(() => {
+            this.isLoading = false;
+            alert('erro no cadastro de arquivo');
+          });
+        } else {
           this.isLoading = false;
           this.$router.push({ name: 'My Proposals' });
-        }).catch(() => {
-          this.isLoading = false;
-          alert('erro no cadastro de arquivo');
-        });
-      }).catch(() => {
+        }
+      }).catch((asdasd) => {
         this.isLoading = false;
-
+        console.log(asdasd);
         alert('Uma falha ocorreu ao efetuar o cadastro. Tente novamente.');
       });
     },
@@ -138,7 +143,6 @@ export default {
       if (!this.titulo.isValid
         || !this.descricao.isValid
         || !this.resultadoEsperado.isValid
-        || !this.file.isValid
         || !this.areasConhecimentoSelecionadas.isValid
       ) {
         this.formIsValid = false;
