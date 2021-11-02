@@ -123,9 +123,14 @@ export default {
         }
       } else if (evaluateLogin(newUser)) {
         this.isLoading = true;
-        userService.logUserIn(newUser).then(() => {
+        userService.logUserIn(newUser).then((userType) => {
           this.isLoading = false;
-          this.$router.push('/');
+          console.log(userType);
+          if (userType === 'Agente Externo') {
+            this.$router.push({ name: 'My Proposals' });
+          } else {
+            this.$router.push('/');
+          }
         }).catch(() => {
           this.isLoading = false;
           alert('Uma falha ocorreu ao fazer login. Tente novamente.');

@@ -1,13 +1,13 @@
 <template>
-  <div v-if='is_last' class='projectLast'>
-    <div class='text'>
+  <div v-if='is_last===true' class='projectLast'>
       <div class='cardLast'>
-        <div>
-          <p>+</p>
+        <div class='bigPlus'>
+          +
         </div>
-        <p>vamos de next</p>
+        <div class='tecton'>
+          Adicionar nova proposta
+        </div>
       </div>
-    </div>
   </div>
 
   <div v-else class='projectCard'>
@@ -43,11 +43,26 @@ export default {
 }
 
 .projectLast {
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
   height: 225px;
   width: 349px;
   border: 0.1em solid black;
   border-radius: 0.8em;
   background-color: #15355E;
+}
+
+.bigPlus {
+  color: #ffffff;
+  font-size: 155px;
+  margin-top: 15px;
+}
+
+.tecton {
+  margin-top: -40px;
+  color: #ffffff;
+  font-size: 27px;
 }
 
 .text {
@@ -74,10 +89,11 @@ export default {
 }
 
 .cardLast {
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+  vertical-align: middle;
   font-size: 19px;
   justify-content: center;
+  align-items: center;
   color: #ffffff;
 }
 

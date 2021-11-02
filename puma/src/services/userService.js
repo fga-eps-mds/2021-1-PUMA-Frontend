@@ -9,7 +9,7 @@ export default class UserService {
   registerUser(newUser) {
     return new Promise((resolve, reject) => {
       axios.post(`${global.URL_GATEWAY}/user/register`, newUser).then((response) => {
-        resolve(`/register resolve: ${response}`);
+        resolve(response);
       }).catch((response) => {
         reject(`/register reject: ${response}`);
       });
@@ -22,7 +22,7 @@ export default class UserService {
         if (response.data.auth) {
           Cookie.set('PUMA_USER_TYPE', response.data.type, { expires: 7, path: '/' });
           Cookie.set('PUMA_USER_SESSION', response.data.token, { expires: 7, path: '/' });
-          resolve(`/login resolve: ${response}`);
+          resolve(response.data.type);
         } else {
           reject(`/login reject: ${response}`);
         }
@@ -39,5 +39,9 @@ export default class UserService {
 
   isUserLoggedIn() {
     return Cookie.get('PUMA_USER_SESSION') !== undefined;
+  }
+
+  getUserType() {
+    return Cookie.get('PUMA_USER_TYPE');
   }
 }

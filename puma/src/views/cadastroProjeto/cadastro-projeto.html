@@ -1,0 +1,48 @@
+<body>
+  <div class='title'>
+    {{operacao === 'visualizar'?'Visualização de Projeto':'Nova proposta'}}
+  </div>
+
+  <div class='forms'>
+    <input type="text" id="titulo" v-model="titulo.val"
+      placeholder="Qual é o título da proposta de projeto?" :disabled=isLoading>
+  
+    <textarea id="descricao" placeholder="Qual a proposta do projeto?" rows="7" v-model="descricao.val"
+    maxlength="10000" :disabled=isLoading>
+      </textarea>
+  
+    <textarea id="resultado" placeholder="Qual resultado espera ter?" rows="5" v-model="resultadoEsperado.val"
+    maxlength="10000" :disabled=isLoading></textarea>
+
+    <div v-if="areasConhecimento.length">
+    <h3>
+      A quais áreas de conhecimento o projeto pertence?
+    </h3>
+  </div>
+  
+  <div class="bubblesContainer">
+    <div v-for="areaConhecimento in areasConhecimento" :key="areaConhecimento.id" id="checklistArea">
+      <div id="categoryBubble" :class='whoAmI(areaConhecimento.knowledgeareaid)' @click="beGay(areaConhecimento.knowledgeareaid)">{{areaConhecimento.knowledgearea}}</div>
+    </div>
+  </div>
+</div>
+
+  <div align="center">
+    <form :style="{borderColor: !file.isValid ? 'red' : ''}" action="http://localhost:3000/upload"
+      enctype="multipart/form-data" method="post">
+      <input :disabled=isLoading @change="updateFile($event)" name="pic" id="file" type="file" placeholder="assa">
+      <p v-if="!this.file.val">
+        Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+      </p>
+      <p v-else-if="this.file.val">
+        {{ file.val.name }}
+      </p>
+      <p v-else style="color: #15355e">
+        Arraste um arquivo de imagem que represente sua proposta de projeto ou selecione-o
+      </p>
+    </form>
+  </div>
+  <div class="form-row" v-if="operacao !== 'visualizar'">
+    <input value="Submeter" v-if="!isLoading" type="submit" class="btn btn-warning submit-btn" @click="submitForm"></input>
+  </div>
+</body>

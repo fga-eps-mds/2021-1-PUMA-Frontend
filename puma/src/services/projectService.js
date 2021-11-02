@@ -16,6 +16,16 @@ export default class ProjectService {
     return allocatedArray;
   }
 
+  async getMyProposals() {
+    const auth = Cookie.get('PUMA_USER_SESSION');
+    const myProposals = await axios.get(`${global.URL_GATEWAY}/project/myProposals`, {
+      headers: {
+        auth,
+      },
+    });
+    return myProposals;
+  }
+
   async getProjById(projId) {
     const auth = Cookie.get('PUMA_USER_SESSION');
     const projInfos = await axios.get(`${global.URL_GATEWAY}/project/project/${projId}`, {
@@ -58,5 +68,48 @@ export default class ProjectService {
         },
       });
     return subjects;
+  }
+
+  addProject(project) {
+    return new Promise((resolve, reject) => {
+      const auth = Cookie.get('PUMA_USER_SESSION');
+      console.log(project);
+      axios.post(`${global.URL_GATEWAY}/project`, project, { headers: { auth } }).then((response) => {
+        resolve(response);
+      }).catch((response) => {
+        reject(`/projeto/cadastro reject: ${response}`);
+      });
+    });
+  }
+
+  addFile(file) {
+    return new Promise((resolve, reject) => {
+      const auth = Cookie.get('PUMA_USER_SESSION');
+      axios.post(`${global.URL_GATEWAY}/project/upload`, file, { headers: { auth } }).then((response) => {
+        resolve(response);
+      }).catch(() => {
+        reject('erro no upload do arquivo');
+      });
+    });
+  }
+
+  deleteProject(idprojeto) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${global.URL_GATEWAY}/project/${idprojeto}`).then((response) => {
+        resolve(response);
+      }).catch(() => {
+        reject('erro na deleção do arquivo');
+      });
+    });
+  }
+
+  getKnowledgeAreas() {
+    return new Promise((resolve, reject) => {
+      axios.get(`${global.URL_GATEWAY}/areas-conhecimento`).then((response) => {
+        resolve(response);
+      }).catch(() => {
+        reject('erro na deleção do arquivo');
+      });
+    });
   }
 }
