@@ -40,4 +40,8 @@ export default class UserService {
   isUserLoggedIn() {
     return Cookie.get('PUMA_USER_SESSION') !== undefined;
   }
+
+  getUserType() {
+    return Cookie.get('PUMA_USER_TYPE');
+  }
 }
