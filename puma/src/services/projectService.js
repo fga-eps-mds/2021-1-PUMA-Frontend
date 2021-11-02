@@ -16,6 +16,16 @@ export default class ProjectService {
     return allocatedArray;
   }
 
+  async getMyProposals() {
+    const auth = Cookie.get('PUMA_USER_SESSION');
+    const myProposals = await axios.get(`${global.URL_GATEWAY}/project/myProposals`, {
+      headers: {
+        auth,
+      },
+    });
+    return myProposals;
+  }
+
   async getProjById(projId) {
     const auth = Cookie.get('PUMA_USER_SESSION');
     const projInfos = await axios.get(`${global.URL_GATEWAY}/project/project/${projId}`, {

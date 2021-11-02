@@ -61,6 +61,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '/myProposals',
+    name: 'My Proposals',
+    component: () => import('../views/myProposals/myProposals.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({
