@@ -1,0 +1,21 @@
+hr {
+    border-top: .15em solid #989898;
+    border-left: 0;
+    /* border: 0;
+    height: 0; /* Firefox...
+    box-shadow: 0 0 10px 1px black; */
+}
+
+.ocard {
+    margin-top: 4em;
+    margin-left: 7em;
+}
+
+.projcard {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+}

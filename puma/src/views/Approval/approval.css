@@ -1,0 +1,67 @@
+.lighter {
+    font-weight: 300;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.label {
+    margin-bottom: -15px;
+}
+
+p {
+    margin-top: 0px;
+    font-size: 20px;
+}
+ul {
+    margin-top: 0px;
+}
+li {
+    margin-top: 0px;
+    font-size: 20px;
+}
+
+
+.container {
+    text-align: left;
+    display: flex;
+    margin-left: 150px;
+    margin-right: 150px;
+    max-width: 1500px;
+    margin-top: 3.5em;
+    justify-content: left;
+    font-family: rubik, Sans-serif;
+    color: black;
+}
+
+.title {
+    color: black;
+    font-size: 40px;
+}
+
+.proposalTitle {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    font-size: 32px;
+    margin-top: 32px;
+    margin-bottom: 38px;
+}
+
+.compositeLine {
+    max-width: 1100px;
+}
+
+.submit-btn {
+    /* flex-direction: row; */
+    margin: 50px 0;
+}
+
+hr {
+    border-top: .15em solid #989898;
+    border-left: 0;
+    /* border: 0;
+    height: 0; /* Firefox...
+    box-shadow: 0 0 10px 1px black; */
+}

@@ -1,28 +1,104 @@
 <template>
-  <div id="nav">
-    <a href="/">Home</a> |
-    <a href="/about">About</a> |
-    <a href="/register">Register</a> |
-    <a href="disciplina/cadastro"> Cadastro de Disciplina</a> |
-    <a href="/disciplina"> Consulta de Disciplinas</a>
+  <div id='nav'>
+    <img
+      v-on:click='$router.push({ name: `Home` })'
+      class='nav-item'
+      id='logo'
+      src='../assets/navbarLogo.svg'
+      alt='PUMA'
+    />
+    <div id='dropdown'>
+      <img class='nav-item' id='menu-button' src='../assets/navbarMenu.svg' alt='|||' />
+      <div class="dropdown-content">
+        <a v-on:click='logOut()'>Sair</a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import UserService from '../services/userService';
+
+const userService = new UserService();
+
 export default {
   name: 'Navbar',
+  methods: {
+    logOut() {
+      userService.logUserOut();
+      this.$router.push('/register');
+      this.$router.go();
+    },
+  },
 };
 </script>
 
 <style scope>
-#nav {
-  padding: 30px;
-  background-color: #15355e;
+div {
+  position: relative;
 }
 
-#nav a {
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #15355e;
+  width: 300px;
+  transform: translate(-180px);
+  z-index: 1;
+  font-size: 20px;
+  font-family: rubik, sans-serif;
+  font-weight: 300;
+}
+
+.dropdown-content a {
+  height: 35px;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+#dropdown {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #265FAB;
+}
+
+#dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#nav {
+  padding: 7 px;
+  background-color: #15355e;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
   font-weight: bold;
   color: white;
+  align-items: center;
+}
+
+#logo {
+  height: 18px;
+  cursor: pointer;
+}
+
+#menu {
+  position: absolute;
+}
+
+#menu-button {
+  height: 55px;
+}
+
+.nav-item {
+  margin-left: 45px;
+  margin-right: 20px;
 }
 
 #nav a.router-link-exact-active {
