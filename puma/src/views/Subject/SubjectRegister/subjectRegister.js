@@ -1,8 +1,11 @@
 import SubjectService from '../../../services/subjectService';
 import SubareaService from '../../../services/subareaService';
+import ProjectService from '../../../services/projectService';
 
 const subjectService = new SubjectService();
+const projectService = new ProjectService();
 const subareaService = new SubareaService();
+let selectedAreasConhecimento = [];
 
 function evaluateRegister(subjectObject) {
   if (!(
@@ -21,6 +24,13 @@ function evaluateRegister(subjectObject) {
 }
 
 export default {
+  beforeCreate() {
+    projectService.getKnowledgeAreas().then((response) => {
+      response.data.response.forEach((areaConhecimento) => {
+        this.areasConhecimento.push(areaConhecimento);
+      });
+    });
+  },
   created() {
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const key in this.$route.params) {
@@ -71,6 +81,10 @@ export default {
       operacao: '',
       isLoading: false,
       subjectid: null,
+      areasConhecimento: [],
+      selectedAreasConhecimento,
+      areasConhecimentoSelecionadas: { val: selectedAreasConhecimento, isValid: true },
+      areasConhecimentoObject: [],
       subareas: [],
       subareasSelecionadas: { val: [], isValid: true },
       subareasObject: [],
@@ -88,6 +102,21 @@ export default {
   },
 
   methods: {
+    beGay(lel) {
+      if (selectedAreasConhecimento.includes(lel)) {
+        selectedAreasConhecimento = selectedAreasConhecimento
+          .filter((value) => value !== lel);
+      } else {
+        selectedAreasConhecimento.push(lel);
+      }
+      this.areasConhecimentoSelecionadas.val = selectedAreasConhecimento;
+    },
+    whoAmI(lel) {
+      if (this.areasConhecimentoSelecionadas.val.includes(lel)) {
+        return ('fuck');
+      }
+      return ('notfuck');
+    },
     submitForm() {
       this.subareasSelecionadas.val.forEach((sub) => {
         this.subareas.forEach((subarea) => {

@@ -61,3 +61,46 @@ textarea{
 .input-text{
   width: 39%;
 }
+
+.bubblesContainer {
+  max-width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+#categoryBubble {
+  cursor: pointer;
+  user-select: none;
+  margin-left: -8px;
+  border-radius: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div#checklist {
+  display: inline-flex;
+  padding-left: 13px;
+  justify-content: space-between;
+}
+
+.fuck {
+  appearance: none;
+  background-color: #F7DB36;
+}
+
+#checklistArea {
+  border: #15355e;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 8px;
+  margin: 10px 5px 15px 5px;
+  display: -webkit-inline-box;
+  position: relative;
+  padding-left: 8px;
+}
+
+input[type="checkbox"] {
+  margin: 0 4px 0 0;
+}
