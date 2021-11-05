@@ -11,10 +11,7 @@ dotenv.config();
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 environment.configUser();
-Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
 new Vue({
   router,
   store,

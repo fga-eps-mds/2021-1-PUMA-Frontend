@@ -8,7 +8,7 @@ import axios from '../main';
 export default class SubjectService {
   addSubject(subject) {
     return new Promise((resolve, reject) => {
-      axios.post(`${global.URL_GATEWAY}/disciplina`, subject).then((response) => {
+      axios.post(`${global.URL_GATEWAY}/subject`, subject).then((response) => {
         resolve(response);
       }).catch((response) => {
         reject(`/disciplina/cadastro reject: ${response}`);
@@ -18,7 +18,7 @@ export default class SubjectService {
 
   updateSubject(subject) {
     return new Promise((resolve, reject) => {
-      axios.put(`${global.URL_GATEWAY}/disciplina`, subject).then((response) => {
+      axios.put(`${global.URL_GATEWAY}/subject`, subject).then((response) => {
         resolve(response);
       }).catch((response) => {
         reject(`/disciplina/update reject: ${response}`);
@@ -28,7 +28,7 @@ export default class SubjectService {
 
   getSubjects() {
     return new Promise((resolve, reject) => {
-      axios.get(`${global.URL_GATEWAY}/disciplina`).then((response) => {
+      axios.get(`${global.URL_GATEWAY}/subject`).then((response) => {
         resolve(response);
       }).catch((response) => {
         reject(`/disciplina reject: ${response}`);
@@ -38,7 +38,7 @@ export default class SubjectService {
 
   getSubject(subjectIdParam) {
     return new Promise((resolve, reject) => {
-      axios.get(`${global.URL_GATEWAY}/disciplina/${subjectIdParam}`).then((response) => {
+      axios.get(`${global.URL_GATEWAY}/subject/${subjectIdParam}`).then((response) => {
         resolve(response);
       }).catch((response) => {
         reject(`/disciplina/retrive reject: ${response}`);

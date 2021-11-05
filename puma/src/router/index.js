@@ -48,12 +48,6 @@ const routes = [
     name: 'Alteração de Disciplina',
     props: true,
     component: () => import('../views/Subject/SubjectRegister/SubjectRegister.vue'),
-    // eslint-disable-next-line import/no-unresolved
-    component: () => import('@/views/Register/Register.vue'),
-    meta: {
-      guest: true,
-    },
-
   },
   {
     path: '/evaluate/:subjectId',
