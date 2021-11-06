@@ -21,7 +21,7 @@
             </div>
 
             <div class="input-container">
-                <input class ="input-text" type="text" id="nomeProfessor" v-model="nameTeacher" placeholder="Nome do Professor"/>
+                <input class ="input-text" type="text" id="nomeProfessor" v-model="professorRegNumber" placeholder="Nome do Professor"/>
             </div>
             <div class="bubblesContainer">
                 <div v-for="areaConhecimento in areasConhecimento" :key="areaConhecimento.id" id="checklistArea">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="input-container">
-                <input  class ="input-text" type="password" id="Senha" v-model="password" placeholder="Senha de Acesso (Opcional)">    
+                <input  class ="input-text" type="password" id="Senha" v-model="accessPassword" placeholder="Senha de Acesso (Opcional)">    
             </div>
 
             <div>

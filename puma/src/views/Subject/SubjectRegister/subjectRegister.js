@@ -1,22 +1,24 @@
 import SubjectService from '../../../services/subjectService';
-import SubareaService from '../../../services/subareaService';
+// import SubareaService from '../../../services/subareaService';
 import ProjectService from '../../../services/projectService';
 
 const subjectService = new SubjectService();
 const projectService = new ProjectService();
-const subareaService = new SubareaService();
+// const subareaService = new SubareaService();
 let selectedAreasConhecimento = [];
 
 function evaluateRegister(subjectObject) {
-  if (!(
+  if (
     subjectObject.name
     && subjectObject.coursesyllabus
     && subjectObject.operacao
     && subjectObject.nameTeacher
+    && subjectObject.knowledgearea
     && subjectObject.semester
     && subjectObject.academicYear
     && subjectObject.turma
-  )) {
+    && subjectObject.accessPassword
+  ) {
     alert('Preencha todos os campos');
     return false;
   }
@@ -41,6 +43,7 @@ export default {
       }
     }
 
+    console.log(this.operacao);
     if (this.operacao === 'cadastro') {
       this.isRegister = true;
       this.isUpdate = false;
@@ -56,12 +59,6 @@ export default {
       this.greetings = 'Alteração de Disciplina';
       this.submitButtonText = 'Alterar Disciplina';
     }
-
-    subareaService.getSubareas().then((response) => {
-      response.data.response.forEach((subarea) => {
-        this.subareas.push(subarea);
-      });
-    });
 
     if (this.isUpdate) {
       subjectService.getSubject(this.subjectid).then((response) => {
@@ -85,15 +82,12 @@ export default {
       selectedAreasConhecimento,
       areasConhecimentoSelecionadas: { val: selectedAreasConhecimento, isValid: true },
       areasConhecimentoObject: [],
-      subareas: [],
-      subareasSelecionadas: { val: [], isValid: true },
-      subareasObject: [],
       formIsValid: '',
       isRegister: false,
       greetings: 'Nova Disciplina',
       submitButtonText: 'Cadastrar Disciplina',
-      password: '',
-      nameTeacher: '',
+      accessPassword: '',
+      professorRegNumber: '',
       semester: '',
       academicYear: '',
       turma: '',
@@ -118,25 +112,35 @@ export default {
       return ('notfuck');
     },
     submitForm() {
-      this.subareasSelecionadas.val.forEach((sub) => {
-        this.subareas.forEach((subarea) => {
-          if (subarea.description === sub.description) {
-            this.subareasObject.push({ description: sub.description, subareaid: sub.subareaid });
+      this.areasConhecimentoObject = [];
+      this.areasConhecimentoSelecionadas.val.forEach((areaConhecimento) => {
+        this.areasConhecimento.forEach((area) => {
+          if (area.knowledgeareaid === areaConhecimento) {
+            this.areasConhecimentoObject.push({
+              knowledgearea: area.knowledgearea,
+              knowledgeareaid: area.knowledgeareaid,
+              selected: false,
+            });
           }
         });
+      });
+      const aux = [];
+      this.areasConhecimentoObject.forEach((area) => {
+        aux.push({ knowledgearea: area.knowledgearea, knowledgeareaid: area.knowledgeareaid });
       });
       const subjectObject = {
         name: this.nomeDisciplina,
         coursesyllabus: this.ementa.val,
-        subareas: this.subareasObject,
+        knowledgearea: aux,
         operacao: this.operacao,
         subjectid: this.subjectid,
-        nameTeacher: this.nameTeacher,
+        professorRegNumber: this.nameTeacher,
         semester: this.semester,
         academicYear: this.academicYear,
-        turma: this.turma,
-        password: this.password,
+        class: this.turma,
+        accessPassword: this.accessPassword,
       };
+      console.log(subjectObject);
       if (this.isRegister) {
         if (evaluateRegister(subjectObject)) {
           this.isLoading = true;
