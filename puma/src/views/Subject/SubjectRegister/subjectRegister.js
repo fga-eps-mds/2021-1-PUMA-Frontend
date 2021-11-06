@@ -43,7 +43,6 @@ export default {
       }
     }
 
-    console.log(this.operacao);
     if (this.operacao === 'cadastro') {
       this.isRegister = true;
       this.isUpdate = false;
@@ -62,17 +61,19 @@ export default {
 
     if (this.isUpdate) {
       subjectService.getSubject(this.subjectid).then((response) => {
-        this.ementa.val = response.data.data.response[0].coursesyllabus.trim();
-        this.nomeDisciplina = response.data.data.response[0].name.trim();
-        response.data.data.response.forEach((subject) => {
-        // eslint-disable-next-line max-len
-          this.subareasSelecionadas.val.push({ description: subject.description, subareaid: subject.subareaid });
-        });
+        this.nomeDisciplina = response.name;
+        this.nameTeacher = response.nameTeacher;
+        this.ementa.val = response.coursesyllabus;
+        selectedAreasConhecimento = response.knowledgeArea;
+        this.semester = response.semester;
+        this.academicYear = response.academicYear;
+        this.turma = response.class;
       });
     }
   },
   data() {
     return {
+      newSubject: {},
       nomeDisciplina: '',
       ementa: { val: '', isValid: true },
       operacao: '',

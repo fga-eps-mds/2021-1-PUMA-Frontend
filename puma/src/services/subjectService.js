@@ -36,13 +36,8 @@ export default class SubjectService {
     });
   }
 
-  getSubject(subjectIdParam) {
-    return new Promise((resolve, reject) => {
-      axios.get(`${global.URL_GATEWAY}/subject/getSubject/${subjectIdParam}`).then((response) => {
-        resolve(response);
-      }).catch((response) => {
-        reject(`/disciplina/retrieve reject: ${response}`);
-      });
-    });
+  async getSubject(subjectIdParam) {
+    const subject = await axios.get(`${global.URL_GATEWAY}/subject/getSubject/${subjectIdParam}`);
+    return subject.data.response[0];
   }
 }
