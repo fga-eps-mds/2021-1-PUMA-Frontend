@@ -38,10 +38,10 @@ export default class SubjectService {
 
   getSubject(subjectIdParam) {
     return new Promise((resolve, reject) => {
-      axios.get(`${global.URL_GATEWAY}/subject/${subjectIdParam}`).then((response) => {
+      axios.get(`${global.URL_GATEWAY}/subject/getSubject/${subjectIdParam}`).then((response) => {
         resolve(response);
       }).catch((response) => {
-        reject(`/disciplina/retrive reject: ${response}`);
+        reject(`/disciplina/retrieve reject: ${response}`);
       });
     });
   }
