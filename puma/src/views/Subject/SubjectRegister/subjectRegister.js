@@ -64,10 +64,13 @@ export default {
         this.nomeDisciplina = response.name;
         this.nameTeacher = response.nameTeacher;
         this.ementa.val = response.coursesyllabus;
-        selectedAreasConhecimento = response.knowledgeArea;
         this.semester = response.semester;
         this.academicYear = response.academicYear;
         this.turma = response.class;
+        response.knowledgeArea[0].forEach((areaConhecimento) => {
+          selectedAreasConhecimento.push(areaConhecimento.knowledgeareaid);
+        });
+        this.areasConhecimentoSelecionadas.val = selectedAreasConhecimento;
       });
     }
   },

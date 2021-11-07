@@ -7,7 +7,7 @@
                 <div class="input-container">
                     <input class ="input-text" type="text" id="nomeDisciplina" v-model.trim="nomeDisciplina" placeholder="Nome da Disciplina"/>
                 </div>        
-    
+                
                 <div class="in-line">
                     <input type="text" id="turma" v-model="turma" placeholder="Turma"/>
                 </div>
@@ -29,14 +29,6 @@
                         <div id="categoryBubble" :class='whoAmI(areaConhecimento.knowledgeareaid)' @click="beGay(areaConhecimento.knowledgeareaid)">{{areaConhecimento.knowledgearea}}</div>
                     </div>
                 </div>
-    
-                <!-- <div class="input-container">
-                    <label>Sub-areas</label>
-                    <div class="checkbox-container" v-for="subarea in subareas">
-                        <input type="checkbox" value="testando">
-                        <span>{{subarea}}</span>
-                    </div>
-                </div> -->
     
                 <div class="textarea">
                     <textarea type="text" id="ementaDisciplina" v-model.trim="ementa.val" placeholder="Descreva a ementa da disciplina dentro de 1000 caracteres" maxlength="1000"></textarea>    
