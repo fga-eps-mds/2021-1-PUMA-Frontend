@@ -5,14 +5,11 @@
 	<hr>
 	<div class='projcard'>
 		<ProjectCard
-			v-on:click.native='proj.submit'
-			v-for='proj in projs'
-			:is_last='proj.is_last'
+			v-on:click.native='subjectDetail(subject.subjectid)'
+			v-for='subject in subjects'
 			font-family='Rubik,Sans-serif'
 			class='ocard'
-			v-bind:title='proj.name'
-			v-bind:expectedResult='proj.status'
+			v-bind:title='subject.name'
 			picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'/>
-			<!-- <ProjectCard is_last='true'/> -->
 	</div>
 </body>
