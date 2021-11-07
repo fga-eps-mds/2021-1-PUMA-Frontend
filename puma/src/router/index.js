@@ -84,6 +84,11 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '/mySubjects',
+    name: 'My Subjects',
+    component: () => import('../views/Subject/MySubjects/MySubjects.vue'),
+  },
 ];
 
 const router = new VueRouter({
