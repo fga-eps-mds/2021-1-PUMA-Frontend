@@ -1,0 +1,50 @@
+<body>
+    <div class='container'>
+        <div class='title lighter'>
+            Disciplina de {{subject.name}}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class='column container'>
+
+        <div class='row bold proposalTitle'>
+            {{subject.name}}
+        </div>
+        <div class='row compositeLine'>
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column '>Nome da disciplina:&nbsp;</p>
+                    <p class='lighter column'>{{subject.name}}</p>
+                </div>
+            </div>
+
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column'>Ano letivo:&nbsp;</p>
+                    <p class='lighter column'>{{subject.academicYear}}</p>
+                </div>
+            </div>
+
+            <div class='column flex1'>
+                <div class='row'>
+                    <p class='bold column '>Semestre:&nbsp;</p>
+                    <p class='lighter column'>{{subject.semester}}</p>
+                </div>
+                <div class='row'>
+                    <p class='bold column '>Turma:&nbsp;</p>
+                    <p class='lighter column'>{{subject.class}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class='row bold label'>
+            <p>Descrição da disciplina:</p>
+        </div>
+        <div class='row'>
+            <p>{{subject.coursesyllabus}}</p>
+        </div>
+    </div>
+
+</body>

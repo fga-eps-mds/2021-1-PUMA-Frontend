@@ -33,9 +33,13 @@ const routes = [
     },
   },
   {
-    path: '/disciplina',
-    name: 'Consulta de Disciplinas',
-    component: () => import('../views/Subject/ConsultaDisciplinas.vue'),
+    path: '/disciplina/:idDisciplina',
+    name: 'Subject',
+    props: true,
+    component: () => import('../views/Subject/Consulta/SubjectDetail.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/disciplina/cadastro',
