@@ -1,11 +1,9 @@
 <body>
     <div class='container'>
-        <div class='title lighter'>
+        <div class='title bold'>
             Disciplina de {{subject.name}}
         </div>
     </div>
-
-    <hr>
 
     <div class='column container'>
 
@@ -18,19 +16,16 @@
                     <p class='bold column '>Nome da disciplina:&nbsp;</p>
                     <p class='lighter column'>{{subject.name}}</p>
                 </div>
+                <div class='row'>
+                    <p class='bold column '>Semestre:&nbsp;</p>
+                    <p class='lighter column'>{{subject.semester}}</p>
+                </div>
             </div>
 
             <div class='column flex1'>
                 <div class='row'>
                     <p class='bold column'>Ano letivo:&nbsp;</p>
                     <p class='lighter column'>{{subject.academicYear}}</p>
-                </div>
-            </div>
-
-            <div class='column flex1'>
-                <div class='row'>
-                    <p class='bold column '>Semestre:&nbsp;</p>
-                    <p class='lighter column'>{{subject.semester}}</p>
                 </div>
                 <div class='row'>
                     <p class='bold column '>Turma:&nbsp;</p>
@@ -47,4 +42,20 @@
         </div>
     </div>
 
+    <div class='container'>
+        <div class='title lighter'>
+            O que você quer fazer?
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="projcard">
+        <ProjectCard
+          font-family='Rubik,Sans-serif'
+          class='ocard'
+          :card_title='"Ver projetos da disciplina"'
+          picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'
+          v-on:click.native='projDetail(proj.projectid)'/>
+    </div>
 </body>

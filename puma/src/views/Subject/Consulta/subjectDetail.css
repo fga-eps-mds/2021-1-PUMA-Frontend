@@ -65,3 +65,12 @@ hr {
     height: 0; /* Firefox...
     box-shadow: 0 0 10px 1px black; */
 }
+
+.projcard {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+  }
