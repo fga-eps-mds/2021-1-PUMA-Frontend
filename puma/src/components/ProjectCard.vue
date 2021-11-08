@@ -4,7 +4,10 @@
         <div class='bigPlus'>
           +
         </div>
-        <div class='tecton'>
+        <div class='tecton' v-if='is_subject===true'>
+          Adicionar nova disciplina
+        </div>
+        <div class='tecton' v-else>
           Adicionar nova proposta
         </div>
       </div>
@@ -27,7 +30,7 @@
 <script>
 export default {
   name: 'ProjectCard',
-  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last'],
+  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last', 'is_subject'],
   created() {
     console.log(this.picture);
   },
