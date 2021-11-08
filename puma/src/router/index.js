@@ -38,13 +38,12 @@ const routes = [
     component: () => import('../views/Subject/ConsultaDisciplinas.vue'),
   },
   {
-    path: '/disciplina/:cadastro',
+    path: '/disciplina/cadastro',
     name: 'Cadastro de Disciplina',
-    props: true,
     component: () => import('../views/Subject/SubjectRegister/SubjectRegister.vue'),
   },
   {
-    path: '/disciplina/:alteracao/:idDisciplina',
+    path: '/disciplina/alteracao/:idDisciplina',
     name: 'Alteração de Disciplina',
     props: true,
     component: () => import('../views/Subject/SubjectRegister/SubjectRegister.vue'),
