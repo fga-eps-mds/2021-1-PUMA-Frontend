@@ -15,12 +15,17 @@
   </div>
 
   <div v-else class='projectCard'>
-    <div v-if='card_title==="Ver projetos da disciplina"'>
+    <div v-if='card_title === "Ver projetos da disciplina" || card_title === "Aprovar propostas"'>
       <div class='projectLast'>
         <div class='projectTecton'>
           {{ card_title }}
         </div>
         <hr>
+        <div class='projectTecton' v-if='card_title === "Avaliar propostas"'>
+        </div>
+        <div v-else>
+          {{ project_len }} Projetos aprovados
+        </div>
       </div>
     </div>
     <div v-else>
@@ -40,7 +45,7 @@
 <script>
 export default {
   name: 'ProjectCard',
-  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last', 'is_subject', 'card_title'],
+  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last', 'is_subject', 'card_title', 'project_len'],
   created() {
     console.log(this.picture);
   },
@@ -80,7 +85,7 @@ export default {
 
 .projectTecton {
   color: #ffffff;
-  font-size: 35px;
+  font-size: 34px;
   margin-top:25px
 }
 

@@ -67,7 +67,7 @@ hr {
 }
 
 .projcard {
-    display: flex;
+    display: inline-flex;
     justify-content: flex-start;
     flex-direction: row;
     height: 100%;

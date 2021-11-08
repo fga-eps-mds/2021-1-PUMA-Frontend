@@ -50,12 +50,45 @@
 
     <hr>
 
-    <div class="projcard">
-        <ProjectCard
-          font-family='Rubik,Sans-serif'
-          class='ocard'
-          :card_title='"Ver projetos da disciplina"'
-          picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'
-          v-on:click.native='projDetail(proj.projectid)'/>
+    <div v-if='userType === "Professor"'>
+        <div class='column'>
+            <div class='row projcard'>
+              <ProjectCard
+                font-family='Rubik,Sans-serif'
+                class='ocard'
+                :card_title='"Avaliar propostas"'
+                picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'
+                v-on:click.native='projDetail(proj.projectid)'/>
+            </div>
+        </div>
+        <div class='column'>
+            <div class='row projcard'>
+              <ProjectCard
+                font-family='Rubik,Sans-serif'
+                class='ocard'
+                :card_title='"Ver projetos da disciplina"'
+                :project_len='projLen'
+                picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'
+                v-on:click.native='projDetail(proj.projectid)'/>
+            </div>
+        </div>
+    </div>
+    <div v-else>
+        <div class="projcard column">
+            <ProjectCard
+              font-family='Rubik,Sans-serif'
+              class='ocard'
+              :card_title='"Ver projetos da disciplina"'
+              :project_len='projLen'
+              picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'/>
+        </div>
+        <div class="projcard">
+            <ProjectCard
+              font-family='Rubik,Sans-serif'
+              class='ocard'
+              :card_title='"Ver projetos da disciplina"'
+              :project_len='projLen'
+              picture='https://ospedagogicosblog.com.br/wp-content/uploads/2019/09/Webysther_20160322_-_Logo_UnB_sem_texto.svg_.png'/>
+        </div>
     </div>
 </body>
