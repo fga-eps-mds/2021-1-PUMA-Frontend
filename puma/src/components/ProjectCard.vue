@@ -1,28 +1,38 @@
 <template>
   <div v-if='is_last===true' class='projectLast'>
-      <div class='cardLast'>
-        <div class='bigPlus'>
-          +
-        </div>
-        <div class='tecton' v-if='is_subject===true'>
-          Adicionar nova disciplina
-        </div>
-        <div class='tecton' v-else>
-          Adicionar nova proposta
-        </div>
+
+    <div class='cardLast'>
+      <div class='bigPlus'>
+        +
       </div>
+      <div class='tecton' v-if='is_subject===true'>
+        Adicionar nova disciplina
+      </div>
+      <div class='tecton' v-else>
+        Adicionar nova proposta
+      </div>
+    </div>
   </div>
 
   <div v-else class='projectCard'>
-  <img class='picture' alt='projPicture' :src='picture'>
-    <div class='text'>
-      <div class='cardTitle'>
-        {{ title }}
+    <div v-if='card_title==="Ver projetos da disciplina"'>
+      <div class='projectLast'>
+        <div class='projectTecton'>
+          {{ card_title }}
+        </div>
+        <hr>
       </div>
-      <div class='expectedResult'>
-        {{ expectedResult }}
+    </div>
+    <div v-else>
+      <img class='picture' alt='projPicture' :src='picture'>
+      <div class='text'>
+        <div class='cardTitle'>
+          {{ title }}
+        </div>
+        <div class='expectedResult'>
+          {{ expectedResult }}
+        </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -30,7 +40,7 @@
 <script>
 export default {
   name: 'ProjectCard',
-  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last', 'is_subject'],
+  props: ['picture', 'title', 'expectedResult', 'font-family', 'is_last', 'is_subject', 'card_title'],
   created() {
     console.log(this.picture);
   },
@@ -66,6 +76,12 @@ export default {
   margin-top: -40px;
   color: #ffffff;
   font-size: 27px;
+}
+
+.projectTecton {
+  color: #ffffff;
+  font-size: 35px;
+  margin-top:25px
 }
 
 .text {
